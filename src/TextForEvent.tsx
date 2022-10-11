@@ -46,6 +46,7 @@ import RightPanelStore from './stores/right-panel/RightPanelStore';
 import UserIdentifierCustomisations from './customisations/UserIdentifier';
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { isLocationEvent } from './utils/EventUtils';
+import { ElementCall } from "./models/Call";
 
 export function getSenderName(event: MatrixEvent): string {
     return event.sender?.name ?? event.getSender() ?? _t("Someone");
@@ -56,6 +57,15 @@ function getRoomMemberDisplayname(event: MatrixEvent, userId = event.getSender()
     const roomId = event.getRoomId();
     const member = client.getRoom(roomId)?.getMember(userId);
     return member?.rawDisplayName || userId || _t("Someone");
+}
+
+function textForCallEvent(event: MatrixEvent): () => string {
+    const roomName = MatrixClientPeg.get().getRoom(event.getRoomId()!).name;
+    const isSupported = MatrixClientPeg.get().supportsVoip();
+
+    return isSupported
+        ? () => _t("Video call started in %(roomName)s.", { roomName })
+        : () => _t("Video call started in %(roomName)s. (not supported by this browser)", { roomName });
 }
 
 // These functions are frequently used just to check whether an event has
@@ -797,6 +807,11 @@ const stateHandlers: IHandlers = {
 // Add all the Mjolnir stuff to the renderer
 for (const evType of ALL_RULE_TYPES) {
     stateHandlers[evType] = textForMjolnirEvent;
+}
+
+// Add both stable and unstable m.call events
+for (const evType of ElementCall.CALL_EVENT_TYPE.names) {
+    stateHandlers[evType] = textForCallEvent;
 }
 
 /**

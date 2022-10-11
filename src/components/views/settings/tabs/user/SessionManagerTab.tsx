@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { _t } from "../../../../../languageHandler";
 import { useOwnDevices } from '../../devices/useOwnDevices';
@@ -24,9 +24,20 @@ import CurrentDeviceSection from '../../devices/CurrentDeviceSection';
 import SecurityRecommendations from '../../devices/SecurityRecommendations';
 import { DeviceSecurityVariation, DeviceWithVerification } from '../../devices/types';
 import SettingsTab from '../SettingsTab';
+import Modal from '../../../../../Modal';
+import SetupEncryptionDialog from '../../../dialogs/security/SetupEncryptionDialog';
+import VerificationRequestDialog from '../../../dialogs/VerificationRequestDialog';
+import LogoutDialog from '../../../dialogs/LogoutDialog';
 
 const SessionManagerTab: React.FC = () => {
-    const { devices, currentDeviceId, isLoading } = useOwnDevices();
+    const {
+        devices,
+        currentDeviceId,
+        currentUserMember,
+        isLoading,
+        requestDeviceVerification,
+        refreshDevices,
+    } = useOwnDevices();
     const [filter, setFilter] = useState<DeviceSecurityVariation>();
     const [expandedDeviceIds, setExpandedDeviceIds] = useState<DeviceWithVerification['device_id'][]>([]);
     const filteredDeviceListRef = useRef<HTMLDivElement>(null);
@@ -57,6 +68,38 @@ const SessionManagerTab: React.FC = () => {
     const { [currentDeviceId]: currentDevice, ...otherDevices } = devices;
     const shouldShowOtherSessions = Object.keys(otherDevices).length > 0;
 
+    const onVerifyCurrentDevice = () => {
+        Modal.createDialog(
+            SetupEncryptionDialog as unknown as React.ComponentType,
+            { onFinished: refreshDevices },
+        );
+    };
+
+    const onTriggerDeviceVerification = useCallback((deviceId: DeviceWithVerification['device_id']) => {
+        if (!requestDeviceVerification) {
+            return;
+        }
+        const verificationRequestPromise = requestDeviceVerification(deviceId);
+        Modal.createDialog(VerificationRequestDialog, {
+            verificationRequestPromise,
+            member: currentUserMember,
+            onFinished: async () => {
+                const request = await verificationRequestPromise;
+                request.cancel();
+                await refreshDevices();
+            },
+        });
+    }, [requestDeviceVerification, refreshDevices, currentUserMember]);
+
+    const onSignOutCurrentDevice = () => {
+        if (!currentDevice) {
+            return;
+        }
+        Modal.createDialog(LogoutDialog,
+            /* props= */{}, /* className= */undefined,
+            /* isPriority= */false, /* isStatic= */true);
+    };
+
     useEffect(() => () => {
         clearTimeout(scrollIntoViewTimeoutRef.current);
     }, [scrollIntoViewTimeoutRef]);
@@ -70,6 +113,8 @@ const SessionManagerTab: React.FC = () => {
         <CurrentDeviceSection
             device={currentDevice}
             isLoading={isLoading}
+            onVerifyCurrentDevice={onVerifyCurrentDevice}
+            onSignOutCurrentDevice={onSignOutCurrentDevice}
         />
         {
             shouldShowOtherSessions &&
@@ -87,6 +132,7 @@ const SessionManagerTab: React.FC = () => {
                     expandedDeviceIds={expandedDeviceIds}
                     onFilterChange={setFilter}
                     onDeviceExpandToggle={onDeviceExpandToggle}
+                    onRequestDeviceVerification={requestDeviceVerification ? onTriggerDeviceVerification : undefined}
                     ref={filteredDeviceListRef}
                 />
             </SettingsSubsection>

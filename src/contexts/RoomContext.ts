@@ -64,6 +64,7 @@ const RoomContext = createContext<IRoomState>({
     threadId: undefined,
     liveTimeline: undefined,
     narrow: false,
+    activeCall: null,
 });
 RoomContext.displayName = "RoomContext";
 export default RoomContext;

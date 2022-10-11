@@ -28,10 +28,15 @@ import { DeviceWithVerification } from './types';
 interface Props {
     device?: DeviceWithVerification;
     isLoading: boolean;
+    onVerifyCurrentDevice: () => void;
+    onSignOutCurrentDevice: () => void;
 }
 
 const CurrentDeviceSection: React.FC<Props> = ({
-    device, isLoading,
+    device,
+    isLoading,
+    onVerifyCurrentDevice,
+    onSignOutCurrentDevice,
 }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -50,9 +55,14 @@ const CurrentDeviceSection: React.FC<Props> = ({
                     onClick={() => setIsExpanded(!isExpanded)}
                 />
             </DeviceTile>
-            { isExpanded && <DeviceDetails device={device} /> }
+            { isExpanded &&
+                <DeviceDetails
+                    device={device}
+                    onSignOutDevice={onSignOutCurrentDevice}
+                />
+            }
             <br />
-            <DeviceVerificationStatusCard device={device} />
+            <DeviceVerificationStatusCard device={device} onVerifyDevice={onVerifyCurrentDevice} />
         </>
         }
     </SettingsSubsection>;
