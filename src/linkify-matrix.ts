@@ -30,11 +30,13 @@ import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
 import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { showGroupReplacedWithSpacesDialog } from "./group_helpers";
 
 export enum Type {
     URL = "url",
     UserId = "userid",
     RoomAlias = "roomalias",
+    GroupId = "groupid",
 }
 
 // Linkify stuff doesn't type scanner/parser/utils properly :/
@@ -113,6 +115,11 @@ function onUserClick(event: MouseEvent, userId: string) {
     });
 }
 
+function onGroupClick(event: MouseEvent, groupId: string) {
+    event.preventDefault();
+    showGroupReplacedWithSpacesDialog(groupId);
+}
+
 function onAliasClick(event: MouseEvent, roomAlias: string) {
     event.preventDefault();
     dis.dispatch<ViewRoomPayload>({
@@ -185,6 +192,15 @@ export const options = {
                         onAliasClick(e, alias);
                     },
                 };
+
+            case Type.GroupId:
+                return {
+                    // @ts-ignore see https://linkify.js.org/docs/options.html
+                    click: function(e: MouseEvent) {
+                        const groupId = parsePermalink(href).groupId;
+                        onGroupClick(e, groupId);
+                    },
+                };
         }
     },
 
@@ -192,6 +208,7 @@ export const options = {
         switch (type) {
             case Type.RoomAlias:
             case Type.UserId:
+            case Type.GroupId:
             default: {
                 return tryTransformEntityToPermalink(href);
             }
@@ -235,6 +252,17 @@ registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
         utils,
         token,
         name: Type.RoomAlias,
+    });
+});
+
+registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
+    const token = scanner.tokens.PLUS as '+';
+    matrixOpaqueIdLinkifyParser({
+        scanner,
+        parser,
+        utils,
+        token,
+        name: Type.GroupId,
     });
 });
 

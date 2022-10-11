@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ExtendedDevice, DeviceSecurityVariation } from "./types";
+import { DeviceWithVerification, DeviceSecurityVariation } from "./types";
 
-type DeviceFilterCondition = (device: ExtendedDevice) => boolean;
+type DeviceFilterCondition = (device: DeviceWithVerification) => boolean;
 
 const MS_DAY = 24 * 60 * 60 * 1000;
 export const INACTIVE_DEVICE_AGE_MS = 7.776e+9; // 90 days
@@ -32,7 +32,7 @@ const filters: Record<DeviceSecurityVariation, DeviceFilterCondition> = {
 };
 
 export const filterDevicesBySecurityRecommendation = (
-    devices: ExtendedDevice[],
+    devices: DeviceWithVerification[],
     securityVariations: DeviceSecurityVariation[],
 ) => {
     const activeFilters = securityVariations.map(variation => filters[variation]);

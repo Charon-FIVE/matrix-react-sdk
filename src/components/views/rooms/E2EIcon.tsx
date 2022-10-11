@@ -20,7 +20,7 @@ import classNames from 'classnames';
 
 import { _t, _td } from '../../../languageHandler';
 import AccessibleButton from "../elements/AccessibleButton";
-import Tooltip, { Alignment } from "../elements/Tooltip";
+import Tooltip from "../elements/Tooltip";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 
 export enum E2EState {
@@ -49,20 +49,10 @@ interface IProps {
     size?: number;
     onClick?: () => void;
     hideTooltip?: boolean;
-    tooltipAlignment?: Alignment;
     bordered?: boolean;
 }
 
-const E2EIcon: React.FC<IProps> = ({
-    isUser,
-    status,
-    className,
-    size,
-    onClick,
-    hideTooltip,
-    tooltipAlignment,
-    bordered,
-}) => {
+const E2EIcon: React.FC<IProps> = ({ isUser, status, className, size, onClick, hideTooltip, bordered }) => {
     const [hover, setHover] = useState(false);
 
     const classes = classNames({
@@ -90,7 +80,7 @@ const E2EIcon: React.FC<IProps> = ({
 
     let tip;
     if (hover && !hideTooltip) {
-        tip = <Tooltip label={e2eTitle ? _t(e2eTitle) : ""} alignment={tooltipAlignment} />;
+        tip = <Tooltip label={e2eTitle ? _t(e2eTitle) : ""} />;
     }
 
     if (onClick) {

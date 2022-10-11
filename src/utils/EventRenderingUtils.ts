@@ -23,7 +23,6 @@ import SettingsStore from "../settings/SettingsStore";
 import { haveRendererForEvent, JitsiEventFactory, JSONEventFactory, pickFactory } from "../events/EventTileFactory";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getMessageModerationState, isLocationEvent, MessageModerationState } from "./EventUtils";
-import { ElementCall } from "../models/Call";
 
 export function getEventDisplayInfo(mxEvent: MatrixEvent, showHiddenEvents: boolean, hideEvent?: boolean): {
     isInfoMessage: boolean;
@@ -62,8 +61,9 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent, showHiddenEvents: bool
         (eventType === EventType.RoomEncryption) ||
         (factory === JitsiEventFactory)
     );
-    const isLeftAlignedBubbleMessage = !isBubbleMessage && (
-        eventType === EventType.CallInvite || ElementCall.CALL_EVENT_TYPE.matches(eventType)
+    const isLeftAlignedBubbleMessage = (
+        !isBubbleMessage &&
+        eventType === EventType.CallInvite
     );
     let isInfoMessage = (
         !isBubbleMessage &&

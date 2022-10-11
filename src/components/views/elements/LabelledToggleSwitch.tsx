@@ -18,17 +18,12 @@ import React from "react";
 import classNames from "classnames";
 
 import ToggleSwitch from "./ToggleSwitch";
-import { Caption } from "../typography/Caption";
 
 interface IProps {
     // The value for the toggle switch
     value: boolean;
     // The translated label for the switch
     label: string;
-    // The translated caption for the switch
-    caption?: string;
-    // Tooltip to display
-    tooltip?: string;
     // Whether or not to disable the toggle switch
     disabled?: boolean;
     // True to put the toggle in front of the label
@@ -43,20 +38,13 @@ interface IProps {
 export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
     public render() {
         // This is a minimal version of a SettingsFlag
-        const { label, caption } = this.props;
-        let firstPart = <span className="mx_SettingsFlag_label">
-            { label }
-            { caption && <>
-                <br />
-                <Caption>{ caption }</Caption>
-            </> }
-        </span>;
+
+        let firstPart = <span className="mx_SettingsFlag_label">{ this.props.label }</span>;
         let secondPart = <ToggleSwitch
             checked={this.props.value}
             disabled={this.props.disabled}
             onChange={this.props.onChange}
-            title={this.props.label}
-            tooltip={this.props.tooltip}
+            aria-label={this.props.label}
         />;
 
         if (this.props.toggleInFront) {
@@ -69,7 +57,7 @@ export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
             "mx_SettingsFlag_toggleInFront": this.props.toggleInFront,
         });
         return (
-            <div data-testid={this.props["data-testid"]} className={classes}>
+            <div className={classes}>
                 { firstPart }
                 { secondPart }
             </div>

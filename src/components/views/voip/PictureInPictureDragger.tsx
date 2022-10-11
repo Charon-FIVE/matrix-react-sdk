@@ -201,7 +201,7 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
         };
 
         return (
-            <aside
+            <div
                 className={this.props.className}
                 style={style}
                 ref={this.callViewWrapper}
@@ -211,7 +211,7 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
                     onStartMoving: this.onStartMoving,
                     onResize: this.onResize,
                 }) }
-            </aside>
+            </div>
         );
     }
 }

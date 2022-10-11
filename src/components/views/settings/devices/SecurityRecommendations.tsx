@@ -23,13 +23,13 @@ import DeviceSecurityCard from './DeviceSecurityCard';
 import { filterDevicesBySecurityRecommendation, INACTIVE_DEVICE_AGE_DAYS } from './filter';
 import {
     DeviceSecurityVariation,
-    ExtendedDevice,
+    DeviceWithVerification,
     DevicesDictionary,
 } from './types';
 
 interface Props {
     devices: DevicesDictionary;
-    currentDeviceId: ExtendedDevice['device_id'];
+    currentDeviceId: DeviceWithVerification['device_id'];
     goToFilteredList: (filter: DeviceSecurityVariation) => void;
 }
 
@@ -38,7 +38,7 @@ const SecurityRecommendations: React.FC<Props> = ({
     currentDeviceId,
     goToFilteredList,
 }) => {
-    const devicesArray = Object.values<ExtendedDevice>(devices);
+    const devicesArray = Object.values<DeviceWithVerification>(devices);
 
     const unverifiedDevicesCount = filterDevicesBySecurityRecommendation(
         devicesArray,

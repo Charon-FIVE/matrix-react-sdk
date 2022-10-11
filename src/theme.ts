@@ -237,13 +237,13 @@ export async function setTheme(theme?: string): Promise<void> {
 
     // look for the stylesheet elements.
     // styleElements is a map from style name to HTMLLinkElement.
-    const styleElements = new Map<string, HTMLLinkElement>();
-    const themes = Array.from(document.querySelectorAll<HTMLLinkElement>('[data-mx-theme]'));
+    const styleElements = Object.create(null);
+    const themes = Array.from(document.querySelectorAll('[data-mx-theme]'));
     themes.forEach(theme => {
-        styleElements.set(theme.attributes['data-mx-theme'].value.toLowerCase(), theme);
+        styleElements[theme.attributes['data-mx-theme'].value.toLowerCase()] = theme;
     });
 
-    if (!styleElements.has(stylesheetName)) {
+    if (!(stylesheetName in styleElements)) {
         throw new Error("Unknown theme " + stylesheetName);
     }
 
@@ -258,18 +258,17 @@ export async function setTheme(theme?: string): Promise<void> {
     // having them interact badly... but this causes a flash of unstyled app
     // which is even uglier.  So we don't.
 
-    const styleSheet = styleElements.get(stylesheetName);
-    styleSheet.disabled = false;
+    styleElements[stylesheetName].disabled = false;
 
-    return new Promise(((resolve, reject) => {
+    return new Promise((resolve) => {
         const switchTheme = function() {
             // we re-enable our theme here just in case we raced with another
             // theme set request as per https://github.com/vector-im/element-web/issues/5601.
             // We could alternatively lock or similar to stop the race, but
             // this is probably good enough for now.
-            styleSheet.disabled = false;
-            styleElements.forEach(a => {
-                if (a == styleSheet) return;
+            styleElements[stylesheetName].disabled = false;
+            Object.values(styleElements).forEach((a: HTMLStyleElement) => {
+                if (a == styleElements[stylesheetName]) return;
                 a.disabled = true;
             });
             const bodyStyles = global.getComputedStyle(document.body);
@@ -280,50 +279,26 @@ export async function setTheme(theme?: string): Promise<void> {
             resolve();
         };
 
-        const isStyleSheetLoaded = () => Boolean(
-            [...document.styleSheets]
-                .find(_styleSheet => _styleSheet?.href === styleSheet.href),
-        );
+        // turns out that Firefox preloads the CSS for link elements with
+        // the disabled attribute, but Chrome doesn't.
 
-        function waitForStyleSheetLoading() {
-            // turns out that Firefox preloads the CSS for link elements with
-            // the disabled attribute, but Chrome doesn't.
-            if (isStyleSheetLoaded()) {
-                switchTheme();
-                return;
+        let cssLoaded = false;
+
+        styleElements[stylesheetName].onload = () => {
+            switchTheme();
+        };
+
+        for (let i = 0; i < document.styleSheets.length; i++) {
+            const ss = document.styleSheets[i];
+            if (ss && ss.href === styleElements[stylesheetName].href) {
+                cssLoaded = true;
+                break;
             }
-
-            let counter = 0;
-
-            // In case of theme toggling (white => black => white)
-            // Chrome doesn't fire the `load` event when the white theme is selected the second times
-            const intervalId = setInterval(() => {
-                if (isStyleSheetLoaded()) {
-                    clearInterval(intervalId);
-                    styleSheet.onload = undefined;
-                    styleSheet.onerror = undefined;
-                    switchTheme();
-                }
-
-                // Avoid to be stuck in an endless loop if there is an issue in the stylesheet loading
-                counter++;
-                if (counter === 10) {
-                    clearInterval(intervalId);
-                    reject();
-                }
-            }, 200);
-
-            styleSheet.onload = () => {
-                clearInterval(intervalId);
-                switchTheme();
-            };
-
-            styleSheet.onerror = (e) => {
-                clearInterval(intervalId);
-                reject(e);
-            };
         }
 
-        waitForStyleSheetLoading();
-    }));
+        if (cssLoaded) {
+            styleElements[stylesheetName].onload = undefined;
+            switchTheme();
+        }
+    });
 }

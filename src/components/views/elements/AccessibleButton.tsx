@@ -26,10 +26,10 @@ type AccessibleButtonKind = | 'primary'
     | 'primary_outline'
     | 'primary_sm'
     | 'secondary'
-    | 'content_inline'
     | 'danger'
     | 'danger_outline'
     | 'danger_sm'
+    | 'danger_inline'
     | 'link'
     | 'link_inline'
     | 'link_sm'
@@ -71,7 +71,7 @@ type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> 
     disabled?: boolean;
     className?: string;
     triggerOnMouseDown?: boolean;
-    onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
+    onClick(e?: ButtonEvent): void | Promise<void>;
 };
 
 interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
@@ -105,9 +105,9 @@ export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>(
         newProps["disabled"] = true;
     } else {
         if (triggerOnMouseDown) {
-            newProps.onMouseDown = onClick ?? undefined;
+            newProps.onMouseDown = onClick;
         } else {
-            newProps.onClick = onClick ?? undefined;
+            newProps.onClick = onClick;
         }
         // We need to consume enter onKeyDown and space onKeyUp
         // otherwise we are risking also activating other keyboard focusable elements
@@ -123,7 +123,7 @@ export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>(
                 case KeyBindingAction.Enter:
                     e.stopPropagation();
                     e.preventDefault();
-                    return onClick?.(e);
+                    return onClick(e);
                 case KeyBindingAction.Space:
                     e.stopPropagation();
                     e.preventDefault();
@@ -143,7 +143,7 @@ export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>(
                 case KeyBindingAction.Space:
                     e.stopPropagation();
                     e.preventDefault();
-                    return onClick?.(e);
+                    return onClick(e);
                 default:
                     onKeyUp?.(e);
                     break;
