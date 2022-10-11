@@ -1,5 +1,5 @@
 /*
-Copyright 2015-2021 The Matrix.org Foundation C.I.C.
+Copyright 2015-2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,7 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
+/**
+ * 入口
+ * 后续改动可能不较大,所以在原有的基础上更改
+ */
 import React, { ComponentType, createRef } from 'react';
 import {
     ClientEvent,
@@ -100,7 +103,7 @@ import RoomDirectory from './RoomDirectory';
 import KeySignatureUploadFailedDialog from "../views/dialogs/KeySignatureUploadFailedDialog";
 import IncomingSasDialog from "../views/dialogs/IncomingSasDialog";
 import CompleteSecurity from "./auth/CompleteSecurity";
-import Welcome from "../views/auth/Welcome";
+import QRCodePage from "../views/auth/QRCodePage";
 import ForgotPassword from "./auth/ForgotPassword";
 import E2eSetup from "./auth/E2eSetup";
 import Registration from './auth/Registration';
@@ -188,8 +191,6 @@ interface IState {
     currentRoomId?: string;
     // If we're trying to just view a user ID (i.e. /user URL), this is it
     currentUserId?: string;
-    // Group ID for legacy "communities don't exist" page
-    currentGroupId?: string;
     // this is persisted as mx_lhs_size, loaded in LoggedInView
     collapseLhs: boolean;
     // Parameters used in the registration dance with the IS
@@ -679,9 +680,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             }
-            case 'view_legacy_group':
-                this.viewLegacyGroup(payload.groupId);
-                break;
             case Action.ViewUserSettings: {
                 const tabPayload = payload as OpenToTabPayload;
                 Modal.createDialog(UserSettingsDialog,
@@ -1021,16 +1019,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             this.setState({ currentUserId: userId });
             this.setPage(PageType.UserView);
         });
-    }
-
-    private viewLegacyGroup(groupId: string) {
-        this.setStateForNewView({
-            view: Views.LOGGED_IN,
-            currentRoomId: null,
-            currentGroupId: groupId,
-        });
-        this.notifyNewScreen('group/' + groupId);
-        this.setPage(PageType.LegacyGroupView);
     }
 
     private async createRoom(defaultPublic = false, defaultName?: string, type?: RoomType) {
@@ -1803,12 +1791,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 userId: userId,
                 subAction: params.action,
             });
-        } else if (screen.indexOf('group/') === 0) {
-            const groupId = screen.substring(6);
-            dis.dispatch({
-                action: 'view_legacy_group',
-                groupId: groupId,
-            });
         } else {
             logger.info("Ignoring showScreen for '%s'", screen);
         }
@@ -2036,7 +2018,16 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 );
             }
         } else if (this.state.view === Views.WELCOME) {
-            view = <Welcome />;
+            view = <QRCodePage 
+                    isSyncing={this.state.pendingInitialSync}
+                    onLoggedIn={this.onUserCompletedLoginFlow}
+                    fallbackHsUrl={this.getFallbackHsUrl()}
+                    defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
+                    onServerConfigChange={this.onServerConfigChange}
+                    fragmentAfterLogin={fragmentAfterLogin}
+                    defaultUsername={this.props.startingFragmentQueryParams.defaultUsername as string}
+                    {...this.getServerProperties()}
+              />;
         } else if (this.state.view === Views.REGISTER && SettingsStore.getValue(UIFeature.Registration)) {
             const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
             view = (
