@@ -13,10 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-/**
- * 入口
- * 后续改动可能不较大,所以在原有的基础上更改
- */
+
 import React, { ComponentType, createRef } from 'react';
 import {
     ClientEvent,
@@ -103,7 +100,7 @@ import RoomDirectory from './RoomDirectory';
 import KeySignatureUploadFailedDialog from "../views/dialogs/KeySignatureUploadFailedDialog";
 import IncomingSasDialog from "../views/dialogs/IncomingSasDialog";
 import CompleteSecurity from "./auth/CompleteSecurity";
-import QRCodePage from "../views/auth/QRCodePage";
+import Welcome from "../views/auth/Welcome";
 import ForgotPassword from "./auth/ForgotPassword";
 import E2eSetup from "./auth/E2eSetup";
 import Registration from './auth/Registration';
@@ -2018,16 +2015,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 );
             }
         } else if (this.state.view === Views.WELCOME) {
-            view = <QRCodePage 
-                    isSyncing={this.state.pendingInitialSync}
-                    onLoggedIn={this.onUserCompletedLoginFlow}
-                    fallbackHsUrl={this.getFallbackHsUrl()}
-                    defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
-                    onServerConfigChange={this.onServerConfigChange}
-                    fragmentAfterLogin={fragmentAfterLogin}
-                    defaultUsername={this.props.startingFragmentQueryParams.defaultUsername as string}
-                    {...this.getServerProperties()}
-              />;
+            view = <Welcome />;
         } else if (this.state.view === Views.REGISTER && SettingsStore.getValue(UIFeature.Registration)) {
             const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
             view = (
