@@ -18,7 +18,6 @@ limitations under the License.
 import React from 'react';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixError } from 'matrix-js-sdk/src/matrix';
 
 import * as Email from '../../../email';
 import { looksValid as phoneNumberLooksValid } from '../../../phonenumber';
@@ -49,7 +48,6 @@ enum UsernameAvailableStatus {
     Available,
     Unavailable,
     Error,
-    Invalid,
 }
 
 export const PASSWORD_MIN_SCORE = 3; // safely unguessable: moderate protection from offline slow-hash scenario.
@@ -365,9 +363,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 const available = await this.props.matrixClient.isUsernameAvailable(value);
                 return available ? UsernameAvailableStatus.Available : UsernameAvailableStatus.Unavailable;
             } catch (err) {
-                if (err instanceof MatrixError && err.errcode === "M_INVALID_USERNAME") {
-                    return UsernameAvailableStatus.Invalid;
-                }
                 return UsernameAvailableStatus.Error;
             }
         },
@@ -379,8 +374,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             },
             {
                 key: "safeLocalpart",
-                test: ({ value }, usernameAvailable) => (!value || SAFE_LOCALPART_REGEX.test(value))
-                    && usernameAvailable !== UsernameAvailableStatus.Invalid,
+                test: ({ value }) => !value || SAFE_LOCALPART_REGEX.test(value),
                 invalid: () => _t("Some characters not allowed"),
             },
             {

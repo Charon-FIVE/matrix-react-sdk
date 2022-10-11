@@ -45,7 +45,7 @@ interface IProps {
     haveRecording: boolean;
     isMenuOpen: boolean;
     isStickerPickerOpen: boolean;
-    menuPosition?: AboveLeftOf;
+    menuPosition: AboveLeftOf;
     onRecordStartEndClick: () => void;
     relation?: IEventRelation;
     setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
@@ -53,8 +53,6 @@ interface IProps {
     showPollsButton: boolean;
     showStickersButton: boolean;
     toggleButtonMenu: () => void;
-    showVoiceBroadcastButton: boolean;
-    onStartVoiceBroadcastClick: () => void;
 }
 
 type OverflowMenuCloser = () => void;
@@ -78,8 +76,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             uploadButton(), // props passed via UploadButtonContext
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            startVoiceBroadcastButton(props),
-            props.showPollsButton ? pollButton(room, props.relation) : null,
+            props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     } else {
@@ -90,8 +87,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         moreButtons = [
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            startVoiceBroadcastButton(props),
-            props.showPollsButton ? pollButton(room, props.relation) : null,
+            props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     }
@@ -269,7 +265,7 @@ const UploadButton = () => {
     />;
 };
 
-function showStickersButton(props: IProps): ReactElement | null {
+function showStickersButton(props: IProps): ReactElement {
     return (
         props.showStickersButton
             ? <CollapsibleButton
@@ -284,21 +280,7 @@ function showStickersButton(props: IProps): ReactElement | null {
     );
 }
 
-const startVoiceBroadcastButton: React.FC<IProps> = (props: IProps): ReactElement | null => {
-    return (
-        props.showVoiceBroadcastButton
-            ? <CollapsibleButton
-                key="start_voice_broadcast"
-                className="mx_MessageComposer_button"
-                iconClassName="mx_MessageComposer_voiceBroadcast"
-                onClick={props.onStartVoiceBroadcastClick}
-                title={_t("Voice broadcast")}
-            />
-            : null
-    );
-};
-
-function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement | null {
+function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement {
     // XXX: recording UI does not work well in narrow mode, so hide for now
     return (
         narrow
@@ -330,7 +312,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         this.context?.(); // close overflow menu
         const canSend = this.props.room.currentState.maySendEvent(
             M_POLL_START.name,
-            MatrixClientPeg.get().getUserId()!,
+            MatrixClientPeg.get().getUserId(),
         );
         if (!canSend) {
             Modal.createDialog(
@@ -380,16 +362,14 @@ function showLocationButton(
     room: Room,
     roomId: string,
     matrixClient: MatrixClient,
-): ReactElement | null {
-    const sender = room.getMember(matrixClient.getUserId()!);
-
+): ReactElement {
     return (
-        props.showLocationButton && sender
+        props.showLocationButton
             ? <LocationButton
                 key="location"
                 roomId={roomId}
                 relation={props.relation}
-                sender={sender}
+                sender={room.getMember(matrixClient.getUserId())}
                 menuPosition={props.menuPosition}
             />
             : null

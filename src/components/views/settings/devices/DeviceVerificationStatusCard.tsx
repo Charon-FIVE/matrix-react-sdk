@@ -17,7 +17,6 @@ limitations under the License.
 import React from 'react';
 
 import { _t } from '../../../../languageHandler';
-import AccessibleButton from '../../elements/AccessibleButton';
 import DeviceSecurityCard from './DeviceSecurityCard';
 import {
     DeviceSecurityVariation,
@@ -26,14 +25,12 @@ import {
 
 interface Props {
     device: DeviceWithVerification;
-    onVerifyDevice?: () => void;
 }
 
 export const DeviceVerificationStatusCard: React.FC<Props> = ({
     device,
-    onVerifyDevice,
 }) => {
-    const securityCardProps = device.isVerified ? {
+    const securityCardProps = device?.isVerified ? {
         variation: DeviceSecurityVariation.Verified,
         heading: _t('Verified session'),
         description: _t('This session is ready for secure messaging.'),
@@ -44,15 +41,5 @@ export const DeviceVerificationStatusCard: React.FC<Props> = ({
     };
     return <DeviceSecurityCard
         {...securityCardProps}
-    >
-        { !device.isVerified && !!onVerifyDevice &&
-            <AccessibleButton
-                kind='primary'
-                onClick={onVerifyDevice}
-                data-testid={`verification-status-button-${device.device_id}`}
-            >
-                { _t('Verify session') }
-            </AccessibleButton>
-        }
-    </DeviceSecurityCard>;
+    />;
 };

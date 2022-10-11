@@ -28,19 +28,10 @@ import { DeviceWithVerification } from './types';
 interface Props {
     device?: DeviceWithVerification;
     isLoading: boolean;
-    isSigningOut: boolean;
-    onVerifyCurrentDevice: () => void;
-    onSignOutCurrentDevice: () => void;
-    saveDeviceName: (deviceName: string) => Promise<void>;
 }
 
 const CurrentDeviceSection: React.FC<Props> = ({
-    device,
-    isLoading,
-    isSigningOut,
-    onVerifyCurrentDevice,
-    onSignOutCurrentDevice,
-    saveDeviceName,
+    device, isLoading,
 }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -48,8 +39,7 @@ const CurrentDeviceSection: React.FC<Props> = ({
         heading={_t('Current session')}
         data-testid='current-session-section'
     >
-        { /* only show big spinner on first load */ }
-        { isLoading && !device && <Spinner /> }
+        { isLoading && <Spinner /> }
         { !!device && <>
             <DeviceTile
                 device={device}
@@ -60,17 +50,9 @@ const CurrentDeviceSection: React.FC<Props> = ({
                     onClick={() => setIsExpanded(!isExpanded)}
                 />
             </DeviceTile>
-            { isExpanded &&
-                <DeviceDetails
-                    device={device}
-                    isSigningOut={isSigningOut}
-                    onVerifyDevice={onVerifyCurrentDevice}
-                    onSignOutDevice={onSignOutCurrentDevice}
-                    saveDeviceName={saveDeviceName}
-                />
-            }
+            { isExpanded && <DeviceDetails device={device} /> }
             <br />
-            <DeviceVerificationStatusCard device={device} onVerifyDevice={onVerifyCurrentDevice} />
+            <DeviceVerificationStatusCard device={device} />
         </>
         }
     </SettingsSubsection>;

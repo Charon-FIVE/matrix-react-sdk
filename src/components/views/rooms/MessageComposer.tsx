@@ -37,7 +37,7 @@ import ReplyPreview from "./ReplyPreview";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
 import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
-import { RecordingState } from "../../../audio/VoiceRecording";
+import { RecordingState, VoiceRecording } from "../../../audio/VoiceRecording";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { E2EStatus } from '../../../utils/ShieldUtils';
@@ -52,13 +52,6 @@ import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
-import { Features } from '../../../settings/Settings';
-import { VoiceMessageRecording } from '../../../audio/VoiceMessageRecording';
-import {
-    VoiceBroadcastInfoEventContent,
-    VoiceBroadcastInfoEventType,
-    VoiceBroadcastInfoState,
-} from '../../../voice-broadcast';
 
 let instanceCount = 0;
 
@@ -85,7 +78,6 @@ interface IProps {
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
     compact?: boolean;
-    showVoiceBroadcastButton?: boolean;
 }
 
 interface IState {
@@ -97,24 +89,22 @@ interface IState {
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
     showPollsButton: boolean;
-    showVoiceBroadcastButton: boolean;
 }
 
 export default class MessageComposer extends React.Component<IProps, IState> {
-    private dispatcherRef?: string;
+    private dispatcherRef: string;
     private messageComposerInput = createRef<SendMessageComposerClass>();
     private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private instanceId: number;
 
-    private _voiceRecording: Optional<VoiceMessageRecording>;
+    private _voiceRecording: Optional<VoiceRecording>;
 
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
     public static defaultProps = {
         compact: false,
-        showVoiceBroadcastButton: false,
     };
 
     public constructor(props: IProps) {
@@ -124,26 +114,24 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         this.state = {
             isComposerEmpty: true,
             haveRecording: false,
-            recordingTimeLeftSeconds: undefined, // when set to a number, shows a toast
+            recordingTimeLeftSeconds: null, // when set to a number, shows a toast
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
             showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
-            showVoiceBroadcastButton: SettingsStore.getValue(Features.VoiceBroadcast),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
         SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
-        SettingsStore.monitorSetting(Features.VoiceBroadcast, null);
     }
 
-    private get voiceRecording(): Optional<VoiceMessageRecording> {
+    private get voiceRecording(): Optional<VoiceRecording> {
         return this._voiceRecording;
     }
 
-    private set voiceRecording(rec: Optional<VoiceMessageRecording>) {
+    private set voiceRecording(rec: Optional<VoiceRecording>) {
         if (this._voiceRecording) {
             this._voiceRecording.off(RecordingState.Started, this.onRecordingStarted);
             this._voiceRecording.off(RecordingState.EndingSoon, this.onRecordingEndingSoon);
@@ -165,7 +153,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
         this.waitForOwnMember();
-        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current!);
+        UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current);
         UIStore.instance.on(`MessageComposer${this.instanceId}`, this.onResize);
         this.updateRecordingState(); // grab any cached recordings
     }
@@ -211,19 +199,13 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         }
                         break;
                     }
-                    case Features.VoiceBroadcast: {
-                        if (this.state.showVoiceBroadcastButton !== settingUpdatedPayload.newValue) {
-                            this.setState({ showVoiceBroadcastButton: !!settingUpdatedPayload.newValue });
-                        }
-                        break;
-                    }
                 }
             }
         }
     };
 
     private waitForOwnMember() {
-        // If we have the member already, do that
+        // if we have the member already, do that
         const me = this.props.room.getMember(MatrixClientPeg.get().getUserId());
         if (me) {
             this.setState({ me });
@@ -260,7 +242,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         const viaServers = [this.context.tombstone.getSender().split(':').slice(1).join(':')];
-
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             highlighted: true,
@@ -376,10 +357,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return this.state.showStickersButton && !isLocalRoom(this.props.room);
     }
 
-    private get showVoiceBroadcastButton(): boolean {
-        return this.props.showVoiceBroadcastButton && this.state.showVoiceBroadcastButton;
-    }
-
     public render() {
         const controls = [
             this.props.e2eStatus ?
@@ -449,8 +426,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         }
 
         let recordingTooltip;
-        if (this.state.recordingTimeLeftSeconds) {
-            const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
+        const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
+        if (secondsLeft) {
             recordingTooltip = <Tooltip
                 label={_t("%(seconds)ss left", { seconds: secondsLeft })}
                 alignment={Alignment.Top}
@@ -507,20 +484,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
-                            showVoiceBroadcastButton={this.showVoiceBroadcastButton}
-                            onStartVoiceBroadcastClick={async () => {
-                                const client = MatrixClientPeg.get();
-                                client.sendStateEvent(
-                                    this.props.room.roomId,
-                                    VoiceBroadcastInfoEventType,
-                                    {
-                                        state: VoiceBroadcastInfoState.Started,
-                                        chunk_length: 300,
-                                    } as VoiceBroadcastInfoEventContent,
-                                    client.getUserId(),
-                                );
-                                this.toggleButtonMenu();
-                            }}
                         /> }
                         { showSendButton && (
                             <SendButton

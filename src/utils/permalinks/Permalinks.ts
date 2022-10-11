@@ -180,7 +180,7 @@ export class RoomPermalinkCreator {
         if (plEvent) {
             const content = plEvent.getContent();
             if (content) {
-                const users: Record<string, number> = content.users;
+                const users = content.users;
                 if (users) {
                     const entries = Object.entries(users);
                     const allowedEntries = entries.filter(([userId]) => {
@@ -189,11 +189,9 @@ export class RoomPermalinkCreator {
                             return false;
                         }
                         const serverName = getServerName(userId);
-
-                        const domain = getHostnameFromMatrixServerName(serverName) ?? serverName;
-                        return !isHostnameIpAddress(domain) &&
-                            !isHostInRegex(domain, this.bannedHostsRegexps) &&
-                            isHostInRegex(domain, this.allowedHostsRegexps);
+                        return !isHostnameIpAddress(serverName) &&
+                            !isHostInRegex(serverName, this.bannedHostsRegexps) &&
+                            isHostInRegex(serverName, this.allowedHostsRegexps);
                     });
                     const maxEntry = allowedEntries.reduce((max, entry) => {
                         return (entry[1] > max[1]) ? entry : max;
@@ -252,15 +250,14 @@ export class RoomPermalinkCreator {
             .sort((a, b) => this.populationMap[b] - this.populationMap[a]);
 
         for (let i = 0; i < serversByPopulation.length && candidates.size < MAX_SERVER_CANDIDATES; i++) {
-            const serverName = serversByPopulation[i];
-            const domain = getHostnameFromMatrixServerName(serverName) ?? "";
+            const server = serversByPopulation[i];
             if (
-                !candidates.has(serverName) &&
-                !isHostnameIpAddress(domain) &&
-                !isHostInRegex(domain, this.bannedHostsRegexps) &&
-                isHostInRegex(domain, this.allowedHostsRegexps)
+                !candidates.has(server) &&
+                !isHostnameIpAddress(server) &&
+                !isHostInRegex(server, this.bannedHostsRegexps) &&
+                isHostInRegex(server, this.allowedHostsRegexps)
             ) {
-                candidates.add(serverName);
+                candidates.add(server);
             }
         }
 
@@ -444,21 +441,17 @@ export function parsePermalink(fullUrl: string): PermalinkParts {
     return null; // not a permalink we can handle
 }
 
-export function getServerName(userId: string): string {
+function getServerName(userId: string): string {
     return userId.split(":").splice(1).join(":");
 }
 
-export function getHostnameFromMatrixServerName(serverName: string): string | null {
-    if (!serverName) return null;
-    try {
-        return new URL(`https://${serverName}`).hostname;
-    } catch (e) {
-        console.error("Error encountered while extracting hostname from server name", e);
-        return null;
-    }
+function getHostnameFromMatrixDomain(domain: string): string {
+    if (!domain) return null;
+    return new URL(`https://${domain}`).hostname;
 }
 
 function isHostInRegex(hostname: string, regexps: RegExp[]): boolean {
+    hostname = getHostnameFromMatrixDomain(hostname);
     if (!hostname) return true; // assumed
     if (regexps.length > 0 && !regexps[0].test) throw new Error(regexps[0].toString());
 
@@ -466,6 +459,7 @@ function isHostInRegex(hostname: string, regexps: RegExp[]): boolean {
 }
 
 function isHostnameIpAddress(hostname: string): boolean {
+    hostname = getHostnameFromMatrixDomain(hostname);
     if (!hostname) return false;
 
     // is-ip doesn't want IPv6 addresses surrounded by brackets, so

@@ -395,10 +395,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                             />
                         </div>
                         <span className="mx_AccessSecretStorageDialog_recoveryKeyEntry_entryControlSeparatorText">
-                            { _t("%(securityKey)s or %(recoveryFile)s", {
-                                recoveryFile: "",
-                                securityKey: "",
-                            }) }
+                            { _t("or") }
                         </span>
                         <div>
                             <input type="file"

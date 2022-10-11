@@ -22,12 +22,12 @@ import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
-import { createVoiceMessageRecording, VoiceMessageRecording } from "../audio/VoiceMessageRecording";
+import { VoiceRecording } from "../audio/VoiceRecording";
 
 const SEPARATOR = "|";
 
 interface IState {
-    [voiceRecordingId: string]: Optional<VoiceMessageRecording>;
+    [voiceRecordingId: string]: Optional<VoiceRecording>;
 }
 
 export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
@@ -63,7 +63,7 @@ export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
      * @param {string} voiceRecordingId The room ID (with optionally the thread ID if in one) to get the recording in.
      * @returns {Optional<VoiceRecording>} The recording, if any.
      */
-    public getActiveRecording(voiceRecordingId: string): Optional<VoiceMessageRecording> {
+    public getActiveRecording(voiceRecordingId: string): Optional<VoiceRecording> {
         return this.state[voiceRecordingId];
     }
 
@@ -74,12 +74,12 @@ export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
      * @param {string} voiceRecordingId The room ID (with optionally the thread ID if in one) to start recording in.
      * @returns {VoiceRecording} The recording.
      */
-    public startRecording(voiceRecordingId: string): VoiceMessageRecording {
+    public startRecording(voiceRecordingId: string): VoiceRecording {
         if (!this.matrixClient) throw new Error("Cannot start a recording without a MatrixClient");
         if (!voiceRecordingId) throw new Error("Recording must be associated with a room");
         if (this.state[voiceRecordingId]) throw new Error("A recording is already in progress");
 
-        const recording = createVoiceMessageRecording(this.matrixClient);
+        const recording = new VoiceRecording(this.matrixClient);
 
         // noinspection JSIgnoredPromiseFromCall - we can safely run this async
         this.updateState({ ...this.state, [voiceRecordingId]: recording });

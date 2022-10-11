@@ -103,7 +103,7 @@ export class ModalManager {
     }
 
     public createDialog<T extends any[]>(
-        Element: React.ComponentType<any>,
+        Element: React.ComponentType,
         ...rest: ParametersWithoutFirst<ModalManager["createDialogAsync"]>
     ) {
         return this.createDialogAsync<T>(Promise.resolve(Element), ...rest);

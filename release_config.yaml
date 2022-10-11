@@ -1,4 +1,0 @@
-subprojects:
-    matrix-js-sdk:
-        includeByDefault: false
-

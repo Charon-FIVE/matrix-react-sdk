@@ -35,7 +35,6 @@ interface IState {
     headerKind: HeaderKind;
     phase: RightPanelPhases;
     threadNotificationColor: NotificationColor;
-    globalNotificationColor: NotificationColor;
 }
 
 interface IProps {}
@@ -52,7 +51,6 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
             headerKind: kind,
             phase: rps.currentCard.phase,
             threadNotificationColor: NotificationColor.None,
-            globalNotificationColor: NotificationColor.None,
         };
     }
 
