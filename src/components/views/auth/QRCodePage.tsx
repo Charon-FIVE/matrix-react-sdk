@@ -16,14 +16,14 @@ limitations under the License.
 
 import React from 'react';
 import {createClient} from 'matrix-js-sdk/src/matrix';
-import SdkConfig from '../../../SdkConfig';
-import AuthPage from "./AuthPage";
-import { _td } from "../../../languageHandler";
-import { _t } from "../../../languageHandler";
-import { IMatrixClientCreds } from '../../../../src/MatrixClientPeg';
+import SdkConfig from 'matrix-react-sdk/src/SdkConfig';
+import AuthPage from "matrix-react-sdk/src/components/views/auth/AuthPage";
+import { _td } from "matrix-react-sdk/src/languageHandler";
+import { _t } from "matrix-react-sdk/src/languageHandler";
+import { IMatrixClientCreds } from 'matrix-react-sdk/src/MatrixClientPeg';
 import { ToDeviceChannel } from "matrix-js-sdk/src/crypto/verification/request/ToDeviceChannel";
 import CryptoJS from 'crypto-js';
-import { ValidatedServerConfig } from '../../../../src/utils/ValidatedServerConfig';
+import { ValidatedServerConfig } from 'matrix-react-sdk/src/utils/ValidatedServerConfig';
 import QRCode from 'qrcode-react';
 //import DeviceInfo from 'react-native-device-info';
 
@@ -36,7 +36,7 @@ interface IProps {
     // - The user's password, if applicable, (may be cached in memory for a
     //   short time so the user is not required to re-enter their password
     //   for operations like uploading cross-signing keys).
-    onLoggedIn(data: IMatrixClientCreds): void;
+    onLoggedIn(data: IMatrixClientCreds, password?: string): void;
     onServerConfigChange(config: ValidatedServerConfig): void;
     isSyncing?: boolean;
     defaultUsername?: string;
@@ -48,7 +48,7 @@ interface IState {
     isPolling:boolean;
     invalid:boolean;
 }
-export default class QRCode extends React.PureComponent<IProps,IState> {
+export default class QRCodePage extends React.PureComponent<IProps,IState> {
     private timer;
     private transactionId:string = "";
     private loginTime;
@@ -306,7 +306,7 @@ export default class QRCode extends React.PureComponent<IProps,IState> {
             pageUrl = pagesConfig.welcomeUrl;
         }
         if (!pageUrl) {
-            pageUrl = 'welcome.html';
+            pageUrl = 'qrcode.html';
         }
         let qrBlockDialog
         if(!this.state.invalid){
@@ -332,7 +332,7 @@ export default class QRCode extends React.PureComponent<IProps,IState> {
 
         return (
             <AuthPage>
-                <div className="mx_Welcome">
+                <div className="mx_QRCode">
                 <p className="mx_welcome_title">{"TalkTalk客户端只支持手机端扫码登录"}</p> 
                 <div className="mx_welcome_content">
                     <div className="mx_welcome_content_left">
