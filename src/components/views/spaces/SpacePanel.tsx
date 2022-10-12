@@ -349,7 +349,7 @@ const SpacePanel = () => {
                         onKeyDown={onKeyDownHandler}
                         ref={ref}
                     >
-                        <UserMenu isPanelCollapsed={isPanelCollapsed}>
+                        {/* <UserMenu isPanelCollapsed={isPanelCollapsed}>
                             <AccessibleTooltipButton
                                 className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
                                 onClick={() => setPanelCollapsed(!isPanelCollapsed)}
@@ -367,7 +367,7 @@ const SpacePanel = () => {
                                     </div>
                                 </div>}
                             />
-                        </UserMenu>
+                        </UserMenu> */}
                         <Droppable droppableId="top-level-spaces">
                             { (provided, snapshot) => (
                                 <InnerSpacePanel
@@ -382,7 +382,7 @@ const SpacePanel = () => {
                             ) }
                         </Droppable>
 
-                        <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
+                        {/* <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> */}
                     </div>
                 ) }
             </RovingTabIndexProvider>

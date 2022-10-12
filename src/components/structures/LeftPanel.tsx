@@ -40,13 +40,15 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import IndicatorScrollbar from "./IndicatorScrollbar";
 import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
 import SettingsStore from "../../settings/SettingsStore";
-import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import { ALTERNATE_KEY_NAME, KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
 import PosthogTrackers from "../../PosthogTrackers";
 import PageType from "../../PageTypes";
 import { UserOnboardingButton } from "../views/user-onboarding/UserOnboardingButton";
+import UserMenu from "../../components/structures/UserMenu";
+import { IS_MAC,Key } from "matrix-react-sdk/src/Keyboard";
 
 interface IProps {
     isMinimized: boolean;
@@ -386,6 +388,27 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         return (
             <div className={containerClasses}>
                 <div className="mx_LeftPanel_roomListContainer">
+                    <div className="mx_LeftPanel_UserMenu">
+                        { <UserMenu  isPanelCollapsed={false}>
+                                <AccessibleTooltipButton
+                                    className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !false })}
+                                    title={false ? _t("Expand") : _t("Collapse")}
+                                    onClick={null}
+                                    tooltip={<div>
+                                        <div className="mx_Tooltip_title">
+                                            { false ? _t("Expand") : _t("Collapse") }
+                                        </div>
+                                        <div className="mx_Tooltip_sub">
+                                            { IS_MAC
+                                                ? "⌘ + ⇧ + D"
+                                                : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) + " + " +
+                                                _t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + D"
+                                            }
+                                        </div>
+                                    </div>}
+                                />
+                            </UserMenu>}
+                        </div>
                     { this.renderSearchDialExplore() }
                     { this.renderBreadcrumbs() }
                     { !this.props.isMinimized && (
