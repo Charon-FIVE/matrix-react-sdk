@@ -137,6 +137,7 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { UseCaseSelection } from '../views/elements/UseCaseSelection';
 import { ValidatedServerConfig } from '../../utils/ValidatedServerConfig';
 import { isLocalRoom } from '../../utils/localRoom/isLocalRoom';
+import QRCodePage from 'matrix-react-sdk/src/components/views/auth/QRCodePage';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -2036,7 +2037,16 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 );
             }
         } else if (this.state.view === Views.WELCOME) {
-            view = <Welcome />;
+            //view = <Welcome />;
+            view = <QRCodePage 
+                onLoggedIn={this.onUserCompletedLoginFlow}
+                fragmentAfterLogin={fragmentAfterLogin}
+                isSyncing={this.state.pendingInitialSync}
+                onServerConfigChange={this.onServerConfigChange}
+                defaultUsername={this.props.startingFragmentQueryParams.defaultUsername as string}
+                {...this.getServerProperties()}
+            />;
+
         } else if (this.state.view === Views.REGISTER && SettingsStore.getValue(UIFeature.Registration)) {
             const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
             view = (
