@@ -42,7 +42,6 @@ import { RightPanelPhases } from "../../../src/stores/right-panel/RightPanelStor
 import { LocalRoom, LocalRoomState } from "../../../src/models/LocalRoom";
 import { DirectoryMember } from "../../../src/utils/direct-messages";
 import { createDmLocalRoom } from "../../../src/utils/dm/createDmLocalRoom";
-import { UPDATE_EVENT } from "../../../src/stores/AsyncStore";
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
@@ -75,13 +74,12 @@ describe("RoomView", () => {
     const mountRoomView = async (): Promise<ReactWrapper> => {
         if (RoomViewStore.instance.getRoomId() !== room.roomId) {
             const switchedRoom = new Promise<void>(resolve => {
-                const subFn = () => {
+                const subscription = RoomViewStore.instance.addListener(() => {
                     if (RoomViewStore.instance.getRoomId()) {
-                        RoomViewStore.instance.off(UPDATE_EVENT, subFn);
+                        subscription.remove();
                         resolve();
                     }
-                };
-                RoomViewStore.instance.on(UPDATE_EVENT, subFn);
+                });
             });
 
             defaultDispatcher.dispatch<ViewRoomPayload>({

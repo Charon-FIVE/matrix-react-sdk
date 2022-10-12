@@ -33,6 +33,7 @@ import Measured from '../views/elements/Measured';
 import PosthogTrackers from "../../PosthogTrackers";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import { BetaPill } from '../views/beta/BetaCard';
+import SdkConfig from '../../SdkConfig';
 import Modal from '../../Modal';
 import BetaFeedbackDialog from '../views/dialogs/BetaFeedbackDialog';
 import { Action } from '../../dispatcher/actions';
@@ -40,7 +41,6 @@ import { UserTab } from '../views/dialogs/UserTab';
 import dis from '../../dispatcher/dispatcher';
 import Spinner from "../views/elements/Spinner";
 import Heading from '../views/typography/Heading';
-import { shouldShowFeedback } from "../../utils/Feedback";
 
 interface IProps {
     roomId: string;
@@ -234,7 +234,7 @@ const ThreadPanel: React.FC<IProps> = ({
         }
     }, [timelineSet, timelinePanel]);
 
-    const openFeedback = shouldShowFeedback() ? () => {
+    const openFeedback = SdkConfig.get().bug_report_endpoint_url ? () => {
         Modal.createDialog(BetaFeedbackDialog, {
             featureId: "feature_thread",
         });
@@ -282,10 +282,10 @@ const ThreadPanel: React.FC<IProps> = ({
                     ? <TimelinePanel
                         key={timelineSet.getFilter()?.filterId ?? (roomId + ":" + filterOption)}
                         ref={timelinePanel}
-                        showReadReceipts={false} // No RR support in thread's list
-                        manageReadReceipts={false} // No RR support in thread's list
-                        manageReadMarkers={false} // No RM support in thread's list
-                        sendReadReceiptOnLoad={false} // No RR support in thread's list
+                        showReadReceipts={false} // No RR support in thread's MVP
+                        manageReadReceipts={false} // No RR support in thread's MVP
+                        manageReadMarkers={false} // No RM support in thread's MVP
+                        sendReadReceiptOnLoad={false} // No RR support in thread's MVP
                         timelineSet={timelineSet}
                         showUrlPreview={false} // No URL previews at the threads list level
                         empty={<EmptyThread

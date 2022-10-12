@@ -23,7 +23,6 @@ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import { useRoomState } from "../../../hooks/useRoomState";
-import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { useRoomMemberCount, useMyRoomMembership } from "../../../hooks/useRoomMembers";
 import AccessibleButton from "../elements/AccessibleButton";
 
@@ -45,12 +44,9 @@ const RoomInfoLine: FC<IProps> = ({ room }) => {
     const membership = useMyRoomMembership(room);
     const memberCount = useRoomMemberCount(room);
 
-    const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
-    const isVideoRoom = room.isElementVideoRoom() || (elementCallVideoRoomsEnabled && room.isCallRoom());
-
     let iconClass: string;
     let roomType: string;
-    if (isVideoRoom) {
+    if (room.isElementVideoRoom()) {
         iconClass = "mx_RoomInfoLine_video";
         roomType = _t("Video room");
     } else if (joinRule === JoinRule.Public) {

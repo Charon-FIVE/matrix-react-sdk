@@ -15,27 +15,20 @@ limitations under the License.
 */
 
 import React from 'react';
-import { IPusher } from 'matrix-js-sdk/src/@types/PushRules';
-import { PUSHER_ENABLED } from 'matrix-js-sdk/src/@types/event';
 
 import { formatDate } from '../../../../DateUtils';
 import { _t } from '../../../../languageHandler';
 import AccessibleButton from '../../elements/AccessibleButton';
-import Spinner from '../../elements/Spinner';
-import ToggleSwitch from '../../elements/ToggleSwitch';
-import { DeviceDetailHeading } from './DeviceDetailHeading';
+import Heading from '../../typography/Heading';
 import { DeviceVerificationStatusCard } from './DeviceVerificationStatusCard';
 import { DeviceWithVerification } from './types';
 
 interface Props {
     device: DeviceWithVerification;
-    pusher?: IPusher | undefined;
-    isSigningOut: boolean;
     onVerifyDevice?: () => void;
-    onSignOutDevice: () => void;
-    saveDeviceName: (deviceName: string) => Promise<void>;
-    setPusherEnabled?: (deviceId: string, enabled: boolean) => Promise<void> | undefined;
-    supportsMSC3881?: boolean | undefined;
+    // @TODO(kerry) optional while signout only implemented
+    // for current device (PSG-744)
+    onSignOutDevice?: () => void;
 }
 
 interface MetadataTable {
@@ -45,13 +38,8 @@ interface MetadataTable {
 
 const DeviceDetails: React.FC<Props> = ({
     device,
-    pusher,
-    isSigningOut,
     onVerifyDevice,
     onSignOutDevice,
-    saveDeviceName,
-    setPusherEnabled,
-    supportsMSC3881,
 }) => {
     const metadata: MetadataTable[] = [
         {
@@ -72,10 +60,7 @@ const DeviceDetails: React.FC<Props> = ({
     ];
     return <div className='mx_DeviceDetails' data-testid={`device-detail-${device.device_id}`}>
         <section className='mx_DeviceDetails_section'>
-            <DeviceDetailHeading
-                device={device}
-                saveDeviceName={saveDeviceName}
-            />
+            <Heading size='h3'>{ device.display_name ?? device.device_id }</Heading>
             <DeviceVerificationStatusCard
                 device={device}
                 onVerifyDevice={onVerifyDevice}
@@ -102,41 +87,15 @@ const DeviceDetails: React.FC<Props> = ({
             </table>,
             ) }
         </section>
-        { pusher && (
-            <section
-                className='mx_DeviceDetails_section mx_DeviceDetails_pushNotifications'
-                data-testid='device-detail-push-notification'
-            >
-                <ToggleSwitch
-                    // For backwards compatibility, if `enabled` is missing
-                    // default to `true`
-                    checked={pusher?.[PUSHER_ENABLED.name] ?? true}
-                    disabled={!supportsMSC3881}
-                    onChange={(checked) => setPusherEnabled?.(device.device_id, checked)}
-                    aria-label={_t("Toggle push notifications on this session.")}
-                    data-testid='device-detail-push-notification-checkbox'
-                />
-                <p className='mx_DeviceDetails_sectionHeading'>
-                    { _t('Push notifications') }
-                    <small className='mx_DeviceDetails_sectionSubheading'>
-                        { _t('Receive push notifications on this session.') }
-                    </small>
-                </p>
-            </section>
-        ) }
-        <section className='mx_DeviceDetails_section'>
+        { !!onSignOutDevice && <section className='mx_DeviceDetails_section'>
             <AccessibleButton
                 onClick={onSignOutDevice}
                 kind='danger_inline'
-                disabled={isSigningOut}
                 data-testid='device-detail-sign-out-cta'
             >
-                <span className='mx_DeviceDetails_signOutButtonContent'>
-                    { _t('Sign out of this session') }
-                    { isSigningOut && <Spinner w={16} h={16} /> }
-                </span>
+                { _t('Sign out of this session') }
             </AccessibleButton>
-        </section>
+        </section> }
     </div>;
 };
 

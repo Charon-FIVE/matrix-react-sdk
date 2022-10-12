@@ -71,6 +71,8 @@ interface IState {
 }
 
 export default class ShareDialog extends React.PureComponent<IProps, IState> {
+    protected closeCopiedTooltip: () => void;
+
     constructor(props) {
         super(props);
 
@@ -97,6 +99,12 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
             linkSpecificEvent: !this.state.linkSpecificEvent,
         });
     };
+
+    componentWillUnmount() {
+        // if the Copied tooltip is open then get rid of it, there are ways to close the modal which wouldn't close
+        // the tooltip otherwise, such as pressing Escape or clicking X really quickly
+        if (this.closeCopiedTooltip) this.closeCopiedTooltip();
+    }
 
     private getUrl() {
         let matrixToUrl;

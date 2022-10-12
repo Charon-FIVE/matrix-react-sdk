@@ -73,7 +73,7 @@ const ReplyInThreadButton = ({ mxEvent, closeMenu }: IReplyInThreadButton) => {
     const relationType = mxEvent?.getRelation()?.rel_type;
 
     // Can't create a thread from an event with an existing relation
-    if (Boolean(relationType) && relationType !== RelationType.Thread) return null;
+    if (Boolean(relationType) && relationType !== RelationType.Thread) return;
 
     const onClick = (): void => {
         if (!localStorage.getItem("mx_seen_feature_thread")) {

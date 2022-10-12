@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 import { useCallback, useContext, useEffect, useState } from "react";
-import { IMyDevice, IPusher, MatrixClient, PUSHER_DEVICE_ID, PUSHER_ENABLED } from "matrix-js-sdk/src/matrix";
+import { IMyDevice, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { User } from "matrix-js-sdk/src/models/user";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
-import { _t } from "../../../../languageHandler";
 import { DevicesDictionary, DeviceWithVerification } from "./types";
 
 const isDeviceVerified = (
@@ -74,18 +74,15 @@ export enum OwnDevicesError {
     Unsupported = 'Unsupported',
     Default = 'Default',
 }
-export type DevicesState = {
+type DevicesState = {
     devices: DevicesDictionary;
-    pushers: IPusher[];
     currentDeviceId: string;
-    isLoadingDeviceList: boolean;
+    currentUserMember?: User;
+    isLoading: boolean;
     // not provided when current session cannot request verification
     requestDeviceVerification?: (deviceId: DeviceWithVerification['device_id']) => Promise<VerificationRequest>;
     refreshDevices: () => Promise<void>;
-    saveDeviceName: (deviceId: DeviceWithVerification['device_id'], deviceName: string) => Promise<void>;
-    setPusherEnabled: (deviceId: DeviceWithVerification['device_id'], enabled: boolean) => Promise<void>;
     error?: OwnDevicesError;
-    supportsMSC3881?: boolean | undefined;
 };
 export const useOwnDevices = (): DevicesState => {
     const matrixClient = useContext(MatrixClientContext);
@@ -94,20 +91,11 @@ export const useOwnDevices = (): DevicesState => {
     const userId = matrixClient.getUserId();
 
     const [devices, setDevices] = useState<DevicesState['devices']>({});
-    const [pushers, setPushers] = useState<DevicesState['pushers']>([]);
-    const [isLoadingDeviceList, setIsLoadingDeviceList] = useState(true);
-    const [supportsMSC3881, setSupportsMSC3881] = useState(true); // optimisticly saying yes!
-
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<OwnDevicesError>();
 
-    useEffect(() => {
-        matrixClient.doesServerSupportUnstableFeature("org.matrix.msc3881").then(hasSupport => {
-            setSupportsMSC3881(hasSupport);
-        });
-    }, [matrixClient]);
-
     const refreshDevices = useCallback(async () => {
-        setIsLoadingDeviceList(true);
+        setIsLoading(true);
         try {
             // realistically we should never hit this
             // but it satisfies types
@@ -116,11 +104,7 @@ export const useOwnDevices = (): DevicesState => {
             }
             const devices = await fetchDevicesWithVerification(matrixClient, userId);
             setDevices(devices);
-
-            const { pushers } = await matrixClient.getPushers();
-            setPushers(pushers);
-
-            setIsLoadingDeviceList(false);
+            setIsLoading(false);
         } catch (error) {
             if ((error as MatrixError).httpStatus == 404) {
                 // 404 probably means the HS doesn't yet support the API.
@@ -129,7 +113,7 @@ export const useOwnDevices = (): DevicesState => {
                 logger.error("Error loading sessions:", error);
                 setError(OwnDevicesError.Default);
             }
-            setIsLoadingDeviceList(false);
+            setIsLoading(false);
         }
     }, [matrixClient, userId]);
 
@@ -148,53 +132,13 @@ export const useOwnDevices = (): DevicesState => {
         }
         : undefined;
 
-    const saveDeviceName = useCallback(
-        async (deviceId: DeviceWithVerification['device_id'], deviceName: string): Promise<void> => {
-            const device = devices[deviceId];
-
-            // no change
-            if (deviceName === device?.display_name) {
-                return;
-            }
-
-            try {
-                await matrixClient.setDeviceDetails(
-                    deviceId,
-                    { display_name: deviceName },
-                );
-                await refreshDevices();
-            } catch (error) {
-                logger.error("Error setting session display name", error);
-                throw new Error(_t("Failed to set display name"));
-            }
-        }, [matrixClient, devices, refreshDevices]);
-
-    const setPusherEnabled = useCallback(
-        async (deviceId: DeviceWithVerification['device_id'], enabled: boolean): Promise<void> => {
-            const pusher = pushers.find(pusher => pusher[PUSHER_DEVICE_ID.name] === deviceId);
-            try {
-                await matrixClient.setPusher({
-                    ...pusher,
-                    [PUSHER_ENABLED.name]: enabled,
-                });
-                await refreshDevices();
-            } catch (error) {
-                logger.error("Error setting pusher state", error);
-                throw new Error(_t("Failed to set pusher state"));
-            }
-        }, [matrixClient, pushers, refreshDevices],
-    );
-
     return {
         devices,
-        pushers,
         currentDeviceId,
-        isLoadingDeviceList,
-        error,
+        currentUserMember: userId && matrixClient.getUser(userId) || undefined,
         requestDeviceVerification,
         refreshDevices,
-        saveDeviceName,
-        setPusherEnabled,
-        supportsMSC3881,
+        isLoading,
+        error,
     };
 };

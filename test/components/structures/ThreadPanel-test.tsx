@@ -15,102 +15,68 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render, screen, fireEvent } from "@testing-library/react";
-import { mocked } from "jest-mock";
+// eslint-disable-next-line deprecate/import
+import { shallow, mount } from "enzyme";
 import 'focus-visible'; // to fix context menus
 
-import ThreadPanel, { ThreadFilterType, ThreadPanelHeader } from '../../../src/components/structures/ThreadPanel';
+import {
+    ThreadFilterType,
+    ThreadPanelHeader,
+    ThreadPanelHeaderFilterOptionItem,
+} from '../../../src/components/structures/ThreadPanel';
+import { ContextMenuButton } from '../../../src/accessibility/context_menu/ContextMenuButton';
+import ContextMenu from '../../../src/components/structures/ContextMenu';
 import { _t } from '../../../src/languageHandler';
-import ResizeNotifier from '../../../src/utils/ResizeNotifier';
-import { RoomPermalinkCreator } from '../../../src/utils/permalinks/Permalinks';
-import { createTestClient, mkStubRoom } from '../../test-utils';
-import { shouldShowFeedback } from "../../../src/utils/Feedback";
-import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
-
-jest.mock("../../../src/utils/Feedback");
 
 describe('ThreadPanel', () => {
-    describe("Feedback prompt", () => {
-        const cli = createTestClient();
-        const room = mkStubRoom("!room:server", "room", cli);
-        mocked(cli.getRoom).mockReturnValue(room);
-
-        it("should show feedback prompt if feedback is enabled", () => {
-            mocked(shouldShowFeedback).mockReturnValue(true);
-
-            render(<MatrixClientContext.Provider value={cli}>
-                <ThreadPanel
-                    roomId="!room:server"
-                    onClose={jest.fn()}
-                    resizeNotifier={new ResizeNotifier()}
-                    permalinkCreator={new RoomPermalinkCreator(room)}
-                />
-            </MatrixClientContext.Provider>);
-            expect(screen.queryByText("Give feedback")).toBeTruthy();
-        });
-
-        it("should hide feedback prompt if feedback is disabled", () => {
-            mocked(shouldShowFeedback).mockReturnValue(false);
-
-            render(<MatrixClientContext.Provider value={cli}>
-                <ThreadPanel
-                    roomId="!room:server"
-                    onClose={jest.fn()}
-                    resizeNotifier={new ResizeNotifier()}
-                    permalinkCreator={new RoomPermalinkCreator(room)}
-                />
-            </MatrixClientContext.Provider>);
-            expect(screen.queryByText("Give feedback")).toBeFalsy();
-        });
-    });
-
     describe('Header', () => {
         it('expect that All filter for ThreadPanelHeader properly renders Show: All threads', () => {
-            const { asFragment } = render(
+            const wrapper = shallow(
                 <ThreadPanelHeader
                     empty={false}
                     filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined} />,
             );
-            expect(asFragment()).toMatchSnapshot();
+            expect(wrapper).toMatchSnapshot();
         });
 
         it('expect that My filter for ThreadPanelHeader properly renders Show: My threads', () => {
-            const { asFragment } = render(
+            const wrapper = shallow(
                 <ThreadPanelHeader
                     empty={false}
                     filterOption={ThreadFilterType.My}
                     setFilterOption={() => undefined} />,
             );
-            expect(asFragment()).toMatchSnapshot();
+            expect(wrapper).toMatchSnapshot();
         });
 
         it('expect that ThreadPanelHeader properly opens a context menu when clicked on the button', () => {
-            const { container } = render(
+            const wrapper = mount(
                 <ThreadPanelHeader
                     empty={false}
                     filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined} />,
             );
-            const found = container.querySelector(".mx_ThreadPanel_dropdown");
-            expect(found).toBeTruthy();
-            expect(screen.queryByRole("menu")).toBeFalsy();
-            fireEvent.click(found);
-            expect(screen.queryByRole("menu")).toBeTruthy();
+            const found = wrapper.find(ContextMenuButton);
+            expect(found).not.toBe(undefined);
+            expect(found).not.toBe(null);
+            expect(wrapper.exists(ContextMenu)).toEqual(false);
+            found.simulate('click');
+            expect(wrapper.exists(ContextMenu)).toEqual(true);
         });
 
         it('expect that ThreadPanelHeader has the correct option selected in the context menu', () => {
-            const { container } = render(
+            const wrapper = mount(
                 <ThreadPanelHeader
                     empty={false}
                     filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined} />,
             );
-            fireEvent.click(container.querySelector(".mx_ThreadPanel_dropdown"));
-            const found = screen.queryAllByRole("menuitemradio");
-            expect(found).toHaveLength(2);
-            const foundButton = screen.queryByRole("menuitemradio", { checked: true });
-            expect(foundButton.textContent).toEqual(`${_t("All threads")}${_t('Shows all threads from current room')}`);
+            wrapper.find(ContextMenuButton).simulate('click');
+            const found = wrapper.find(ThreadPanelHeaderFilterOptionItem);
+            expect(found.length).toEqual(2);
+            const foundButton = found.find('[aria-checked=true]').first();
+            expect(foundButton.text()).toEqual(`${_t("All threads")}${_t('Shows all threads from current room')}`);
             expect(foundButton).toMatchSnapshot();
         });
     });

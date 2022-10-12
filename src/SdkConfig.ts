@@ -30,10 +30,6 @@ export const DEFAULTS: IConfigOptions = {
     jitsi: {
         preferred_domain: "meet.element.io",
     },
-    element_call: {
-        url: "https://call.element.io",
-        use_exclusively: false,
-    },
 
     // @ts-ignore - we deliberately use the camelCase version here so we trigger
     // the fallback behaviour. If we used the snake_case version then we'd break
@@ -83,8 +79,14 @@ export default class SdkConfig {
         return val === undefined ? undefined : null;
     }
 
-    public static put(cfg: Partial<IConfigOptions>) {
-        SdkConfig.setInstance({ ...DEFAULTS, ...cfg });
+    public static put(cfg: IConfigOptions) {
+        const defaultKeys = Object.keys(DEFAULTS);
+        for (let i = 0; i < defaultKeys.length; ++i) {
+            if (cfg[defaultKeys[i]] === undefined) {
+                cfg[defaultKeys[i]] = DEFAULTS[defaultKeys[i]];
+            }
+        }
+        SdkConfig.setInstance(cfg);
     }
 
     /**
@@ -95,7 +97,9 @@ export default class SdkConfig {
     }
 
     public static add(cfg: Partial<IConfigOptions>) {
-        SdkConfig.put({ ...SdkConfig.get(), ...cfg });
+        const liveConfig = SdkConfig.get();
+        const newConfig = Object.assign({}, liveConfig, cfg);
+        SdkConfig.put(newConfig);
     }
 }
 

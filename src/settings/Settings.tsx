@@ -92,7 +92,6 @@ export enum LabGroup {
     Spaces,
     Widgets,
     Rooms,
-    VoiceAndVideo,
     Moderation,
     Analytics,
     MessagePreviews,
@@ -102,17 +101,12 @@ export enum LabGroup {
     Developer,
 }
 
-export enum Features {
-    VoiceBroadcast = "feature_voice_broadcast",
-}
-
 export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Messaging]: _td("Messaging"),
     [LabGroup.Profile]: _td("Profile"),
     [LabGroup.Spaces]: _td("Spaces"),
     [LabGroup.Widgets]: _td("Widgets"),
     [LabGroup.Rooms]: _td("Rooms"),
-    [LabGroup.VoiceAndVideo]: _td("Voice & Video"),
     [LabGroup.Moderation]: _td("Moderation"),
     [LabGroup.Analytics]: _td("Analytics"),
     [LabGroup.MessagePreviews]: _td("Message Previews"),
@@ -193,7 +187,7 @@ export type ISetting = IBaseSetting | IFeature;
 export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_video_rooms": {
         isFeature: true,
-        labsGroup: LabGroup.VoiceAndVideo,
+        labsGroup: LabGroup.Rooms,
         displayName: _td("Video rooms"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -425,21 +419,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: "",
     },
-    "feature_element_call_video_rooms": {
-        isFeature: true,
-        supportedLevels: LEVELS_FEATURE,
-        labsGroup: LabGroup.VoiceAndVideo,
-        displayName: _td("Element Call video rooms"),
-        controller: new ReloadOnChangeController(),
-        default: false,
-    },
-    "feature_group_calls": {
-        isFeature: true,
-        supportedLevels: LEVELS_FEATURE,
-        labsGroup: LabGroup.VoiceAndVideo,
-        displayName: _td("New group call experience"),
-        default: false,
-    },
     "feature_location_share_live": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -454,13 +433,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Favourite Messages (under active development)"),
-        default: false,
-    },
-    [Features.VoiceBroadcast]: {
-        isFeature: true,
-        labsGroup: LabGroup.Messaging,
-        supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Voice broadcast (under active development)"),
         default: false,
     },
     "feature_new_device_manager": {

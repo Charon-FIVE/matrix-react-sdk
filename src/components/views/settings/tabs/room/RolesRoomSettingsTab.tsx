@@ -30,7 +30,6 @@ import ErrorDialog from '../../../dialogs/ErrorDialog';
 import PowerSelector from "../../../elements/PowerSelector";
 import SettingsFieldset from '../../SettingsFieldset';
 import SettingsStore from "../../../../../settings/SettingsStore";
-import { VoiceBroadcastInfoEventType } from '../../../../../voice-broadcast';
 
 interface IEventShowOpts {
     isState?: boolean;
@@ -62,7 +61,6 @@ const plEventsToShow: Record<string, IEventShowOpts> = {
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     "im.vector.modular.widgets": { isState: true, hideForSpace: true },
-    [VoiceBroadcastInfoEventType]: { isState: true, hideForSpace: true },
 };
 
 // parse a string as an integer; if the input is undefined, or cannot be parsed
@@ -246,7 +244,6 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             "im.vector.modular.widgets": isSpaceRoom ? null : _td("Modify widgets"),
-            [VoiceBroadcastInfoEventType]: _td("Voice broadcasts"),
         };
 
         if (SettingsStore.getValue("feature_pinning")) {
