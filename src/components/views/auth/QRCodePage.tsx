@@ -333,7 +333,7 @@ export default class QRCodePage extends React.PureComponent<IProps,IState> {
         return (
             <AuthPage>
                 <div className="mx_QRCode">
-                <p className="mx_welcome_title">{"TalkTalk客户端只支持手机端扫码登录"}</p> 
+                <p className="mx_QRCode_title">{"TalkTalk客户端只支持手机端扫码登录"}</p> 
                 <div className="mx_welcome_content">
                     <div className="mx_welcome_content_left">
                         <h2> {"1.手机端打开Talktalk,使用扫一扫扫二维码登录"}</h2>
@@ -344,9 +344,9 @@ export default class QRCodePage extends React.PureComponent<IProps,IState> {
                       {qrBlockDialog}
                     </div>
                 </div>
-                {/* {spinner} */}
+                {/* {spinner} */} 
                 </div>
             </AuthPage>
         );
-    }
+    } 
 }
