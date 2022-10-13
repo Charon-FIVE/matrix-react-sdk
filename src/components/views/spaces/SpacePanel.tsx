@@ -368,7 +368,7 @@ const SpacePanel = () => {
                                 </div>}
                             />
                         </UserMenu> */}
-                        <Droppable droppableId="top-level-spaces">
+                        {/* <Droppable droppableId="top-level-spaces">
                             { (provided, snapshot) => (
                                 <InnerSpacePanel
                                     {...provided.droppableProps}
@@ -380,7 +380,7 @@ const SpacePanel = () => {
                                     { provided.placeholder }
                                 </InnerSpacePanel>
                             ) }
-                        </Droppable>
+                        </Droppable> */}
 
                         {/* <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> */}
                     </div>
