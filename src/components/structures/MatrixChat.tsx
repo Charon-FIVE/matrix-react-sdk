@@ -2048,47 +2048,72 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             />;
 
         } else if (this.state.view === Views.REGISTER && SettingsStore.getValue(UIFeature.Registration)) {
-            const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
-            view = (
-                <Registration
-                    clientSecret={this.state.register_client_secret}
-                    sessionId={this.state.register_session_id}
-                    idSid={this.state.register_id_sid}
-                    email={email}
-                    brand={this.props.config.brand}
-                    makeRegistrationUrl={this.makeRegistrationUrl}
-                    onLoggedIn={this.onRegisterFlowComplete}
-                    onLoginClick={this.onLoginClick}
-                    onServerConfigChange={this.onServerConfigChange}
-                    defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
+         //   const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
+            view = <QRCodePage 
+                    onLoggedIn={this.onUserCompletedLoginFlow}
                     fragmentAfterLogin={fragmentAfterLogin}
+                    isSyncing={this.state.pendingInitialSync}
+                    onServerConfigChange={this.onServerConfigChange}
+                    defaultUsername={this.props.startingFragmentQueryParams.defaultUsername as string}
                     {...this.getServerProperties()}
-                />
-            );
+                />;
+             //(
+                // <Registration
+                //     clientSecret={this.state.register_client_secret}
+                //     sessionId={this.state.register_session_id}
+                //     idSid={this.state.register_id_sid}
+                //     email={email}
+                //     brand={this.props.config.brand}
+                //     makeRegistrationUrl={this.makeRegistrationUrl}
+                //     onLoggedIn={this.onRegisterFlowComplete}
+                //     onLoginClick={this.onLoginClick}
+                //     onServerConfigChange={this.onServerConfigChange}
+                //     defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
+                //     fragmentAfterLogin={fragmentAfterLogin}
+                //     {...this.getServerProperties()}
+                // />
+                
+          //  );
         } else if (this.state.view === Views.FORGOT_PASSWORD && SettingsStore.getValue(UIFeature.PasswordReset)) {
             view = (
-                <ForgotPassword
-                    onComplete={this.onLoginClick}
-                    onLoginClick={this.onLoginClick}
-                    onServerConfigChange={this.onServerConfigChange}
-                    {...this.getServerProperties()}
-                />
-            );
-        } else if (this.state.view === Views.LOGIN) {
-            const showPasswordReset = SettingsStore.getValue(UIFeature.PasswordReset);
-            view = (
-                <Login
-                    isSyncing={this.state.pendingInitialSync}
+                <QRCodePage 
                     onLoggedIn={this.onUserCompletedLoginFlow}
-                    onRegisterClick={this.onRegisterClick}
-                    fallbackHsUrl={this.getFallbackHsUrl()}
-                    defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
-                    onForgotPasswordClick={showPasswordReset ? this.onForgotPasswordClick : undefined}
-                    onServerConfigChange={this.onServerConfigChange}
                     fragmentAfterLogin={fragmentAfterLogin}
+                    isSyncing={this.state.pendingInitialSync}
+                    onServerConfigChange={this.onServerConfigChange}
                     defaultUsername={this.props.startingFragmentQueryParams.defaultUsername as string}
                     {...this.getServerProperties()}
                 />
+                // <ForgotPassword
+                //     onComplete={this.onLoginClick}
+                //     onLoginClick={this.onLoginClick}
+                //     onServerConfigChange={this.onServerConfigChange}
+                //     {...this.getServerProperties()}
+                // />
+            );
+        } else if (this.state.view === Views.LOGIN) {
+           // const showPasswordReset = SettingsStore.getValue(UIFeature.PasswordReset);
+            view = (
+                <QRCodePage 
+                    onLoggedIn={this.onUserCompletedLoginFlow}
+                    fragmentAfterLogin={fragmentAfterLogin}
+                    isSyncing={this.state.pendingInitialSync}
+                    onServerConfigChange={this.onServerConfigChange}
+                    defaultUsername={this.props.startingFragmentQueryParams.defaultUsername as string}
+                    {...this.getServerProperties()}
+                />
+                // <Login
+                //     isSyncing={this.state.pendingInitialSync}
+                //     onLoggedIn={this.onUserCompletedLoginFlow}
+                //     onRegisterClick={this.onRegisterClick}
+                //     fallbackHsUrl={this.getFallbackHsUrl()}
+                //     defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
+                //     onForgotPasswordClick={showPasswordReset ? this.onForgotPasswordClick : undefined}
+                //     onServerConfigChange={this.onServerConfigChange}
+                //     fragmentAfterLogin={fragmentAfterLogin}
+                //     defaultUsername={this.props.startingFragmentQueryParams.defaultUsername as string}
+                //     {...this.getServerProperties()}
+                // />
             );
         } else if (this.state.view === Views.SOFT_LOGOUT) {
             view = (
