@@ -383,10 +383,10 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
     }
 
     return <div className="mx_RoomListHeader">
-        { contextMenuButton }
-        { pendingActionSummary ?
+        {/* { contextMenuButton } */}
+        {/* { pendingActionSummary ?
             <TooltipTarget label={pendingActionSummary}><InlineSpinner /></TooltipTarget> :
-            null }
+            null } */}
         { canShowPlusMenu && <ContextMenuTooltipButton
             inputRef={plusMenuHandle}
             onClick={openPlusMenu}

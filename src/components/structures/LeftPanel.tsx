@@ -49,7 +49,7 @@ import PageType from "../../PageTypes";
 import { UserOnboardingButton } from "../views/user-onboarding/UserOnboardingButton";
 import UserMenu from "../../components/structures/UserMenu";
 import { IS_MAC,Key } from "matrix-react-sdk/src/Keyboard";
-
+import {ContextMenuTooltipButton, useContextMenu } from "../../components/structures/ContextMenu";
 interface IProps {
     isMinimized: boolean;
     pageType: PageType;
@@ -336,16 +336,18 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 />;
         }
 
-        let rightButton: JSX.Element;
-        if (this.state.showBreadcrumbs === BreadcrumbsMode.Labs) {
-            rightButton = <RecentlyViewedButton />;
-        } else if (this.state.activeSpace === MetaSpace.Home && shouldShowComponent(UIComponent.ExploreRooms)) {
-            rightButton = <AccessibleTooltipButton
-                className="mx_LeftPanel_exploreButton"
-                onClick={this.onExplore}
-                title={_t("Explore rooms")}
-            />;
-        }
+       // let rightButton: JSX.Element;
+        // if (this.state.showBreadcrumbs === BreadcrumbsMode.Labs) {
+        //     rightButton = <RecentlyViewedButton />;
+        // } else if (this.state.activeSpace === MetaSpace.Home && shouldShowComponent(UIComponent.ExploreRooms)) {
+        //     rightButton = <AccessibleTooltipButton
+        //         className="mx_LeftPanel_exploreButton"
+        //         onClick={this.onExplore}
+        //         title={_t("Explore rooms")}
+        //     />;
+        // }
+       // const [plusMenuDisplayed, plusMenuHandle, openPlusMenu] = useContextMenu<HTMLDivElement>();
+       
 
         return (
             <div
@@ -356,8 +358,13 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             >
                 <RoomSearch isMinimized={this.props.isMinimized} />
 
-                { dialPadButton }
-                { rightButton }
+                {/* { dialPadButton } */}
+                {/* { rightButton } */}
+                { !this.props.isMinimized && (
+                        <RoomListHeader
+                            onVisibilityChange={this.refreshStickyHeaders}
+                        />
+                    ) }  
             </div>
         );
     }
@@ -390,8 +397,8 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 <div className="mx_LeftPanel_roomListContainer">
                     <div className="mx_LeftPanel_UserMenu">
                         { <UserMenu  isPanelCollapsed={false}>
-                                <AccessibleTooltipButton
-                                    className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !false })}
+                                {/* <AccessibleTooltipButton
+                                    className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !true })}
                                     title={false ? _t("Expand") : _t("Collapse")}
                                     onClick={null}
                                     tooltip={<div>
@@ -406,16 +413,16 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                                             }
                                         </div>
                                     </div>}
-                                />
+                                /> */}
                             </UserMenu>}
                         </div>
                     { this.renderSearchDialExplore() }
                     { this.renderBreadcrumbs() }
-                    { !this.props.isMinimized && (
+                    {/* { !this.props.isMinimized && (
                         <RoomListHeader
                             onVisibilityChange={this.refreshStickyHeaders}
                         />
-                    ) }
+                    ) }   */}
                     <UserOnboardingButton
                         selected={this.props.pageType === PageType.HomePage}
                         minimized={this.props.isMinimized}

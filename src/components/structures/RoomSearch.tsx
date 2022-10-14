@@ -49,7 +49,7 @@ export default class RoomSearch extends React.PureComponent<IProps> {
 
     private onAction = (payload: ActionPayload) => {
         if (payload.action === 'focus_room_filter') {
-            this.openSpotlight();
+          //  this.openSpotlight();
         }
     };
 

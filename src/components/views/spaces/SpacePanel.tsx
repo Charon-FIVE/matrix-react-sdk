@@ -288,7 +288,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({
         aria-label={_t("Spaces")}
     >
         { metaSpacesSection }
-        { invites.map(s => (
+        {/* { invites.map(s => (
             <SpaceItem
                 key={s.roomId}
                 space={s}
@@ -314,10 +314,11 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(({
                 ) }
             </Draggable>
         )) }
-        { children }
+        { children } */}
         {
-            shouldShowComponent(UIComponent.CreateSpaces) &&
-            <CreateSpaceButton isPanelCollapsed={isPanelCollapsed} setPanelCollapsed={setPanelCollapsed} />
+            // shouldShowComponent(UIComponent.CreateSpaces) &&
+            // <CreateSpaceButton isPanelCollapsed={isPanelCollapsed} setPanelCollapsed={setPanelCollapsed} />
+            <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
         }
 
     </IndicatorScrollbar>;
@@ -368,7 +369,7 @@ const SpacePanel = () => {
                                 </div>}
                             />
                         </UserMenu> */}
-                        {/* <Droppable droppableId="top-level-spaces">
+                        <Droppable droppableId="top-level-spaces">
                             { (provided, snapshot) => (
                                 <InnerSpacePanel
                                     {...provided.droppableProps}
@@ -380,7 +381,8 @@ const SpacePanel = () => {
                                     { provided.placeholder }
                                 </InnerSpacePanel>
                             ) }
-                        </Droppable> */}
+                        </Droppable>
+                       
 
                         {/* <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> */}
                     </div>
