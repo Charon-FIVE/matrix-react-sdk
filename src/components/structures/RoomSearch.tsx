@@ -15,6 +15,9 @@ limitations under the License.
 */
 
 import classNames from "classnames";
+import UserSettingsDialog from "matrix-react-sdk/src/components/views/dialogs/UserSettingsDialog";
+import { Action } from "matrix-react-sdk/src/dispatcher/actions";
+import { OpenToTabPayload } from "matrix-react-sdk/src/dispatcher/payloads/OpenToTabPayload";
 import * as React from "react";
 
 import { ALTERNATE_KEY_NAME } from "../../accessibility/KeyboardShortcuts";
@@ -44,12 +47,13 @@ export default class RoomSearch extends React.PureComponent<IProps> {
     }
 
     private openSpotlight() {
-        Modal.createDialog(SpotlightDialog, {}, "mx_SpotlightDialog_wrapper", false, true);
+       // defaultDispatcher.dispatch({ action: Action.ViewUserSettings });
+       Modal.createDialog(SpotlightDialog, {}, "mx_SpotlightDialog_wrapper", false, true);
     }
 
     private onAction = (payload: ActionPayload) => {
         if (payload.action === 'focus_room_filter') {
-          //  this.openSpotlight();
+            this.openSpotlight();
         }
     };
 
