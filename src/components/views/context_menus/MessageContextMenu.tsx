@@ -482,25 +482,25 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        let permalinkButton: JSX.Element;
-        if (permalink) {
-            permalinkButton = (
-                <IconizedContextMenuOption
-                    iconClassName="mx_MessageContextMenu_iconPermalink"
-                    onClick={this.onShareClick}
-                    label={_t('Share')}
-                    element="a"
-                    {
-                        // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
-                        ...{
-                            href: permalink,
-                            target: "_blank",
-                            rel: "noreferrer noopener",
-                        }
-                    }
-                />
-            );
-        }
+        // let permalinkButton: JSX.Element;
+        // if (permalink) {
+        //     permalinkButton = (
+        //         <IconizedContextMenuOption
+        //             iconClassName="mx_MessageContextMenu_iconPermalink"
+        //             onClick={this.onShareClick}
+        //             label={_t('Share')}
+        //             element="a"
+        //             {
+        //                 // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
+        //                 ...{
+        //                     href: permalink,
+        //                     target: "_blank",
+        //                     rel: "noreferrer noopener",
+        //                 }
+        //             }
+        //         />
+        //     );
+        // }
 
         let endPollButton: JSX.Element;
         if (this.canEndPoll(mxEvent)) {
@@ -571,16 +571,16 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        let reportEventButton: JSX.Element;
-        if (mxEvent.getSender() !== me) {
-            reportEventButton = (
-                <IconizedContextMenuOption
-                    iconClassName="mx_MessageContextMenu_iconReport"
-                    label={_t("Report")}
-                    onClick={this.onReportEventClick}
-                />
-            );
-        }
+        // let reportEventButton: JSX.Element;
+        // if (mxEvent.getSender() !== me) {
+        //     reportEventButton = (
+        //         <IconizedContextMenuOption
+        //             iconClassName="mx_MessageContextMenu_iconReport"
+        //             label={_t("Report")}
+        //             onClick={this.onReportEventClick}
+        //         />
+        //     );
+        // }
 
         let copyLinkButton: JSX.Element;
         if (link) {
@@ -706,8 +706,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 { quoteButton }
                 { forwardButton }
                 { pinButton }
-                { permalinkButton }
-                { reportEventButton }
+                {/* { permalinkButton } */}
+                {/* { reportEventButton } */}
                 { externalURLButton }
                 { jumpToRelatedEventButton }
                 { unhidePreviewButton }
