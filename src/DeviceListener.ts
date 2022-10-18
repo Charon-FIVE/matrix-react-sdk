@@ -252,7 +252,7 @@ export default class DeviceListener {
                 cli.getStoredCrossSigningForUser(cli.getUserId())
             ) {
                 // Cross-signing on account but this device doesn't trust the master key (verify this session)
-                showSetupEncryptionToast(SetupKind.VERIFY_THIS_SESSION);
+               // showSetupEncryptionToast(SetupKind.VERIFY_THIS_SESSION);
                 this.checkKeyBackupStatus();
             } else {
                 const backupInfo = await this.getKeyBackupInfo();
