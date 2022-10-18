@@ -1980,11 +1980,22 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 </div>
             );
         } else if (this.state.view === Views.COMPLETE_SECURITY) {
-            view = (
-                <CompleteSecurity
-                    onFinished={this.onCompleteSecurityE2eSetupFinished}
-                />
-            );
+            // view = (
+            //     <CompleteSecurity
+            //         onFinished={this.onCompleteSecurityE2eSetupFinished}
+            //     />
+            // );
+        
+                view = (
+                    <LoggedInView
+                        {...this.props}
+                        {...this.state}
+                        ref={this.loggedInView}
+                        matrixClient={MatrixClientPeg.get()}
+                        onRegistered={this.onRegistered}
+                        currentRoomId={localStorage.getItem('mx_last_room_id')}
+                    />
+                );
         } else if (this.state.view === Views.E2E_SETUP) {
             view = (
                 <E2eSetup
