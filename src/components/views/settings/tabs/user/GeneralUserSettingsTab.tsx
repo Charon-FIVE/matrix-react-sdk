@@ -52,6 +52,7 @@ import SetIdServer from "../../SetIdServer";
 import SetIntegrationManager from "../../SetIntegrationManager";
 import ToggleSwitch from "../../../elements/ToggleSwitch";
 import { IS_MAC } from "../../../../../Keyboard";
+import IntroductionSettings from 'matrix-react-sdk/src/components/views/settings/IntroductionSettings';
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -301,6 +302,14 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         );
     }
 
+    private renderIntroductionSection():JSX.Element{
+        return (
+            <div>
+                <IntroductionSettings/>
+            </div>
+        );
+    }
+
     private renderAccountSection(): JSX.Element {
         let passwordChangeForm = (
             <ChangePassword
@@ -498,6 +507,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             <div className="mx_SettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("General") }</div>
                 { this.renderProfileSection() }
+                {this.renderIntroductionSection()}
                 {/* { this.renderAccountSection() } */}
                 { this.renderLanguageSection() }
                 { supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null }

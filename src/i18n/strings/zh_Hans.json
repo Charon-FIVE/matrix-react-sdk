@@ -3503,5 +3503,6 @@
     "Create room": "创建房间",
     "Create video room": "创建视频房间",
     "Create a video room": "创建视频房间",
-    "%(user1)s and %(user2)s": "%(user1)s和%(user2)s"
+    "%(user1)s and %(user2)s": "%(user1)s和%(user2)s",
+    "Introduction":"简介"
 }
