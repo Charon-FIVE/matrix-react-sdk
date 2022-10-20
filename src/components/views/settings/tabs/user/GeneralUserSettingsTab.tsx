@@ -53,6 +53,7 @@ import SetIntegrationManager from "../../SetIntegrationManager";
 import ToggleSwitch from "../../../elements/ToggleSwitch";
 import { IS_MAC } from "../../../../../Keyboard";
 import IntroductionSettings from 'matrix-react-sdk/src/components/views/settings/IntroductionSettings';
+import AccountSettings from 'matrix-react-sdk/src/components/views/settings/AccountSettings';
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -113,21 +114,21 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     // TODO: [REACT-WARNING] Move this to constructor
     // eslint-disable-next-line @typescript-eslint/naming-convention, camelcase
     public async UNSAFE_componentWillMount(): Promise<void> {
-        const cli = MatrixClientPeg.get();
+        // const cli = MatrixClientPeg.get();
 
-        const serverSupportsSeparateAddAndBind = await cli.doesServerSupportSeparateAddAndBind();
+        // const serverSupportsSeparateAddAndBind = await cli.doesServerSupportSeparateAddAndBind();
 
-        const capabilities = await cli.getCapabilities(); // this is cached
-        const changePasswordCap = capabilities['m.change_password'];
+        // const capabilities = await cli.getCapabilities(); // this is cached
+        // const changePasswordCap = capabilities['m.change_password'];
 
         // You can change your password so long as the capability isn't explicitly disabled. The implicit
         // behaviour is you can change your password when the capability is missing or has not-false as
         // the enabled flag value.
-        const canChangePassword = !changePasswordCap || changePasswordCap['enabled'] !== false;
+       // const canChangePassword = !changePasswordCap || changePasswordCap['enabled'] !== false;
 
-        this.setState({ serverSupportsSeparateAddAndBind, canChangePassword });
+      //  this.setState({ serverSupportsSeparateAddAndBind, canChangePassword });
 
-        this.getThreepidState();
+       // this.getThreepidState();
     }
 
     public async componentDidMount(): Promise<void> {
@@ -302,6 +303,11 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         );
     }
 
+    /**
+     * 
+     * @returns 
+     * 简介部分
+     */
     private renderIntroductionSection():JSX.Element{
         return (
             <div>
@@ -309,6 +315,16 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             </div>
         );
     }
+    /**
+     * 
+     * @returns 
+     * 账号部分
+     */
+    private renderAccountSectionNew():JSX.Element{
+        return (<div>
+            <AccountSettings/>
+        </div>);
+     }
 
     private renderAccountSection(): JSX.Element {
         let passwordChangeForm = (
@@ -477,37 +493,38 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const plaf = PlatformPeg.get();
         const supportsMultiLanguageSpellCheck = plaf.supportsSpellCheckSettings();
 
-        const discoWarning = this.state.requiredPolicyInfo.hasTerms
-            ? <img
-                className='mx_GeneralUserSettingsTab_warningIcon'
-                src={require("../../../../../../res/img/feather-customised/warning-triangle.svg").default}
-                width="18"
-                height="18"
-                alt={_t("Warning")}
-            />
-            : null;
+        // const discoWarning = this.state.requiredPolicyInfo.hasTerms
+        //     ? <img
+        //         className='mx_GeneralUserSettingsTab_warningIcon'
+        //         src={require("../../../../../../res/img/feather-customised/warning-triangle.svg").default}
+        //         width="18"
+        //         height="18"
+        //         alt={_t("Warning")}
+        //     />
+        //     : null;
 
-        let accountManagementSection;
-        if (SettingsStore.getValue(UIFeature.Deactivate)) {
-            accountManagementSection = <>
-                <div className="mx_SettingsTab_heading">{ _t("Deactivate account") }</div>
-                { this.renderManagementSection() }
-            </>;
-        }
+        // let accountManagementSection;
+        // if (SettingsStore.getValue(UIFeature.Deactivate)) {
+        //     accountManagementSection = <>
+        //         <div className="mx_SettingsTab_heading">{ _t("Deactivate account") }</div>
+        //         { this.renderManagementSection() }
+        //     </>;
+        // }
 
-        let discoverySection;
-        if (SettingsStore.getValue(UIFeature.IdentityServer)) {
-            discoverySection = <>
-                <div className="mx_SettingsTab_heading">{ discoWarning } { _t("Discovery") }</div>
-                { this.renderDiscoverySection() }
-            </>;
-        }
+        // let discoverySection;
+        // if (SettingsStore.getValue(UIFeature.IdentityServer)) {
+        //     discoverySection = <>
+        //         <div className="mx_SettingsTab_heading">{ discoWarning } { _t("Discovery") }</div>
+        //         { this.renderDiscoverySection() }
+        //     </>;
+        // }
 
         return (
             <div className="mx_SettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("General") }</div>
                 { this.renderProfileSection() }
                 {this.renderIntroductionSection()}
+                {this.renderAccountSectionNew()}
                 {/* { this.renderAccountSection() } */}
                 { this.renderLanguageSection() }
                 { supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null }
