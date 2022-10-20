@@ -326,6 +326,24 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         </div>);
      }
 
+     /**
+      * 
+      * @param e 
+      * @returns 
+      * 清除缓存重新加载
+      */
+     private onClearCacheAndReload = (e) => {
+        if (!PlatformPeg.get()) return;
+
+        // Dev note: please keep this log line, it's useful when troubleshooting a MatrixClient suddenly
+        // stopping in the middle of the logs.
+        logger.log("Clear cache & reload clicked");
+        MatrixClientPeg.get().stopClient();
+        MatrixClientPeg.get().store.deleteAllData().then(() => {
+            PlatformPeg.get().reload();
+        });
+    };
+
     private renderAccountSection(): JSX.Element {
         let passwordChangeForm = (
             <ChangePassword
@@ -531,6 +549,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                 {/* { discoverySection } */}
                 {/* { this.renderIntegrationManagerSection() } */}
                 {/* { accountManagementSection } */}
+                <AccessibleButton className='clear-cache-button' onClick={this.onClearCacheAndReload} kind='danger'>
+                    { _t("Clear cache and reload") }
+                </AccessibleButton>
             </div>
         );
     }

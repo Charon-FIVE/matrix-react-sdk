@@ -74,18 +74,6 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         };
     }
 
-    private onClearCacheAndReload = (e) => {
-        if (!PlatformPeg.get()) return;
-
-        // Dev note: please keep this log line, it's useful when troubleshooting a MatrixClient suddenly
-        // stopping in the middle of the logs.
-        logger.log("Clear cache & reload clicked");
-        MatrixClientPeg.get().stopClient();
-        MatrixClientPeg.get().store.deleteAllData().then(() => {
-            PlatformPeg.get().reload();
-        });
-    };
-
     private onBugReport = (e) => {
         Modal.createDialog(BugReportDialog, {});
     };
@@ -305,9 +293,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                                 { MatrixClientPeg.get().getAccessToken() }
                             </CopyableText>
                         </details>
-                        <AccessibleButton onClick={this.onClearCacheAndReload} kind='danger'>
-                            { _t("Clear cache and reload") }
-                        </AccessibleButton>
+                       
                     </div>
                 </div>
             </div>
