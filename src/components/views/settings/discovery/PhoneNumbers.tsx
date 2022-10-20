@@ -249,7 +249,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         return (
             <div className="mx_ExistingPhoneNumber">
                 <span className="mx_ExistingPhoneNumber_address">+{ address }</span>
-                { status }
+                {/* { status } */}
             </div>
         );
     }
