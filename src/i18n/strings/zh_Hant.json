@@ -3550,5 +3550,6 @@
     "%(user)s and %(count)s others|one": "%(user)s 與 1 個其他人",
     "%(user)s and %(count)s others|other": "%(user)s 與 %(count)s 個其他人",
     "%(user1)s and %(user2)s": "%(user1)s 與 %(user2)s",
-    "Introduction":"簡介"
+    "Introduction":"簡介",
+    "Delete local chat history":"刪除本地聊天記錄"
 }

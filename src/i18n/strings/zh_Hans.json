@@ -3504,5 +3504,6 @@
     "Create video room": "创建视频房间",
     "Create a video room": "创建视频房间",
     "%(user1)s and %(user2)s": "%(user1)s和%(user2)s",
-    "Introduction":"简介"
+    "Introduction":"简介",
+    "Delete local chat history":"删除本地聊天记录"
 }

@@ -3544,5 +3544,6 @@
     "New line": "New line",
     "Force complete": "Force complete",
     "Search (must be enabled)": "Search (must be enabled)",
-    "Introduction":"Introduction"
+    "Introduction":"Introduction",
+    "Delete local chat history":"Delete local chat history"
 }

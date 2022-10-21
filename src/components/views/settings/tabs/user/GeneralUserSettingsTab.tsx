@@ -54,6 +54,8 @@ import ToggleSwitch from "../../../elements/ToggleSwitch";
 import { IS_MAC } from "../../../../../Keyboard";
 import IntroductionSettings from 'matrix-react-sdk/src/components/views/settings/IntroductionSettings';
 import AccountSettings from 'matrix-react-sdk/src/components/views/settings/AccountSettings';
+import DeleteHistorySettings from 'matrix-react-sdk/src/components/views/settings/DeleteHistorySettings';
+import ClearAndReloadSettings from 'matrix-react-sdk/src/components/views/settings/ClearAndReloadSettings';
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -326,23 +328,29 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         </div>);
      }
 
-     /**
-      * 
-      * @param e 
-      * @returns 
-      * 清除缓存重新加载
-      */
-     private onClearCacheAndReload = (e) => {
-        if (!PlatformPeg.get()) return;
 
-        // Dev note: please keep this log line, it's useful when troubleshooting a MatrixClient suddenly
-        // stopping in the middle of the logs.
-        logger.log("Clear cache & reload clicked");
-        MatrixClientPeg.get().stopClient();
-        MatrixClientPeg.get().store.deleteAllData().then(() => {
-            PlatformPeg.get().reload();
-        });
-    };
+     /**
+      * 删除本地聊天记录
+      * 
+      */
+     private renderDeleteHistorySection():JSX.Element{
+        return (<div>
+            <DeleteHistorySettings/>
+        </div>);
+     }
+
+
+
+      /**
+      * 清除缓存重新加载
+      * 
+      */
+       private renderClearAndReloadSection():JSX.Element{
+        return (<div>
+            <ClearAndReloadSettings/>
+        </div>);
+     }
+     
 
     private renderAccountSection(): JSX.Element {
         let passwordChangeForm = (
@@ -391,7 +399,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         if (!this.state.canChangePassword) {
             // Just don't show anything if you can't do anything.
             passwordChangeText = null;
-            passwordChangeForm = null;
+            passwordChangeForm = null;  
         }
 
         return (
@@ -549,9 +557,10 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                 {/* { discoverySection } */}
                 {/* { this.renderIntegrationManagerSection() } */}
                 {/* { accountManagementSection } */}
-                <AccessibleButton className='clear-cache-button' onClick={this.onClearCacheAndReload} kind='danger'>
-                    { _t("Clear cache and reload") }
-                </AccessibleButton>
+                {this.renderDeleteHistorySection()}
+                {}
+                {this.renderClearAndReloadSection()}
+               
             </div>
         );
     }
