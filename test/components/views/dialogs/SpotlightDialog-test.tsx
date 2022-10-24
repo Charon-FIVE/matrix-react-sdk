@@ -113,7 +113,7 @@ describe("Spotlight Dialog", () => {
     };
 
     const testPublicRoom: IPublicRoomsChunkRoom = {
-        room_id: "@room247:matrix.org",
+        room_id: "@all247:matrix.org",
         name: "Room #247",
         topic: "We hope you'll have a <b>shining</b> experience!",
         world_readable: false,

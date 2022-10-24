@@ -30,7 +30,7 @@ describe("pillify", () => {
         room_id: roomId,
         type: EventType.RoomMessage,
         content: {
-            body: "@room",
+            body: "@all",
         },
     });
 
@@ -47,7 +47,7 @@ describe("pillify", () => {
                     conditions: [{
                         kind: ConditionKind.EventMatch,
                         key: "content.body",
-                        pattern: "@room",
+                        pattern: "@all",
                     }],
                     actions: [
                         PushRuleActionName.Notify,
@@ -72,22 +72,22 @@ describe("pillify", () => {
         expect(container.outerHTML).toEqual(originalHtml);
     });
 
-    it("should pillify @room", () => {
-        const { container } = render(<div>@room</div>);
+    it("should pillify @all", () => {
+        const { container } = render(<div>@all</div>);
         const containers: Element[] = [];
         pillifyLinks([container], event, containers);
         expect(containers).toHaveLength(1);
-        expect(container.querySelector(".mx_Pill.mx_AtRoomPill").textContent).toBe("!@room");
+        expect(container.querySelector(".mx_Pill.mx_AtRoomPill").textContent).toBe("!@all");
     });
 
     it("should not double up pillification on repeated calls", () => {
-        const { container } = render(<div>@room</div>);
+        const { container } = render(<div>@all</div>);
         const containers: Element[] = [];
         pillifyLinks([container], event, containers);
         pillifyLinks([container], event, containers);
         pillifyLinks([container], event, containers);
         pillifyLinks([container], event, containers);
         expect(containers).toHaveLength(1);
-        expect(container.querySelector(".mx_Pill.mx_AtRoomPill").textContent).toBe("!@room");
+        expect(container.querySelector(".mx_Pill.mx_AtRoomPill").textContent).toBe("!@all");
     });
 });

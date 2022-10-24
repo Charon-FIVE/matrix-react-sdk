@@ -64,7 +64,7 @@ describe('editor/roundtrip', function() {
     describe('markdown messages should round-trip if they contain', function() {
         test.each([
             ["newlines", "hello\nworld"],
-            ["pills", "text message for @room"],
+            ["pills", "text message for @all"],
             ["pills with interesting characters in mxid", "text message for @alice\\\\\\_\\]#>&:hs.example.com"],
             ["styling", "**bold** and _emphasised_"],
             ["bold within a word", "abso**fragging**lutely"],

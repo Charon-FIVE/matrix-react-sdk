@@ -33,7 +33,7 @@ import MemberAvatar from '../avatars/MemberAvatar';
 export enum PillType {
     UserMention = 'TYPE_USER_MENTION',
     RoomMention = 'TYPE_ROOM_MENTION',
-    AtRoomMention = 'TYPE_AT_ROOM_MENTION', // '@room' mention
+    AtRoomMention = 'TYPE_AT_ROOM_MENTION', // '@all' mention
 }
 
 interface IProps {
@@ -67,11 +67,11 @@ export default class Pill extends React.Component<IProps, IState> {
     private matrixClient: MatrixClient;
 
     public static roomNotifPos(text: string): number {
-        return text.indexOf("@room");
+        return text.indexOf("@all");
     }
 
     public static roomNotifLen(): number {
-        return "@room".length;
+        return "@all".length;
     }
 
     constructor(props: IProps) {
@@ -209,7 +209,7 @@ export default class Pill extends React.Component<IProps, IState> {
             case PillType.AtRoomMention: {
                 const room = this.props.room;
                 if (room) {
-                    linkText = "@room";
+                    linkText = "@all";
                     if (this.props.shouldShowPillAvatar) {
                         avatar = <RoomAvatar room={room} width={16} height={16} aria-hidden="true" />;
                     }

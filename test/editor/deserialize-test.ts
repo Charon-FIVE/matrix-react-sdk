@@ -85,11 +85,11 @@ describe('editor/deserialize', function() {
             expect(parts[2]).toStrictEqual({ type: "plain", text: "world" });
             expect(parts.length).toBe(3);
         });
-        it('@room pill', function() {
-            const parts = normalize(parseEvent(textMessage("text message for @room"), createPartCreator()));
+        it('@all pill', function() {
+            const parts = normalize(parseEvent(textMessage("text message for @all"), createPartCreator()));
             expect(parts.length).toBe(2);
             expect(parts[0]).toStrictEqual({ type: "plain", text: "text message for " });
-            expect(parts[1]).toStrictEqual({ type: "at-room-pill", text: "@room" });
+            expect(parts[1]).toStrictEqual({ type: "at-room-pill", text: "@all" });
         });
         it('emote', function() {
             const text = "says DON'T SHOUT!";
@@ -190,12 +190,12 @@ describe('editor/deserialize', function() {
             expect(parts[1]).toStrictEqual({ type: "room-pill", text: "#room:hs.tld", resourceId: "#room:hs.tld" });
             expect(parts[2]).toStrictEqual({ type: "plain", text: "?" });
         });
-        it('@room pill', function() {
-            const html = "<em>formatted</em> message for @room";
+        it('@all pill', function() {
+            const html = "<em>formatted</em> message for @all";
             const parts = normalize(parseEvent(htmlMessage(html), createPartCreator()));
             expect(parts.length).toBe(2);
             expect(parts[0]).toStrictEqual({ type: "plain", text: "_formatted_ message for " });
-            expect(parts[1]).toStrictEqual({ type: "at-room-pill", text: "@room" });
+            expect(parts[1]).toStrictEqual({ type: "at-room-pill", text: "@all" });
         });
         it('inline code', function() {
             const html = "there is no place like <code>127.0.0.1</code>!";

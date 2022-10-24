@@ -44,15 +44,15 @@ export default class NotifProvider extends AutocompleteProvider {
 
         const { command, range } = this.getCurrentCommand(query, selection, force);
         if (command?.[0].length > 1 &&
-            ['@room', '@channel', '@everyone', '@here'].some(c => c.startsWith(command[0]))
+            ['@all', '@channel', '@everyone', '@here'].some(c => c.startsWith(command[0]))
         ) {
             return [{
-                completion: '@room',
-                completionId: '@room',
+                completion: '@all',
+                completionId: '@all',
                 type: "at-room",
                 suffix: ' ',
                 component: (
-                    <PillCompletion title="@room" description={_t("Notify the whole room")}>
+                    <PillCompletion title="@all" description={_t("Notify the whole room")}>
                         <RoomAvatar width={24} height={24} room={this.room} />
                     </PillCompletion>
                 ),

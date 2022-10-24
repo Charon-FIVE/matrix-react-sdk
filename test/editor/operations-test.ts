@@ -216,23 +216,23 @@ describe("editor/operations: formatting operations", () => {
             const pc = createPartCreator();
             const model = new EditorModel([
                 pc.plain("hello there "),
-                pc.atRoomPill("@room"),
+                pc.atRoomPill("@all"),
                 pc.plain(", how are you doing?"),
             ], pc, renderer);
 
             const range = model.startRange(model.positionForOffset(6, false),
-                model.positionForOffset(30, false));  // around "there @room, how are you"
+                model.positionForOffset(30, false));  // around "there @all, how are you"
 
-            expect(range.parts.map(p => p.text).join("")).toBe("there @room, how are you");
+            expect(range.parts.map(p => p.text).join("")).toBe("there @all, how are you");
             expect(model.serializeParts()).toEqual([
                 { "text": "hello there ", "type": "plain" },
-                { "text": "@room", "type": "at-room-pill" },
+                { "text": "@all", "type": "at-room-pill" },
                 { "text": ", how are you doing?", "type": "plain" },
             ]);
             formatRange(range, Formatting.Italics);
             expect(model.serializeParts()).toEqual([
                 { "text": "hello _there ", "type": "plain" },
-                { "text": "@room", "type": "at-room-pill" },
+                { "text": "@all", "type": "at-room-pill" },
                 { "text": ", how are you_ doing?", "type": "plain" },
             ]);
         });

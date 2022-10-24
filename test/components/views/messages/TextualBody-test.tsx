@@ -264,16 +264,16 @@ describe("<TextualBody />", () => {
                 room: "room_id",
                 user: "sender",
                 content: {
-                    body: "`@room`\n```\n@room\n```",
+                    body: "`@all`\n```\n@all\n```",
                     msgtype: "m.text",
                     format: "org.matrix.custom.html",
-                    formatted_body: "<p><code>@room</code></p>\n<pre><code>@room\n</code></pre>\n",
+                    formatted_body: "<p><code>@all</code></p>\n<pre><code>@all\n</code></pre>\n",
                 },
                 event: true,
             });
 
             const wrapper = getComponent({ mxEvent: ev });
-            expect(wrapper.text()).toBe("@room\n1@room\n\n");
+            expect(wrapper.text()).toBe("@all\n1@all\n\n");
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toMatchSnapshot();
         });
