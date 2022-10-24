@@ -203,7 +203,7 @@
     "Waiting for response from server": "Wachtn ip antwoord van de server",
     "Messages containing my display name": "Berichtn da myn weergavenoame bevattn",
     "Messages containing my username": "Berichtn da myn gebruukersnoame bevattn",
-    "Messages containing @room": "Berichtn da ‘@room’ bevattn",
+    "Messages containing @all": "Berichtn da ‘@all’ bevattn",
     "Messages in one-to-one chats": "Berichtn in twigesprekkn",
     "Encrypted messages in one-to-one chats": "Versleuterde berichtn in twigesprekkn",
     "Messages in group chats": "Berichtn in groepsgesprekkn",

@@ -601,7 +601,7 @@
     "Common names and surnames are easy to guess": "常見的名字與姓氏易於猜測",
     "You do not have permission to invite people to this room.": "您沒有權限邀請夥伴到此聊天室。",
     "Unknown server error": "未知的伺服器錯誤",
-    "Messages containing @room": "包含 @room 的訊息",
+    "Messages containing @all": "包含 @all 的訊息",
     "Encrypted messages in one-to-one chats": "在一對一的聊天中的加密訊息",
     "Encrypted messages in group chats": "在群組聊天中的已加密訊息",
     "Set up": "設定",

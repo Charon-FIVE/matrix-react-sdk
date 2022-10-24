@@ -566,7 +566,7 @@
     "was unbanned %(count)s times|other": "został(a) odbanowany(-a) %(count)s razy",
     "were unbanned %(count)s times|other": "zostali odbanowani %(count)s razy",
     "Please review and accept the policies of this homeserver:": "Przeczytaj i zaakceptuj zasady tego serwera domowego:",
-    "Messages containing @room": "Wiadomości zawierające @room",
+    "Messages containing @all": "Wiadomości zawierające @all",
     "This is similar to a commonly used password": "Jest to podobne do powszechnie stosowanego hasła",
     "<b>Print it</b> and store it somewhere safe": "<b>Wydrukuj</b> przechowuj w bezpiecznym miejscu",
     "That doesn't match.": "To się nie zgadza.",

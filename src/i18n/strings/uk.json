@@ -874,7 +874,7 @@
     "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s змінює правило блокування серверів зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
     "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s": "%(senderName)s змінює правило блокування зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
     "Messages containing my username": "Повідомлення, що містять моє користувацьке ім'я",
-    "Messages containing @room": "Повідомлення, що містять @room",
+    "Messages containing @all": "Повідомлення, що містять @all",
     "When rooms are upgraded": "Коли кімнати поліпшено",
     "Unknown caller": "Невідомий викликач",
     "The integration manager is offline or it cannot reach your homeserver.": "Менеджер інтеграцій не під'єднаний або не може зв'язатися з вашим домашнім сервером.",

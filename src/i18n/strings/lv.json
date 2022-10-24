@@ -703,7 +703,7 @@
     "%(senderName)s placed a video call.": "%(senderName)s uzsāka video zvanu.",
     "Encrypted messages in group chats": "Šifrētas ziņas grupas čatos",
     "Encrypted messages in one-to-one chats": "Šifrētas ziņas viens-pret-vienu čatos",
-    "Messages containing @room": "Ziņas, kuras satur @room",
+    "Messages containing @all": "Ziņas, kuras satur @all",
     "Messages containing my username": "Ziņas, kuras satur manu lietotājvārdu",
     "%(displayName)s created this room.": "%(displayName)s izveidoja šo istabu.",
     "IRC display name width": "IRC parādāmā vārda platums",

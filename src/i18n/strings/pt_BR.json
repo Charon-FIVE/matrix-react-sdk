@@ -516,7 +516,7 @@
     "Please contact your homeserver administrator.": "Por favor, entre em contato com o administrador do seu homeserver.",
     "Send analytics data": "Enviar dados analíticos",
     "Enable widget screenshots on supported widgets": "Ativar capturas de tela do widget em widgets suportados",
-    "Messages containing @room": "Mensagens contendo @room",
+    "Messages containing @all": "Mensagens contendo @all",
     "Encrypted messages in one-to-one chats": "Mensagens criptografadas em conversas individuais",
     "Encrypted messages in group chats": "Mensagens criptografadas em salas",
     "Delete Backup": "Remover backup",

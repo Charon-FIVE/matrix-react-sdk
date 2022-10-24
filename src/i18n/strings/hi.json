@@ -182,7 +182,7 @@
     "A word by itself is easy to guess": "सिर्फ एक शब्द अनुमान लगाना आसान है",
     "Names and surnames by themselves are easy to guess": "खुद के नाम और उपनाम अनुमान लगाना आसान है",
     "Common names and surnames are easy to guess": "सामान्य नाम और उपनाम अनुमान लगाना आसान है",
-    "Messages containing @room": "@Room युक्त संदेश",
+    "Messages containing @all": "@All युक्त संदेश",
     "Encrypted messages in one-to-one chats": "एक एक के साथ चैट में एन्क्रिप्टेड संदेश",
     "Encrypted messages in group chats": "समूह चैट में एन्क्रिप्टेड संदेश",
     "Show message in desktop notification": "डेस्कटॉप अधिसूचना में संदेश दिखाएं",

@@ -601,7 +601,7 @@
     "You do not have permission to invite people to this room.": "S’keni leje të ftoni njerëz në këtë dhomë.",
     "Unknown server error": "Gabim i panjohur shërbyesi",
     "Set up": "Rregulloje",
-    "Messages containing @room": "Mesazhe që përmbajnë @room",
+    "Messages containing @all": "Mesazhe që përmbajnë @all",
     "Encrypted messages in one-to-one chats": "Mesazhe të fshehtëzuar në fjalosje tek-për-tek",
     "Encrypted messages in group chats": "Mesazhe të fshehtëzuar në fjalosje në grup",
     "Invalid identity server discovery response": "Përgjigje e pavlefshme zbulimi identiteti shërbyesi",

@@ -604,7 +604,7 @@
     "You do not have permission to invite people to this room.": "Vous n’avez pas la permission d’inviter des personnes dans ce salon.",
     "Unknown server error": "Erreur de serveur inconnue",
     "Set up": "Configurer",
-    "Messages containing @room": "Messages contenant @room",
+    "Messages containing @all": "Messages contenant @all",
     "Encrypted messages in one-to-one chats": "Messages chiffrés dans les conversations privées",
     "Encrypted messages in group chats": "Messages chiffrés dans les discussions de groupe",
     "Invalid identity server discovery response": "Réponse non valide lors de la découverte du serveur d'identité",

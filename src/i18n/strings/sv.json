@@ -602,7 +602,7 @@
     "Enable big emoji in chat": "Aktivera stora emojier i chatt",
     "Send typing notifications": "Skicka \"skriver\"-statusar",
     "Messages containing my username": "Meddelanden som innehåller mitt användarnamn",
-    "Messages containing @room": "Meddelanden som innehåller @room",
+    "Messages containing @all": "Meddelanden som innehåller @all",
     "Encrypted messages in one-to-one chats": "Krypterade meddelanden i en-till-en-chattar",
     "Encrypted messages in group chats": "Krypterade meddelanden i gruppchattar",
     "Dog": "Hund",

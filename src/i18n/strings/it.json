@@ -604,7 +604,7 @@
     "Unable to create key backup": "Impossibile creare backup della chiave",
     "Retry": "Riprova",
     "Set up": "Imposta",
-    "Messages containing @room": "Messaggi contenenti @room",
+    "Messages containing @all": "Messaggi contenenti @all",
     "Encrypted messages in one-to-one chats": "Messaggi cifrati in chat uno-ad-uno",
     "Encrypted messages in group chats": "Messaggi cifrati in chat di gruppo",
     "Invalid identity server discovery response": "Risposta non valida cercando server di identità",

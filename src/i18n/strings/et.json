@@ -532,7 +532,7 @@
     "Collecting logs": "Kogun logisid",
     "Waiting for response from server": "Ootan serverilt vastust",
     "Messages containing my username": "Sõnumid, mis sisaldavad minu kasutajatunnust",
-    "Messages containing @room": "Sõnumid, mis sisaldavad sõna @room",
+    "Messages containing @all": "Sõnumid, mis sisaldavad sõna @all",
     "Messages in one-to-one chats": "Kahepoolsete vestluste sõnumid",
     "Encrypted messages in one-to-one chats": "Kahepoolsete vestluste krüptitud sõnumid",
     "Messages in group chats": "Rühmavestluste sõnumid",

@@ -691,7 +691,7 @@
     "Show hidden events in timeline": "타임라인에서 숨겨진 이벤트 보이기",
     "Allow fallback call assist server turn.matrix.org when your homeserver does not offer one (your IP address would be shared during a call)": "홈서버가 전화를 제공하지 않을 경우 대체 전화 지원 서버 turn.matrix.org 허용 (전화하는 동안 IP 주소가 공유됨)",
     "Messages containing my username": "내 사용자 이름이 있는 메시지",
-    "Messages containing @room": "@room이(가) 있는 메시지",
+    "Messages containing @all": "@all이(가) 있는 메시지",
     "Encrypted messages in one-to-one chats": "1:1 대화 암호화된 메시지",
     "Encrypted messages in group chats": "그룹 대화 암호화된 메시지",
     "When rooms are upgraded": "방을 업그레이드했을 때",

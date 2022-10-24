@@ -603,7 +603,7 @@
     "You do not have permission to invite people to this room.": "Ez duzu jendea gela honetara gonbidatzeko baimenik.",
     "Unknown server error": "Zerbitzari errore ezezaguna",
     "Set up": "Ezarri",
-    "Messages containing @room": "@room duten mezuak",
+    "Messages containing @all": "@all duten mezuak",
     "Encrypted messages in one-to-one chats": "Zifratutako mezuak bi pertsonen arteko txatetan",
     "Encrypted messages in group chats": "Zifratutako mezuak talde-txatetan",
     "Straight rows of keys are easy to guess": "Teklatuko errenkadak asmatzeko errazak dira",

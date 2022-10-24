@@ -513,7 +513,7 @@
     "Names and surnames by themselves are easy to guess": "Ankaŭ nomoj familiaj kaj individiuaj estas memstare facile diveneblaj",
     "Common names and surnames are easy to guess": "Oftaj nomoj familiaj kaj individuaj estas facile diveneblaj",
     "Please contact your homeserver administrator.": "Bonvolu kontakti la administranton de via hejmservilo.",
-    "Messages containing @room": "Mesaĝoj enhavantaj @room",
+    "Messages containing @all": "Mesaĝoj enhavantaj @all",
     "Encrypted messages in one-to-one chats": "Ĉifritaj mesaĝoj en duopaj babiloj",
     "Encrypted messages in group chats": "Ĉifritaj mesaĝoj en grupaj babiloj",
     "Delete Backup": "Forigi savkopion",

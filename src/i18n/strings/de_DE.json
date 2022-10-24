@@ -595,7 +595,7 @@
     "You do not have permission to invite people to this room.": "Du hast keine Berechtigung, Personen in diesen Raum einzuladen.",
     "Unknown server error": "Unbekannter Serverfehler",
     "Short keyboard patterns are easy to guess": "Kurze Tastaturmuster sind einfach zu erraten",
-    "Messages containing @room": "Nachrichten mit \"@room\"",
+    "Messages containing @all": "Nachrichten mit \"@all\"",
     "Encrypted messages in one-to-one chats": "Verschlüsselte Direktnachrichten",
     "Encrypted messages in group chats": "Verschlüsselte Gruppenchats",
     "Use a longer keyboard pattern with more turns": "Nutze ein längeres Tastaturmuster mit mehr Abwechslung",

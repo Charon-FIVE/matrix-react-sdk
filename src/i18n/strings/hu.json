@@ -604,7 +604,7 @@
     "You do not have permission to invite people to this room.": "Nincs jogosultsága embereket meghívni ebbe a szobába.",
     "Unknown server error": "Ismeretlen kiszolgálóhiba",
     "Set up": "Beállítás",
-    "Messages containing @room": "„@room” megemlítést tartalmazó üzenetek",
+    "Messages containing @all": "„@all” megemlítést tartalmazó üzenetek",
     "Encrypted messages in one-to-one chats": "Titkosított üzenetek közvetlen csevegésekben",
     "Encrypted messages in group chats": "Titkosított üzenetek a csoportos beszélgetésekben",
     "Invalid identity server discovery response": "Azonosító szerver felderítésére érkezett válasz érvénytelen",

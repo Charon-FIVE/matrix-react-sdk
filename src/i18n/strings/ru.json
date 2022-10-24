@@ -579,7 +579,7 @@
     "Enable big emoji in chat": "Включить большие смайлики в чате",
     "Send typing notifications": "Оправлять уведомления о наборе текста",
     "Messages containing my username": "Сообщения, содержащие имя моего пользователя",
-    "Messages containing @room": "Сообщения, содержащие @room",
+    "Messages containing @all": "Сообщения, содержащие @all",
     "Encrypted messages in one-to-one chats": "Зашифрованные сообщения в персональных чатах",
     "Encrypted messages in group chats": "Зашифрованные сообщения в групповых чатах",
     "The other party cancelled the verification.": "Другая сторона отменила проверку.",

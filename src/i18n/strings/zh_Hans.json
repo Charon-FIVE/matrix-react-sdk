@@ -542,7 +542,7 @@
     "%(senderName)s set the main address for this room to %(address)s.": "%(senderName)s 将此房间的主要地址设为了 %(address)s。",
     "%(senderName)s removed the main address for this room.": "%(senderName)s 移除了此房间的主要地址。",
     "Unable to load! Check your network connectivity and try again.": "无法加载！请检查你的网络连接并重试。",
-    "Messages containing @room": "当消息包含 @room 时",
+    "Messages containing @all": "当消息包含 @all时",
     "Delete Backup": "删除备份",
     "Set up": "设置",
     "Incompatible local cache": "本地缓存不兼容",

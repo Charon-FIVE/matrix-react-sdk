@@ -574,7 +574,7 @@
     "Show a placeholder for removed messages": "Zobrazovat smazané zprávy",
     "Show display name changes": "Zobrazovat změny zobrazovaného jména",
     "Messages containing my username": "Zprávy obsahující moje uživatelské jméno",
-    "Messages containing @room": "Zprávy obsahující @room",
+    "Messages containing @all": "Zprávy obsahující @all",
     "Encrypted messages in one-to-one chats": "Šifrované přímé zprávy",
     "Email addresses": "E-mailové adresy",
     "Set a new account password...": "Nastavit nové heslo...",

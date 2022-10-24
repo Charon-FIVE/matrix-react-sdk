@@ -992,7 +992,7 @@
     "Waiting for response from server": "Waiting for response from server",
     "Messages containing my display name": "Messages containing my display name",
     "Messages containing my username": "Messages containing my username",
-    "Messages containing @room": "Messages containing @room",
+    "Messages containing @all": "Messages containing @all",
     "Messages in one-to-one chats": "Messages in one-to-one chats",
     "Encrypted messages in one-to-one chats": "Encrypted messages in one-to-one chats",
     "Messages in group chats": "Messages in group chats",

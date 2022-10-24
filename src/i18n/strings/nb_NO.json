@@ -411,7 +411,7 @@
     "Allow fallback call assist server turn.matrix.org when your homeserver does not offer one (your IP address would be shared during a call)": "Tillat tilbakefalloppringingsassistenttjeneren turn.matrix.org dersom hjemmetjeneren din ikke tilbyr en (IP-adressen din ville blitt delt under en samtale)",
     "Show previews/thumbnails for images": "Vis forhåndsvisninger for bilder",
     "Messages containing my username": "Meldinger som nevner brukernavnet mitt",
-    "Messages containing @room": "Medlinger som inneholder @room",
+    "Messages containing @all": "Medlinger som inneholder @all",
     "Encrypted messages in one-to-one chats": "Krypterte meldinger i samtaler under fire øyne",
     "Encrypted messages in group chats": "Krypterte meldinger i gruppesamtaler",
     "When rooms are upgraded": "Når rom blir oppgradert",

@@ -693,7 +693,7 @@
     "Enable big emoji in chat": "Ota käyttöön suuret emojit keskusteluissa",
     "Prompt before sending invites to potentially invalid matrix IDs": "Kysy varmistus ennen kutsujen lähettämistä mahdollisesti epäkelpoihin Matrix ID:hin",
     "Messages containing my username": "Viestit, jotka sisältävät käyttäjätunnukseni",
-    "Messages containing @room": "Viestit, jotka sisältävät sanan ”@room”",
+    "Messages containing @all": "Viestit, jotka sisältävät sanan ”@all”",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Turvalliset viestit tämän käyttäjän kanssa ovat salattuja päästä päähän, eivätkä kolmannet osapuolet voi lukea niitä.",
     "Thumbs up": "Peukut ylös",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Lähetimme sinulle sähköpostin osoitteesi vahvistamiseksi. Noudata sähköpostissa olevia ohjeita, ja klikkaa sen jälkeen alla olevaa painiketta.",

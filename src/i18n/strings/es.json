@@ -607,7 +607,7 @@
     "Send typing notifications": "Enviar notificaciones de tecleo",
     "Prompt before sending invites to potentially invalid matrix IDs": "Preguntarme antes de enviar invitaciones a IDs de matrix que no parezcan válidas",
     "Messages containing my username": "Mensajes que contengan mi nombre",
-    "Messages containing @room": "Mensajes que contengan @room",
+    "Messages containing @all": "Mensajes que contengan @all",
     "Encrypted messages in one-to-one chats": "Mensajes cifrados en salas uno a uno",
     "Encrypted messages in group chats": "Mensajes cifrados en conversaciones grupales",
     "The other party cancelled the verification.": "El otro lado canceló la verificación.",

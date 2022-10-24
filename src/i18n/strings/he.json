@@ -876,7 +876,7 @@
     "When rooms are upgraded": "כאשר חדרים משתדרגים",
     "Encrypted messages in group chats": "הודעות מוצפנות בצאטים של קבוצות",
     "Encrypted messages in one-to-one chats": "הודעות מוצפנות בחדרים של אחד-על-אחד",
-    "Messages containing @room": "הודעות שמכילות שם חדר כגון: room@",
+    "Messages containing @all": "הודעות שמכילות שם חדר כגון: all@",
     "Messages containing my username": "הודעות שמכילות את שם המשתמש שלי",
     "Downloading logs": "מוריד לוגים",
     "Uploading logs": "מעלה לוגים",

@@ -2227,7 +2227,7 @@
     "Messages in group chats": "ຂໍ້ຄວາມໃນກຸ່ມສົນທະນາ",
     "Encrypted messages in one-to-one chats": "ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໃນການສົນທະນາແບບຫນຶ່ງຕໍ່ຫນຶ່ງ",
     "Messages in one-to-one chats": "ຂໍ້ຄວາມໃນການສົນທະນາຫນຶ່ງຕໍ່ຫນຶ່ງ",
-    "Messages containing @room": "ຂໍ້ຄວາມທີ່ບັນຈຸ @room",
+    "Messages containing @all": "ຂໍ້ຄວາມທີ່ບັນຈຸ @all",
     "Messages containing my username": "ຂໍ້ຄວາມບັນຈຸຊື່ຜູ້ໃຊ້ຂອງຂ້ອຍ",
     "Messages containing my display name": "ຂໍ້ຄວາມທີ່ມີຊື່ສະແດງຂອງຂ້ອຍ",
     "Waiting for response from server": "ກຳລັງລໍຖ້າການຕອບສະໜອງຈາກເຊີບເວີ",

@@ -812,7 +812,7 @@
     "Manually verify all remote sessions": "Verificar manualmente todas as sesións remotas",
     "IRC display name width": "Ancho do nome mostrado de IRC",
     "Messages containing my username": "Mensaxes que conteñen o meu nome de usuaria",
-    "Messages containing @room": "Mensaxes que conteñen @room",
+    "Messages containing @all": "Mensaxes que conteñen @all",
     "Encrypted messages in one-to-one chats": "Mensaxes cifradas en conversas 1:1",
     "Encrypted messages in group chats": "Mensaxes cifradas en convesas en grupo",
     "When rooms are upgraded": "Cando se actualizan as salas",
