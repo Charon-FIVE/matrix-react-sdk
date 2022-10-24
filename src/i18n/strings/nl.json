@@ -587,7 +587,7 @@
     "Send typing notifications": "Typmeldingen versturen",
     "Prompt before sending invites to potentially invalid matrix IDs": "Uitnodigingen naar mogelijk ongeldige Matrix-ID’s bevestigen",
     "Messages containing my username": "Berichten die mijn inlognaam bevatten",
-    "Messages containing @room": "Berichten die ‘@room’ bevatten",
+    "Messages containing @all": "Berichten die ‘@all’ bevatten",
     "Encrypted messages in one-to-one chats": "Versleutelde berichten in één-op-één chats",
     "Encrypted messages in group chats": "Versleutelde berichten in groepsgesprekken",
     "The other party cancelled the verification.": "De tegenpartij heeft de verificatie geannuleerd.",
