@@ -1245,7 +1245,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 { content }
             </div>
 
-            <div className="mx_SpotlightDialog_footer">
+            {/* <div className="mx_SpotlightDialog_footer">
                 { openFeedback && _t("Results not as expected? Please <a>give feedback</a>.", {}, {
                     a: sub => <AccessibleButton kind="link_inline" onClick={openFeedback}>
                         { sub }
@@ -1257,7 +1257,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 >
                     { _t("Feedback") }
                 </AccessibleButton> }
-            </div>
+            </div> */}
         </BaseDialog>
     </>;
 };
