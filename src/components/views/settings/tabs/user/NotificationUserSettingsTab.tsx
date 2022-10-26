@@ -27,7 +27,7 @@ export default class NotificationUserSettingsTab extends React.Component {
                 <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">
                     <Notifications />
                 </div>
-            </div>
+            </div>   
         );
     }
 }

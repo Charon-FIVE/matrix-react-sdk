@@ -27,7 +27,7 @@ import SecurityUserSettingsTab from "../settings/tabs/user/SecurityUserSettingsT
 import NotificationUserSettingsTab from "../settings/tabs/user/NotificationUserSettingsTab";
 import PreferencesUserSettingsTab from "../settings/tabs/user/PreferencesUserSettingsTab";
 import VoiceUserSettingsTab from "../settings/tabs/user/VoiceUserSettingsTab";
-import HelpUserSettingsTab from "../settings/tabs/user/HelpUserSettingsTab";
+import HelpUserSettingsNewTab from "../settings/tabs/user/HelpUserSettingsNewTab";
 import SdkConfig from "../../../SdkConfig";
 import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
 import { UIFeature } from "../../../settings/UIFeature";
@@ -178,7 +178,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             UserTab.Help,
             _td("Help & About"),
             "mx_UserSettingsDialog_helpIcon",
-            <HelpUserSettingsTab closeSettingsFn={() => this.props.onFinished(true)} />,
+            <HelpUserSettingsNewTab closeSettingsFn={() => this.props.onFinished(true)} />,
             "UserSettingsHelpAbout",
         ));
 
