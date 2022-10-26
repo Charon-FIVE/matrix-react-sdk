@@ -23,7 +23,7 @@ import GeneralUserSettingsTab from "../settings/tabs/user/GeneralUserSettingsTab
 import SettingsStore, { CallbackFn } from "../../../settings/SettingsStore";
 import LabsUserSettingsTab from "../settings/tabs/user/LabsUserSettingsTab";
 import AppearanceUserSettingsTab from "../settings/tabs/user/AppearanceUserSettingsTab";
-import SecurityUserSettingsTab from "../settings/tabs/user/SecurityUserSettingsTab";
+import SecurityUserSettingsNewTab from "../settings/tabs/user/SecurityUserSettingsNewTab";
 import NotificationUserSettingsTab from "../settings/tabs/user/NotificationUserSettingsTab";
 import PreferencesUserSettingsTab from "../settings/tabs/user/PreferencesUserSettingsTab";
 import VoiceUserSettingsTab from "../settings/tabs/user/VoiceUserSettingsTab";
@@ -140,7 +140,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             UserTab.Security,
             _td("Security & Privacy"),
             "mx_UserSettingsDialog_securityIcon",
-            <SecurityUserSettingsTab closeSettingsFn={this.props.onFinished} />,
+            <SecurityUserSettingsNewTab closeSettingsFn={this.props.onFinished} />,
             "UserSettingsSecurityPrivacy",
         ));
         if (this.state.newSessionManagerEnabled) {
