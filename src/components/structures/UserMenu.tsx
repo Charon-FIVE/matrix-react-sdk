@@ -63,6 +63,8 @@ interface IState {
     isDarkTheme: boolean;
     isHighContrast: boolean;
     selectedSpace?: Room;
+    Introduction:string;
+    userName:string;
 }
 
 const toRightOf = (rect: PartialDOMRect) => {
@@ -95,6 +97,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
             isDarkTheme: this.isUserOnDarkTheme(),
             isHighContrast: this.isUserOnHighContrastTheme(),
             selectedSpace: SpaceStore.instance.activeSpaceRoom,
+            Introduction:'Not introduced yet!',
+            userName:''
         };
 
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onProfileUpdate);
@@ -108,6 +112,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
     public componentDidMount() {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         this.themeWatcherRef = SettingsStore.watchSetting("theme", null, this.onThemeChanged);
+        this.GetIntroduction();
+        this.GetUserName();
     }
 
     public componentWillUnmount() {
@@ -213,6 +219,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 newTheme = hcTheme;
             }
         }
+        location.reload();
         SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme); // set at same level as Appearance tab
     };
 
@@ -266,9 +273,31 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
+
+     /**
+     * 获取个人简介
+     */
+      private GetIntroduction(){
+        const cli = MatrixClientPeg.get();
+        cli.getUserIntroduction(cli.getUserId()).then((res) => {
+           if(res.introduction){
+               this.setState({
+                 Introduction: res.introduction,
+               })    
+           }
+       });
+    }
+
+    private async GetUserName(){
+        const cli = MatrixClientPeg.get();
+        const profileInfo = await cli.getProfileInfo(cli.getUserId());
+        this.setState({
+            userName:profileInfo.user_name
+        });
+    }
+
     private renderContextMenu = (): React.ReactNode => {
         if (!this.state.contextMenuPosition) return null;
-
         let topSection;
         const hostSignupConfig = SdkConfig.getObject("host_signup");
         if (MatrixClientPeg.get().isGuest()) {
@@ -296,6 +325,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             const hostSignupDomains = hostSignupConfig.get("domains") || [];
             const mxDomain = MatrixClientPeg.get().getDomain();
             const validDomains = hostSignupDomains.filter(d => (d === mxDomain || mxDomain.endsWith(`.${d}`)));
+           
             if (!hostSignupConfig.get("domains") || validDomains.length > 0) {
                 topSection = <HostSignupAction onClick={this.onCloseMenu} />;
             }
@@ -312,14 +342,14 @@ export default class UserMenu extends React.Component<IProps, IState> {
             );
         }
 
-        let feedbackButton;
-        if (SettingsStore.getValue(UIFeature.Feedback)) {
-            feedbackButton = <IconizedContextMenuOption
-                iconClassName="mx_UserMenu_iconMessage"
-                label={_t("Feedback")}
-                onClick={this.onProvideFeedback}
-            />;
-        }
+        // let feedbackButton;
+        // if (SettingsStore.getValue(UIFeature.Feedback)) {
+        //     feedbackButton = <IconizedContextMenuOption
+        //         iconClassName="mx_UserMenu_iconMessage"
+        //         label={_t("Feedback")}
+        //         onClick={this.onProvideFeedback}
+        //     />;
+        // }
 
         let primaryOptionList = (
             <IconizedContextMenuOptionList>
@@ -329,17 +359,17 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     label={_t("Notifications")}
                     onClick={(e) => this.onSettingsOpen(e, UserTab.Notifications)}
                 />
-                <IconizedContextMenuOption
+                {/* <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconLock"
                     label={_t("Security & Privacy")}
                     onClick={(e) => this.onSettingsOpen(e, UserTab.Security)}
-                />
+                /> */}
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconSettings"
                     label={_t("All settings")}
                     onClick={(e) => this.onSettingsOpen(e, null)}
                 />
-                { feedbackButton }
+                {/* { feedbackButton } */}
                 <IconizedContextMenuOption
                     className="mx_IconizedContextMenu_option_red"
                     iconClassName="mx_UserMenu_iconSignOut"
@@ -358,7 +388,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         label={_t("Settings")}
                         onClick={(e) => this.onSettingsOpen(e, null)}
                     />
-                    { feedbackButton }
+                    {/* { feedbackButton } */}
                 </IconizedContextMenuOptionList>
             );
         }
@@ -377,10 +407,14 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     <span className="mx_UserMenu_contextMenu_displayName">
                         { OwnProfileStore.instance.displayName }
                     </span>
-                    <span className="mx_UserMenu_contextMenu_userId">
+                    <br/>
+                    <span className="mx_UserInfoDialog_ID">{_t('Username')+ ":  "+this.state.userName}</span>
+                    <br/>
+                    <span className="mx_UserInfoDialog_ID">{_t("Introduction")+ ":  "+this.state.Introduction}</span>
+                    {/* <span className="mx_UserMenu_contextMenu_userId">
                         { UserIdentifierCustomisations.getDisplayUserIdentifier(
                             MatrixClientPeg.get().getUserId(), { withDisplayName: true }) }
-                    </span>
+                    </span> */}
                 </div>
 
                 <RovingAccessibleTooltipButton
@@ -434,7 +468,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     />
                 </div>
                 { name }
-
                 { this.renderContextMenu() }
             </ContextMenuButton>
 

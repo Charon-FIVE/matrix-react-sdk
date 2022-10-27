@@ -784,7 +784,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         <h4 id="mx_SpotlightDialog_section_publicRooms">
                             { _t("Suggestions") }
                         </h4>
-                        <div className="mx_SpotlightDialog_options">
+                        <div className="mx_SpotlightDialog_options"> 
                             { exploringPublicSpacesEnabled && <>
                                 <LabelledCheckbox
                                     label={_t("Show rooms")}
