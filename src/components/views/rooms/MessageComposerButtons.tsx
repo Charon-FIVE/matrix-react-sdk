@@ -74,7 +74,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         ];
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
-            showStickersButton(props),
+           // showStickersButton(props),
             voiceRecordingButton(props, narrow),
             props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
@@ -85,7 +85,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             uploadButton(), // props passed via UploadButtonContext
         ];
         moreButtons = [
-            showStickersButton(props),
+        //   showStickersButton(props),
             voiceRecordingButton(props, narrow),
             props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),

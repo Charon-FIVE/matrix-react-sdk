@@ -323,12 +323,12 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
             </Button>
         </Group>
 
-        {
+        {/* {
             SettingsStore.getValue(UIFeature.Widgets)
             && !isVideoRoom
             && shouldShowComponent(UIComponent.AddIntegrations)
             && <AppsSection room={room} />
-        }
+        } */}
     </BaseCard>;
 };
 

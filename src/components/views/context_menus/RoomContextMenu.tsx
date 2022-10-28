@@ -273,21 +273,21 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
         </IconizedContextMenuOption>;
     }
 
-    let widgetsOption: JSX.Element;
-    if (!isVideoRoom) {
-        widgetsOption = <IconizedContextMenuOption
-            onClick={(ev: ButtonEvent) => {
-                ev.preventDefault();
-                ev.stopPropagation();
+    // let widgetsOption: JSX.Element;
+    // if (!isVideoRoom) {
+    //     widgetsOption = <IconizedContextMenuOption
+    //         onClick={(ev: ButtonEvent) => {
+    //             ev.preventDefault();
+    //             ev.stopPropagation();
 
-                ensureViewingRoom(ev);
-                RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary }, false);
-                onFinished();
-            }}
-            label={_t("Widgets")}
-            iconClassName="mx_RoomTile_iconWidgets"
-        />;
-    }
+    //             ensureViewingRoom(ev);
+    //             RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary }, false);
+    //             onFinished();
+    //         }}
+    //         label={_t("Widgets")}
+    //         iconClassName="mx_RoomTile_iconWidgets"
+    //     />;
+    // }
 
     let exportChatOption: JSX.Element;
     if (!isVideoRoom) {
@@ -345,7 +345,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
             { peopleOption }
             { filesOption }
             { pinsOption }
-            { widgetsOption }
+            {/* { widgetsOption } */}
             { lowPriorityOption }
             { copyLinkOption }
 
