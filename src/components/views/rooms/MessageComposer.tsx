@@ -52,6 +52,8 @@ import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+import { OwnProfileStore } from 'matrix-react-sdk/src/stores/OwnProfileStore';
+import BaseAvatar from 'matrix-react-sdk/src/components/views/avatars/BaseAvatar';
 
 let instanceCount = 0;
 
@@ -358,9 +360,25 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     }
 
     public render() {
+        const avatarSize = 32; 
+        const userId = MatrixClientPeg.get().getUserId();
+        const displayName = OwnProfileStore.instance.displayName || userId;
+        const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
+        
         const controls = [
             this.props.e2eStatus ?
-                <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
+            <div className="mx_MessageComposer_e2eIcon" >
+                    <BaseAvatar
+                        idName={userId}
+                        name={displayName}
+                        url={avatarUrl}
+                        width={avatarSize}
+                        height={avatarSize}
+                        resizeMethod="crop"
+                        className="mx_UserMenu_userAvatar_BaseAvatar"
+                    />
+                </div>:
+                // <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
                 null,
         ];
 
