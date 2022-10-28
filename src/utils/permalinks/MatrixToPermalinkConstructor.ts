@@ -16,7 +16,7 @@ limitations under the License.
 
 import PermalinkConstructor, { PermalinkParts } from "./PermalinkConstructor";
 
-export const host = "matrix.to";
+export const host = "freedomain.0c535de2.com"//"matrix.to";
 export const baseUrl = `https://${host}`;
 
 /**
@@ -32,11 +32,13 @@ export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
     }
 
     forRoom(roomIdOrAlias: string, serverCandidates: string[]): string {
-        return `${baseUrl}/#/${roomIdOrAlias}${this.encodeServerCandidates(serverCandidates)}`;
+        //return `${baseUrl}/#/${roomIdOrAlias}${this.encodeServerCandidates(serverCandidates)}`;
+        return `${baseUrl}/#/${roomIdOrAlias}${"?kind=RoomId"}`;
     }
 
     forUser(userId: string): string {
-        return `${baseUrl}/#/${userId}`;
+       // return `${baseUrl}/#/${userId}`;
+       return `${baseUrl}/#/${userId}${"?kind=UserId"}`;
     }
 
     forGroup(groupId: string): string {

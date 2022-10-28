@@ -174,7 +174,7 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
                     { showQrCode && <div className="mx_ShareDialog_qrcode_container">
                         <QRCode data={matrixToUrl} width={256} />
                     </div> }
-                    { showSocials && <div className="mx_ShareDialog_social_container">
+                    {/* { showSocials && <div className="mx_ShareDialog_social_container">
                         { socials.map((social) => (
                             <a
                                 rel="noreferrer noopener"
@@ -187,7 +187,7 @@ export default class ShareDialog extends React.PureComponent<IProps, IState> {
                                 <img src={social.img} alt={social.name} height={64} width={64} />
                             </a>
                         )) }
-                    </div> }
+                    </div> } */}
                 </div>
             </>;
         }
