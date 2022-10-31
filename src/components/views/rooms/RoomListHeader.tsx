@@ -392,7 +392,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
             onClick={openPlusMenu}
             isExpanded={plusMenuDisplayed}
             className="mx_RoomListHeader_plusButton"
-            title={_t("Start group chat, add friends, search for groups")}
+            title={_t("Add")}
         /> }
 
         { contextMenu }

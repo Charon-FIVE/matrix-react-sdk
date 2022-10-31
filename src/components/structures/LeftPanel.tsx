@@ -32,7 +32,7 @@ import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces"
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import UIStore from "../../stores/UIStore";
 import { IState as IRovingTabIndexState } from "../../accessibility/RovingTabIndex";
-import RoomListHeader from "../views/rooms/RoomListHeader";
+import RoomListHeaderNew from "../views/rooms/RoomListHeaderNew";
 import RecentlyViewedButton from "../views/rooms/RecentlyViewedButton";
 import { BreadcrumbsStore } from "../../stores/BreadcrumbsStore";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../stores/room-list/RoomListStore";
@@ -361,7 +361,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 {/* { dialPadButton } */}
                 {/* { rightButton } */}
                 { !this.props.isMinimized && (
-                        <RoomListHeader
+                        <RoomListHeaderNew
                             onVisibilityChange={this.refreshStickyHeaders}
                         />
                     ) }  

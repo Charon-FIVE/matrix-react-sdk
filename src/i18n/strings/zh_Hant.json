@@ -3554,5 +3554,8 @@
     "Delete local chat history":"刪除本地聊天記錄",
     "Official customer service":"官方客服",
     "Official group":"官方群",
-    "Start group chat, add friends, search for groups":"發起群聊,添加好友,搜索群"
+    "Start group chat, add friends, search for groups":"發起群聊,添加好友,搜索群",
+    "Add friends":"添加好友",
+    "Group chat":"群聊",
+    "Search group":"搜索群"
 }
