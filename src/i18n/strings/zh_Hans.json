@@ -3511,5 +3511,12 @@
     "Start group chat, add friends, search for groups":"发起群聊,添加好友,搜索群",
     "Add friends":"添加好友",
     "Group chat":"群聊",
-    "Search group":"搜索群"
+    "Search group":"搜索群",
+    "Make this room public":"将此群设为公共的",
+    "Private rooms can be found and joined by invitation only. Public rooms can be found and joined by anyone.":"私人群仅能通过邀请找到与加入。公开群则能够被所有人找到并加入。",
+    "After encryption is turned on, the maximum number of group members is":"开启加密后群人数上限为",
+    "people":"人",
+    "After the encryption is turned off, the maximum number of group members is":"关闭加密后群人数上限为",
+    "Enable encryption (irreversible)":"开启加密(不可逆)",
+    "Create Room":"创建房间"
 }

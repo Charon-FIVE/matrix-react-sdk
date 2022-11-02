@@ -475,5 +475,12 @@
     "Start group chat, add friends, search for groups":"Start group chat, add friends, search for groups",
     "Add friends":"Add friends",
     "Group chat":"Group chat",
-    "Search group":"Search group"
+    "Search group":"Search group",
+    "Make this room public":"Make this room public",
+    "Private rooms can be found and joined by invitation only. Public rooms can be found and joined by anyone.":"Private rooms can be found and joined by invitation only. Public rooms can be found and joined by anyone.",
+    "After encryption is turned on, the maximum number of group members is":"After encryption is turned on, the maximum number of group members is",
+    "people":"people",
+    "After the encryption is turned off, the maximum number of group members is":"After the encryption is turned off, the maximum number of group members is",
+    "Enable encryption (irreversible)":"Enable encryption (irreversible)",
+    "Create Room":"Create Room"
 }

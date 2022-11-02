@@ -268,8 +268,8 @@ export default class CreateRoomNewDialog extends React.Component<IProps, IState>
             "found and joined by anyone.",
         )}</p>;
 
-        let encryptionLabel1 = <p className="mx_publicPrivate_Label">{"开启加密后群人数上限为"+this.state.publicMAXNum+"人"}</p>;
-        let encryptionLabel2 = <p className="mx_publicPrivate_Label">{"关闭加密后群人数上限为"+this.state.privateMAXNum+"人"}</p>;
+        let encryptionLabel1 = <p className="mx_publicPrivate_Label">{_t("After encryption is turned on, the maximum number of group members is")+this.state.publicMAXNum+_t("people")}</p>;
+        let encryptionLabel2 = <p className="mx_publicPrivate_Label">{_t("After the encryption is turned off, the maximum number of group members is")+this.state.privateMAXNum+_t("people")}</p>;
 
         let federateLabel = _t(
             "You might enable this if the room will only be used for collaborating with internal " +
@@ -317,7 +317,7 @@ export default class CreateRoomNewDialog extends React.Component<IProps, IState>
                         { publicPrivateLabel }
 
                         <LabelledToggleSwitch
-                            label={"开启加密(不可逆)"}
+                            label={_t("Enable encryption (irreversible)")}
                             onChange={this.onEncryptedChange}
                             value={this.state.isEncrypted}
                         />
