@@ -160,7 +160,7 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
                     </div>
                     { unfederatableSection }
                 </div>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
+                {/* <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
                     <span className='mx_SettingsTab_subheading'>{ _t("Room version") }</span>
                     <div>
                         <span>{ _t("Room version:") }</span>&nbsp;
@@ -168,7 +168,7 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
                     </div>
                     { oldRoomLink }
                     { roomUpgradeButton }
-                </div>
+                </div> */}
             </div>
         );
     }

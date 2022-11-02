@@ -416,13 +416,13 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                         label={_t("Encrypted")}
                         disabled={!canEnableEncryption}
                     />
-                    { encryptionSettings }
+                    {/* { encryptionSettings } */}
                 </SettingsFieldset>
 
-                { this.renderJoinRule() }
+                 { this.renderJoinRule() }
 
-                { advanced }
-                { historySection }
+                {/* { advanced }
+                { historySection } } */}
             </div>
         );
     }
