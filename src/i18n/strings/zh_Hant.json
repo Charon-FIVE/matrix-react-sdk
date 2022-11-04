@@ -3564,5 +3564,6 @@
     "people":"人",
     "After the encryption is turned off, the maximum number of group members is":"关闭加密后群人数上限为",
     "Enable encryption (irreversible)":"开启加密(不可逆)",
-    "Create Room":"创建房间"
+    "Create Room":"创建房间",
+    "Read list":"已读列表"
 }

@@ -471,6 +471,14 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             />
         );
 
+        const readListButton = ( <IconizedContextMenuOption
+            iconClassName="mx_MessageContextMenu_iconSource"
+            label={_t("Read list")}
+            onClick={this.onViewSourceClick}
+        />);
+
+
+
         let unhidePreviewButton: JSX.Element;
         if (eventTileOps?.isWidgetHidden()) {
             unhidePreviewButton = (
@@ -712,6 +720,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 { jumpToRelatedEventButton }
                 { unhidePreviewButton }
                 { viewSourceButton }
+                {readListButton}
                 { resendReactionsButton }
                 { collapseReplyChainButton }
             </IconizedContextMenuOptionList>
