@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import DMRoomMap from "matrix-react-sdk/src/utils/DMRoomMap";
 import PermalinkConstructor, { PermalinkParts } from "./PermalinkConstructor";
 
 export const host = "freedomain.0c535de2.com"//"matrix.to";
@@ -68,26 +69,44 @@ export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
         const parts = fullUrl.substring(`${baseUrl}/#/`.length).split("/");
 
         const entity = parts[0];
-        if (entity[0] === '@') {
-            // Probably a user, no further parsing needed.
+
+
+        if (DMRoomMap.shared().getUserIdForRoomId(entity)) {
             return PermalinkParts.forUser(entity);
-        } else if (entity[0] === '#' || entity[0] === '!') {
+        }else{
             if (parts.length === 1) { // room without event permalink
-                const [roomId, query=""] = entity.split("?");
-                const via = query.split(/&?via=/g).filter(p => !!p);
-                return PermalinkParts.forRoom(roomId, via);
-            }
-
-            // rejoin the rest because v3 events can have slashes (annoyingly)
-            const eventIdAndQuery = parts.length > 1 ? parts.slice(1).join('/') : "";
-            const [eventId, query=""] = eventIdAndQuery.split("?");
-            const via = query.split(/&?via=/g).filter(p => !!p);
-
-            return PermalinkParts.forEvent(entity, eventId, via);
-        } else if (entity[0] === '+') {
-            return PermalinkParts.forGroup(entity);
-        } else {
-            throw new Error("Unknown entity type in permalink");
+                        const [roomId, query=""] = entity.split("?");
+                        const via = query.split(/&?via=/g).filter(p => !!p);
+                        return PermalinkParts.forRoom(roomId, via);
+                    }
+        
+                    // rejoin the rest because v3 events can have slashes (annoyingly)
+                    const eventIdAndQuery = parts.length > 1 ? parts.slice(1).join('/') : "";
+                    const [eventId, query=""] = eventIdAndQuery.split("?");
+                    const via = query.split(/&?via=/g).filter(p => !!p);
+        
+                    return PermalinkParts.forEvent(entity, eventId, via);
         }
+        // if (entity[0] === '@') {
+        //     // Probably a user, no further parsing needed.
+        //     return PermalinkParts.forUser(entity);
+        // } else if (entity[0] === '#' || entity[0] === '!') {
+        //     if (parts.length === 1) { // room without event permalink
+        //         const [roomId, query=""] = entity.split("?");
+        //         const via = query.split(/&?via=/g).filter(p => !!p);
+        //         return PermalinkParts.forRoom(roomId, via);
+        //     }
+
+        //     // rejoin the rest because v3 events can have slashes (annoyingly)
+        //     const eventIdAndQuery = parts.length > 1 ? parts.slice(1).join('/') : "";
+        //     const [eventId, query=""] = eventIdAndQuery.split("?");
+        //     const via = query.split(/&?via=/g).filter(p => !!p);
+
+        //     return PermalinkParts.forEvent(entity, eventId, via);
+        // } else if (entity[0] === '+') {
+        //     return PermalinkParts.forGroup(entity);
+        // } else {
+        //     throw new Error("Unknown entity type in permalink");
+        // }
     }
 }
