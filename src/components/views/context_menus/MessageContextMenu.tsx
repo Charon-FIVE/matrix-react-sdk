@@ -62,6 +62,8 @@ import { getShareableLocationEvent } from '../../../events/location/getShareable
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
 import { CardContext } from "../right_panel/context";
 import { UserTab } from "../dialogs/UserTab";
+import AutoHideScrollbar from 'matrix-react-sdk/src/components/structures/AutoHideScrollbar';
+import { ReadListButton } from 'matrix-react-sdk/src/components/views/elements/ReadListButton';
 
 interface IReplyInThreadButton {
     mxEvent: MatrixEvent;
@@ -236,6 +238,20 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             mxEvent: this.props.mxEvent,
         }, 'mx_Dialog_viewsource');
         this.closeMenu();
+    };
+
+    private onReadListClick = async ():Promise<void>=>{
+        const cli = MatrixClientPeg.get()
+        await cli.getReadMemberList(
+              this.props.mxEvent.getRoomId(),
+              this.props.mxEvent.event.event_id
+        ).then((res) => {
+            if (res) {
+              console.log("已读列表数据:"+res.record)
+          //  return res.record
+            
+            }
+        })
     };
 
     private onRedactClick = (): void => {
@@ -474,7 +490,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         const readListButton = ( <IconizedContextMenuOption
             iconClassName="mx_MessageContextMenu_iconSource"
             label={_t("Read list")}
-            onClick={this.onViewSourceClick}
+            onClick={this.onReadListClick}
         />);
 
 
@@ -724,6 +740,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 { resendReactionsButton }
                 { collapseReplyChainButton }
             </IconizedContextMenuOptionList>
+           
         );
 
         let redactItemList: JSX.Element;

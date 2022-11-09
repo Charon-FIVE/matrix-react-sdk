@@ -124,8 +124,7 @@ const RoomListHeaderNew = ({ onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
-              
-            </>;
+                </>;
         }
         if (canExploreRooms) {
             joinRoomOpt = (
