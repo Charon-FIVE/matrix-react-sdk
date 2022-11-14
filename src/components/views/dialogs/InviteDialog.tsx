@@ -566,7 +566,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     };
 
     private updateSuggestions = async (term) => {
-        MatrixClientPeg.get().searchUserDirectory({ term }).then(async r => {
+        MatrixClientPeg.get().searchAddFriend({ term }).then(async r => {
             if (term !== this.state.filterText) {
                 // Discard the results - we were probably too slow on the server-side to make
                 // these results useful. This is a race we want to avoid because we could overwrite
@@ -578,7 +578,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
             // While we're here, try and autocomplete a search result for the mxid itself
             // if there's no matches (and the input looks like a mxid).
-            if (term[0] === '@' && term.indexOf(':') > 1) {
+          //  if (term[0] === '@' && term.indexOf(':') > 1) {//userid修改后不以@开头
                 try {
                     const profile = await MatrixClientPeg.get().getProfileInfo(term);
                     if (profile) {
@@ -603,7 +603,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                         avatar_url: null,
                     });
                 }
-            }
+         //   }
 
             this.setState({
                 serverResultsMixin: r.results.map(u => ({
