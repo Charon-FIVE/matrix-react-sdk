@@ -48,6 +48,7 @@ import { RoomViewStore } from "../../../stores/RoomViewStore";
 import { RoomTileCallSummary } from "./RoomTileCallSummary";
 import { RoomGeneralContextMenu } from "../context_menus/RoomGeneralContextMenu";
 import { CallStore, CallStoreEvent } from "../../../stores/CallStore";
+import MessageTimestamp from "matrix-react-sdk/src/components/views/messages/MessageTimestamp";
 
 interface IProps {
     room: Room;
@@ -371,6 +372,14 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 </div>
             );
         }
+        let messageTimestamp = null;
+        if (this.showMessagePreview && this.state.messagePreview) {
+            messageTimestamp=  <MessageTimestamp
+                                    showFullDate={false}
+                                    showTwelveHour={false}
+                                    ts={this.props.room.timeline[this.props.room.timeline.length-1].event.origin_server_ts}
+                                    showSeconds={false}
+                                 />}
 
         let subtitle;
         if (this.state.call) {
@@ -387,10 +396,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     title={this.state.messagePreview}
                 >
                     { this.state.messagePreview }
+                   
                 </div>
             );
         }
 
+
+       
         const titleClasses = classNames({
             "mx_RoomTile_title": true,
             "mx_RoomTile_titleWithSubtitle": !!subtitle,
@@ -405,6 +417,15 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     </span>
                 </div>
                 { subtitle }
+              
+            </div>
+        );
+
+
+        const titleContainerNew = this.props.isMinimized ? null : (
+            <div className="mx_RoomTile_titleContainerNew">
+              {titleContainer} 
+              {messageTimestamp}
             </div>
         );
 
@@ -461,7 +482,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                                 displayBadge={this.props.isMinimized}
                                 tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
                             />
-                            { titleContainer }
+                            { titleContainerNew }
                             { badge }
                             { this.renderGeneralMenu() }
                             { this.renderNotificationsMenu(isActive) }
