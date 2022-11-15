@@ -1357,7 +1357,7 @@ const BasicUserInfo: React.FC<{
     return <React.Fragment>
         { memberDetails }
 
-        { securitySection }
+        {/* { securitySection } */}
         <UserOptionsSection
             canInvite={roomPermissions.canInvite}
             isIgnored={isIgnored}
