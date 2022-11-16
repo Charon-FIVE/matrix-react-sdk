@@ -1370,16 +1370,34 @@ const BasicUserInfo: React.FC<{
             { editDevices }
         </div>
     );
-
+    
+    //简介
     const introductionUI = <div className='mx_UserInfo_container'>
           <h3>{ _t("Introduction") }</h3>
-         {introduction}
+          <p>{introduction}</p>
     </div>
 
+    //备注
+    const remark =  (
+        <div className="mx_UserInfo_container">
+            <h3>{ _t("Remark") }</h3>
+               <input
+                  type="text"
+                  className="mx_MyGroups_DM_MarkInput"
+                  value={'测试'}
+                  onFocus={null}
+                  onBlur={null}
+                  onChange={null}
+                  autoComplete="off"
+                  placeholder={"点击可修改"}
+            />
+        </div>
+    );
 
     return <React.Fragment>
         { memberDetails }
         {introductionUI}
+        {remark}
         {/* { securitySection } */}
         <UserOptionsSection
             canInvite={roomPermissions.canInvite}
