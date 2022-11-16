@@ -1159,6 +1159,23 @@ const BasicUserInfo: React.FC<{
 
     // Check whether the user is ignored
     const [isIgnored, setIsIgnored] = useState(cli.isUserIgnored(member.userId));
+    const [introduction, setIntroduction] = useState<string>();
+
+    const getIntroduced= async(member)=>{
+        let introduction=null;
+      //  setIntroduction(introduction)
+    if (!member.userId) { return false}
+        const cli = MatrixClientPeg.get();
+        await cli.getUserIntroduction(member.userId).then((res) => {
+                introduction = res.introduction?res.introduction.substring(0,20) : "Not introduced yet";
+               setIntroduction(introduction)
+            }).catch(err => {
+                if(err.code == 429){
+                    getIntroduced(member);
+                }
+            });
+    }
+    getIntroduced(member)
     // Recheck if the user or client changes
     useEffect(() => {
         setIsIgnored(cli.isUserIgnored(member.userId));
@@ -1354,9 +1371,15 @@ const BasicUserInfo: React.FC<{
         </div>
     );
 
+    const introductionUI = <div className='mx_UserInfo_container'>
+          <h3>{ _t("Introduction") }</h3>
+         {introduction}
+    </div>
+
+
     return <React.Fragment>
         { memberDetails }
-
+        {introductionUI}
         {/* { securitySection } */}
         <UserOptionsSection
             canInvite={roomPermissions.canInvite}
