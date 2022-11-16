@@ -78,6 +78,7 @@ import UserIdentifierCustomisations from '../../../customisations/UserIdentifier
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { DirectoryMember, startDmOnFirstMessage } from '../../../utils/direct-messages';
+import RemarkUI from 'matrix-react-sdk/src/components/views/right_panel/RemarkUI';
 
 export interface IDevice {
     deviceId: string;
@@ -1379,19 +1380,7 @@ const BasicUserInfo: React.FC<{
 
     //备注
     const remark =  (
-        <div className="mx_UserInfo_container">
-            <h3>{ _t("Remark") }</h3>
-               <input
-                  type="text"
-                  className="mx_MyGroups_DM_MarkInput"
-                  value={'测试'}
-                  onFocus={null}
-                  onBlur={null}
-                  onChange={null}
-                  autoComplete="off"
-                  placeholder={"点击可修改"}
-            />
-        </div>
+       <RemarkUI userid={member.userId}/>      
     );
 
     return <React.Fragment>
