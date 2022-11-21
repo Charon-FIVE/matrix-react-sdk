@@ -479,21 +479,13 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         // This is specifically not behind the developerMode flag to give people insight into the Matrix
-        const viewSourceButton = (
-            <IconizedContextMenuOption
-                iconClassName="mx_MessageContextMenu_iconSource"
-                label={_t("View source")}
-                onClick={this.onViewSourceClick}
-            />
-        );
-
-        const readListButton = ( <IconizedContextMenuOption
-            iconClassName="mx_MessageContextMenu_iconSource"
-            label={_t("Read list")}
-            onClick={this.onReadListClick}
-        />);
-
-
+        // const viewSourceButton = (
+        //     <IconizedContextMenuOption
+        //         iconClassName="mx_MessageContextMenu_iconSource"
+        //         label={_t("View source")}
+        //         onClick={this.onViewSourceClick}
+        //     />
+        // );
 
         let unhidePreviewButton: JSX.Element;
         if (eventTileOps?.isWidgetHidden()) {
@@ -727,7 +719,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 { viewInRoomButton }
                 { openInMapSiteButton }
                 { endPollButton }
-                { quoteButton }
+                {/* { quoteButton } */}
                 { forwardButton }
                 { pinButton }
                 {/* { permalinkButton } */}
@@ -735,8 +727,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 { externalURLButton }
                 { jumpToRelatedEventButton }
                 { unhidePreviewButton }
-                { viewSourceButton }
-                {readListButton}
+                {/* { viewSourceButton } */}
                 { resendReactionsButton }
                 { collapseReplyChainButton }
             </IconizedContextMenuOptionList>
