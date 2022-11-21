@@ -29,7 +29,7 @@ import { ActionPayload } from "../../../../../dispatcher/payloads";
 import DevicesNewPanel from "../../DevicesNewPanel";
 import InlineSpinner from "../../../elements/InlineSpinner";
 import { privateShouldBeEncrypted } from "../../../../../utils/rooms";
-
+import { RemarkUtils } from '../../../../../utils/RemarkUtils';
 interface IIgnoredUserProps {
     userId: string;
     onUnignored: (userId: string) => void;
@@ -43,12 +43,15 @@ export class IgnoredUser extends React.Component<IIgnoredUserProps> {
 
     public render(): JSX.Element {
         const id = `mx_SecurityUserSettingsTab_ignoredUser_${this.props.userId}`;
+        let u = MatrixClientPeg.get().getUser(this.props.userId);
+        const rName = RemarkUtils.getRemarkNameById(this.props.userId);
+
         return (
             <div className='mx_SecurityUserSettingsTab_ignoredUser'>
                 <AccessibleButton onClick={this.onUnignoreClicked} kind='primary_sm' aria-describedby={id} disabled={this.props.inProgress}>
                     { _t('Unignore') }
                 </AccessibleButton>
-                <span id={id}>{ this.props.userId }</span>
+                <span id={id}>{rName?rName: u.displayName?u.displayName:this.props.userId }</span>
             </div>
         );
     }
