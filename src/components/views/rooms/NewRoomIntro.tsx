@@ -216,7 +216,8 @@ const NewRoomIntro = () => {
     }
 
     const subtitle = (
-        <span> { subText } { subButton } </span>
+        // <span> { subText } { subButton } </span>
+        <span> { subText }  </span>
     );
 
     return <li className="mx_NewRoomIntro">

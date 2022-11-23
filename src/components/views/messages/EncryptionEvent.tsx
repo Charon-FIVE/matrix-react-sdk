@@ -61,10 +61,16 @@ const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp
                 "When people join, you can verify them in their profile, just tap on their avatar.");
         }
 
-        return <EventTileBubble
+        // return <EventTileBubble
+        //     className="mx_cryptoEvent mx_cryptoEvent_icon"
+        //     title={_t("Encryption enabled")}
+        //     subtitle={subtitle}
+        //     timestamp={timestamp}
+        // />;
+         return <EventTileBubble
             className="mx_cryptoEvent mx_cryptoEvent_icon"
             title={_t("Encryption enabled")}
-            subtitle={subtitle}
+            subtitle={ _t("Messages in this chat will be end-to-end encrypted.")}
             timestamp={timestamp}
         />;
     }

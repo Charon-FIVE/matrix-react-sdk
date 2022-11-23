@@ -64,9 +64,9 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
         const canSetCanonical = room.currentState.mayClientSendStateEvent("m.room.canonical_alias", client);
         const canonicalAliasEv = room.currentState.getStateEvents("m.room.canonical_alias", '');
 
-        const urlPreviewSettings = SettingsStore.getValue(UIFeature.URLPreviews) ?
-            <UrlPreviewSettings room={room} /> :
-            null;
+        // const urlPreviewSettings = SettingsStore.getValue(UIFeature.URLPreviews) ?
+        //     <UrlPreviewSettings room={room} /> :
+        //     null;
 
         let leaveSection;
         if (room.getMyMembership() === "join") {
@@ -94,8 +94,8 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                     canSetAliases={canSetAliases}
                     canonicalAliasEvent={canonicalAliasEv}
                 /> */}
-                <div className="mx_SettingsTab_heading">{ _t("Other") }</div>
-                { urlPreviewSettings }
+                {/* <div className="mx_SettingsTab_heading">{ _t("Other") }</div> */}
+                {/* { urlPreviewSettings } */}
                 { leaveSection }
             </div>
         );

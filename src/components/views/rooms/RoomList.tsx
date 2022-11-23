@@ -89,7 +89,7 @@ export const TAG_ORDER: TagID[] = [
     DefaultTagID.LowPriority,
     DefaultTagID.ServerNotice,
     DefaultTagID.Suggested,
-    DefaultTagID.Archived,
+    // DefaultTagID.Archived,
 ];
 const ALWAYS_VISIBLE_TAGS: TagID[] = [
     DefaultTagID.DM,
@@ -382,11 +382,11 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
     },
 
     // TODO: Replace with archived view: https://github.com/vector-im/element-web/issues/14038
-    [DefaultTagID.Archived]: {
-        sectionLabel: _td("Historical"),
-        isInvite: false,
-        defaultHidden: true,
-    },
+    // [DefaultTagID.Archived]: {
+    //     sectionLabel: _td("Historical"),
+    //     isInvite: false,
+    //     defaultHidden: true,
+    // },
 
     [DefaultTagID.Suggested]: {
         sectionLabel: _td("Suggested Rooms"),
@@ -618,7 +618,8 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     (this.props.activeSpace === MetaSpace.Favourites && orderedTagId === DefaultTagID.Favourite) ||
                     (this.props.activeSpace === MetaSpace.People && orderedTagId === DefaultTagID.DM)
                 ) {
-                    forceExpanded = true;
+                   // forceExpanded = true;
+                   forceExpanded = false;
                 }
                 // The cost of mounting/unmounting this component offsets the cost
                 // of keeping it in the DOM and hiding it when it is not required

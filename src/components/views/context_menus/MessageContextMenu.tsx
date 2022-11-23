@@ -529,16 +529,16 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        let quoteButton: JSX.Element;
-        if (eventTileOps && canSendMessages) { // this event is rendered using TextualBody
-            quoteButton = (
-                <IconizedContextMenuOption
-                    iconClassName="mx_MessageContextMenu_iconQuote"
-                    label={_t("Quote")}
-                    onClick={this.onQuoteClick}
-                />
-            );
-        }
+        // let quoteButton: JSX.Element;
+        // if (eventTileOps && canSendMessages) { // this event is rendered using TextualBody
+        //     quoteButton = (
+        //         <IconizedContextMenuOption
+        //             iconClassName="mx_MessageContextMenu_iconQuote"
+        //             label={_t("Quote")}
+        //             onClick={this.onQuoteClick}
+        //         />
+        //     );
+        // }
 
         // Bridges can provide a 'external_url' to link back to the source.
         let externalURLButton: JSX.Element;

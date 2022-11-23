@@ -1191,7 +1191,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         <BaseDialog
             className="mx_SpotlightDialog"
             onFinished={onFinished}
-            hasCancel={false}
+            hasCancel={true}
             onKeyDown={onDialogKeyDown}
             screenName="UnifiedSearch"
             aria-label={_t("Search Dialog")}

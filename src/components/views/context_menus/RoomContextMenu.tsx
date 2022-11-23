@@ -289,20 +289,20 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
     //     />;
     // }
 
-    let exportChatOption: JSX.Element;
-    if (!isVideoRoom) {
-        exportChatOption = <IconizedContextMenuOption
-            onClick={(ev: ButtonEvent) => {
-                ev.preventDefault();
-                ev.stopPropagation();
+    // let exportChatOption: JSX.Element;
+    // if (!isVideoRoom) {
+    //     exportChatOption = <IconizedContextMenuOption
+    //         onClick={(ev: ButtonEvent) => {
+    //             ev.preventDefault();
+    //             ev.stopPropagation();
 
-                Modal.createDialog(ExportDialog, { room });
-                onFinished();
-            }}
-            label={_t("Export chat")}
-            iconClassName="mx_RoomTile_iconExport"
-        />;
-    }
+    //             Modal.createDialog(ExportDialog, { room });
+    //             onFinished();
+    //         }}
+    //         label={_t("Export chat")}
+    //         iconClassName="mx_RoomTile_iconExport"
+    //     />;
+    // }
 
     const onTagRoom = (ev: ButtonEvent, tagId: TagID) => {
         ev.preventDefault();
@@ -365,7 +365,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 iconClassName="mx_RoomTile_iconSettings"
             />
 
-            { exportChatOption }
+            {/* { exportChatOption } */}
 
             { SettingsStore.getValue("developerMode") && <IconizedContextMenuOption
                 onClick={(ev: ButtonEvent) => {
