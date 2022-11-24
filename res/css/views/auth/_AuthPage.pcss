@@ -30,13 +30,23 @@ limitations under the License.
     background-color: $authpage-modal-bg-color; */
     top: 5%;
     left: 5%;
+    background: rgba(255,255,255,0.3) !important;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: inset 0px 0px 10px 1px rgba(255,255,255,0.42), 0px 0px 9px 4px rgba(0,0,0, 0.1);
 
-    @media only screen and (max-height: 768px) {
-       // margin-top: 50px;
-        margin: 140px auto auto;
+    @media screen and (max-height:675px){
+        margin: 160px auto auto auto;
     }
 
-    @media only screen and (max-width: 480px) {
-        margin-top: 0;
+    @media screen and (max-height:600px){
+        margin: 110px auto auto auto;
+    }
+
+    @media screen and (max-height:490px){
+        margin: 60px auto auto auto;
+    }
+    @media screen and (max-height:425px){
+        margin: 30px auto auto auto;
     }
 }
