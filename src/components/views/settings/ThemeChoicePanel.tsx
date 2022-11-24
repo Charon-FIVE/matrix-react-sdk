@@ -114,8 +114,8 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
         // XXX: The local echoed value appears to be unreliable, in particular
         // when settings custom themes(!) so adding forceTheme to override
         // the value from settings.
-        location.reload();
         dis.dispatch<RecheckThemePayload>({ action: Action.RecheckTheme, forceTheme: newTheme });
+        window.location.reload();
     };
 
     private onUseSystemThemeChanged = (checked: boolean): void => {

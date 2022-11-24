@@ -62,16 +62,22 @@ const QuickThemeSwitcher: React.FC<Props> = ({ requestClose }) => {
                 // when settings custom themes(!) so adding forceTheme to override
                 // the value from settings.
                 dis.dispatch<RecheckThemePayload>({ action: Action.RecheckTheme, forceTheme: newTheme });
+                const theme = SettingsStore.getValue("theme");
+                if(theme!=newTheme){
+                 window.location.reload();
+                }
                 await Promise.all([
                     SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme),
                     SettingsStore.setValue("use_system_theme", null, SettingLevel.DEVICE, false),
                 ]);
+             
             }
         } catch (_error) {
             dis.dispatch<RecheckThemePayload>({ action: Action.RecheckTheme });
         }
 
         requestClose();
+       
     };
 
     return <div className="mx_QuickThemeSwitcher">

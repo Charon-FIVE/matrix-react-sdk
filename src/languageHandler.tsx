@@ -401,16 +401,35 @@ export function setLanguage(preferredLangs: string | string[]) {
     return getLangsJson().then((result) => {
         availLangs = result;
 
-        for (let i = 0; i < preferredLangs.length; ++i) {
-            if (availLangs.hasOwnProperty(preferredLangs[i])) {
-                langToUse = preferredLangs[i];
+        // for (let i = 0; i < preferredLangs.length; ++i) {
+        //     if (availLangs.hasOwnProperty(preferredLangs[i])) {
+        //         langToUse = preferredLangs[i];
+        //         break;
+        //     }
+        // }
+        // if (!langToUse) {
+        //     // Fallback to en_EN if none is found
+        //     langToUse = 'en';
+        //     logger.error("Unable to find an appropriate language");
+        // }
+        let lang = navigator.language||navigator.userLanguage;
+        let systemLang;
+        switch (lang){
+            case 'zh':
+                systemLang = 'zh-hans'
                 break;
-            }
+            case 'zh-CN':
+                systemLang = 'zh-hans'
+                break;
+            case 'zh-TW':
+                systemLang = 'zh-hant' 
+            default:
+                systemLang = lang.toLowerCase()
         }
-        if (!langToUse) {
-            // Fallback to en_EN if none is found
-            langToUse = 'en';
-            logger.error("Unable to find an appropriate language");
+        if(JSON.parse(localStorage.getItem("mx_local_settings"))&&JSON.parse(localStorage.getItem("mx_local_settings")).language){
+            langToUse = JSON.parse(localStorage.getItem("mx_local_settings")).language
+        }else{
+            langToUse = systemLang
         }
 
         return getLanguageRetry(i18nFolder + availLangs[langToUse].fileName);
