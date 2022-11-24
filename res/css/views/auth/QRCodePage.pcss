@@ -21,6 +21,12 @@ limitations under the License.
     width: 600px;
     height: 350px; 
    // margin-top:100px;
+    @media screen and (max-width: 1100px){
+        width: 530px;
+    }
+    @media screen and (max-width: 900px){
+        width: 490px;
+    }
 }
 
 
@@ -29,9 +35,6 @@ limitations under the License.
     text-align: center;   
     font-size:  $font-22px;
     font-weight: bold;
-    @media screen and (max-width: 1000px){
-        font-size: 1rem;
-    }
 }
 
 
@@ -39,26 +42,22 @@ limitations under the License.
     display: flex;
     flex-direction:row;
     align-items: center;
+    margin: 0 auto;
 }
 
 .mx_welcome_content_left{
     font-size: 18px;
-    margin-left: 120px;
     width: 307px;
-    @media screen and (max-height: 768px){
-        width: 265px;
+    @media screen and (max-width: 1100px){
+        width: 260px;
     }
-}
-
-.mx_welcome_content_left h2{
-    font-size: 12px;
 }
 
 .mx_welcome_content_right{
     margin-left: 60px;
     margin-top: 30px;
-    @media screen and (max-height: 768px){
-        margin-left: 0px;
+    @media screen and (max-width: 1100px){
+        margin-left: 20px;
     }
 }
 
