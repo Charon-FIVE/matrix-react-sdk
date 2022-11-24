@@ -25,6 +25,7 @@ import { MatrixClientPeg } from './MatrixClientPeg';
 import MultiInviter, { CompletionStates } from './utils/MultiInviter';
 import Modal from './Modal';
 import { _t } from './languageHandler';
+import InviteNewDialog from "./components/views/dialogs/InviteNewDialog";
 import InviteDialog from "./components/views/dialogs/InviteDialog";
 import BaseAvatar from "./components/views/avatars/BaseAvatar";
 import { mediaFromMxc } from "./customisations/Media";
@@ -62,7 +63,7 @@ export function inviteMultipleToRoom(
 export function showStartChatInviteDialog(initialText = ""): void {
     // This dialog handles the room creation internally - we don't need to worry about it.
     Modal.createDialog(
-        InviteDialog, { kind: KIND_DM, initialText },
+        InviteNewDialog, { kind: KIND_DM, initialText },
         /*className=*/"mx_InviteDialog_flexWrapper", /*isPriority=*/false, /*isStatic=*/true,
     );
 }

@@ -452,3 +452,101 @@ limitations under the License.
 .mx_InviteDialog_identityServer {
     margin-top: 1em; /* TODO: Use a spacing variable */
 }
+
+.mx_InviteDialog_AddButton{
+    margin-left: 235px;
+}
+
+.mx_InviteDialog_roomTile {
+    cursor: pointer;
+    padding: 5px 10px 5px 0px;
+
+    // &:hover {
+    //     background-color: $user-tile-hover-bg-color;
+    //     border-radius: 4px;
+    // }
+
+    * {
+        vertical-align: middle;
+    }
+
+    .mx_InviteDialog_roomTile_avatarStack {
+        display: inline-block;
+        position: relative;
+        width: 36px;
+        height: 36px;
+
+        & > * {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+
+    .mx_InviteDialog_roomTile_selected {
+        width: 36px;
+        height: 36px;
+        border-radius: 36px;
+        background-color: $username-variant1-color;
+        display: inline-block;
+        position: relative;
+
+        &::before {
+            content: "";
+            width: 24px;
+            height: 24px;
+            grid-column: 1;
+            grid-row: 1;
+            mask-image: url("$(res)/img/feather-customised/check.svg");
+            mask-size: 100%;
+            mask-repeat: no-repeat;
+            position: absolute;
+            top: 6px; // 50%
+            left: 6px; // 50%
+            background-color: #ffffff; // this is fine without a var because it's for both themes
+        }
+    }
+
+    .mx_InviteDialog_roomTile_nameStack {
+        display: inline-block;
+        overflow: hidden;
+    }
+
+    .mx_InviteDialog_roomTile_name {
+        font-weight: 600;
+        font-size: $font-14px;
+        margin-left: 7px;
+    }
+
+    .mx_InviteDialog_roomTile_userId {
+        font-size: $font-12px;
+        color: $muted-fg-color;
+        margin-left: 7px;
+        span{
+            color: #999;
+            font-weight: 400;
+        }
+    }
+
+    .mx_InviteDialog_roomTile_name,
+    .mx_InviteDialog_roomTile_userId {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .mx_InviteDialog_roomTile_time {
+        text-align: right;
+        font-size: $font-12px;
+        color: $muted-fg-color;
+        float: right;
+        line-height: $font-36px; // Height of the avatar to keep the time vertically aligned
+    }
+
+    .mx_InviteDialog_roomTile_highlight {
+        // font-weight: 900;
+        color:#999;
+    }
+}
+
+

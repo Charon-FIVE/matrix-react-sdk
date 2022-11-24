@@ -3561,5 +3561,6 @@
     "Create Room":"Create Room",
     "Read list":"Read list",
     "Remark":"Remark",
-    "Click to modify":"Click to modify"
+    "Click to modify":"Click to modify",
+    "Start a conversation with someone using username or phone number add friend  (like <userId/>).": "Start a conversation with someone using username or phone number add friend  (like <userId/>)."
 }
