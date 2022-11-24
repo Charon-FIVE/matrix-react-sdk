@@ -219,8 +219,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 newTheme = hcTheme;
             }
         }
-        location.reload();
         SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme); // set at same level as Appearance tab
+        window.location.reload()
     };
 
     private onSettingsOpen = (ev: ButtonEvent, tabId: string) => {
