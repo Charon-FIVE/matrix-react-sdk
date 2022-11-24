@@ -51,7 +51,7 @@ export class IgnoredUser extends React.Component<IIgnoredUserProps> {
                 <AccessibleButton onClick={this.onUnignoreClicked} kind='primary_sm' aria-describedby={id} disabled={this.props.inProgress}>
                     { _t('Unignore') }
                 </AccessibleButton>
-                <span id={id}>{rName?rName: u.displayName?u.displayName:this.props.userId }</span>
+                <span id={id}>{rName?rName: u?.displayName?u?.displayName:this.props.userId }</span>
             </div>
         );
     }
