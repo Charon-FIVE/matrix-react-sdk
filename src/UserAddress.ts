@@ -14,9 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const emailRegex = /^\S+@\S+\.\S+$/;
-const mxUserIdRegex = /^@\S+:\S+$/;
-const mxRoomIdRegex = /^!\S+:\S+$/;
+// const emailRegex = /^\S+@\S+\.\S+$/;
+// const mxUserIdRegex = /^@\S+:\S+$/;
+// const mxRoomIdRegex = /^!\S+:\S+$/;
+
+const emailRegex =  /^\S+@\S+\.\S+$/;
+const mxUserIdRegex = /^[a-zA-Z0-9_]+$/  ///^!\S+:\S+$/;
+const mxRoomIdRegex =/^[a-zA-Z0-9_]+$/     ///^!\S+:\S+$/;
+
 
 export enum AddressType {
     Email = "email",
