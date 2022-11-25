@@ -2347,7 +2347,7 @@
     "Including %(commaSeparatedMembers)s": "包括 %(commaSeparatedMembers)s",
     "View all %(count)s members|one": "查看 1 位成员",
     "View all %(count)s members|other": "查看全部 %(count)s 位成员",
-    "Use the <a>Desktop app</a> to search encrypted messages": "使用<a>桌面端英语</a>来搜索加密消息",
+    "Use the <a>Desktop app</a> to search encrypted messages": "使用<a>桌面端应用</a>来搜索加密消息",
     "Use the <a>Desktop app</a> to see all encrypted files": "使用<a>桌面端应用</a>来查看所有加密文件",
     "Add reaction": "添加反应",
     "Error processing voice message": "处理语音消息时发生错误",
