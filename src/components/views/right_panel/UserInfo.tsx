@@ -78,7 +78,8 @@ import UserIdentifierCustomisations from '../../../customisations/UserIdentifier
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { DirectoryMember, startDmOnFirstMessage } from '../../../utils/direct-messages';
-import RemarkUI from 'matrix-react-sdk/src/components/views/right_panel/RemarkUI';
+import { RemarkUtils } from 'matrix-react-sdk/src/utils/RemarkUtils';
+
 
 export interface IDevice {
     deviceId: string;
@@ -322,6 +323,8 @@ const MessageButton = ({ member }: { member: RoomMember }) => {
         </AccessibleButton>
     );
 };
+
+
 
 const UserOptionsSection: React.FC<{
     member: RoomMember;
@@ -1377,11 +1380,36 @@ const BasicUserInfo: React.FC<{
           <h3>{ _t("Introduction") }</h3>
           <p>{introduction}</p>
     </div>
-
+    let remarkName;
     //备注
-    const remark =  (
-       <RemarkUI userid={member.userId}/>      
-    );
+    const remark=<div className="mx_UserInfo_container">
+        <h3>{ _t("Remark") }</h3>
+        <input
+            type="text"
+            className="mx_MyGroups_DM_MarkInput"
+            value={remarkName}
+            // onFocus={()=>{
+
+            // }}
+            onBlur={(e)=>{
+                if(!e.target.value){
+                    //失去焦点时,备注名为空还原备注名为对应的昵称或者用户名
+                    RemarkUtils.deleteRemarkNameByUserId(member.userId);
+                    dis.dispatch({action: 'remarked',userId:member.userId});
+                    e.target.value = '';
+                }else{
+                    RemarkUtils.setRemarkNameById(member.userId,e.target.value);
+                    dis.dispatch({action: 'remarked',userId:member.userId});
+                }
+            }}
+            onChange={(e)=>{
+                remarkName = e.target.value;
+            }}
+            autoComplete="off"
+            placeholder={RemarkUtils.getRemarkNameById(member.userId)?RemarkUtils.getRemarkNameById(member.userId):_t("Click to modify")}
+        />
+    </div>
+    
 
     return <React.Fragment>
         { memberDetails }
