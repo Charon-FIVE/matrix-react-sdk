@@ -1279,25 +1279,13 @@ export default class InviteNewDialog extends React.PureComponent<IInviteDialogPr
            
         } else if (this.props.kind === KIND_INVITE) {
             const room = MatrixClientPeg.get()?.getRoom(this.props.roomId);
-            const isSpace = SettingsStore.getValue("feature_spaces") && room?.isSpaceRoom();
-            title = isSpace
-                ? _t("Invite to %(spaceName)s", {
-                    spaceName: room.name || _t("Unnamed Space"),
-                })
-                : _t("Invite to %(roomName)s", {
+           // const isSpace = SettingsStore.getValue("feature_spaces") && room?.isSpaceRoom();
+            title =  _t("Invite to %(roomName)s", {
                     roomName: room.name || _t("Unnamed Room"),
                 });
 
             let helpTextUntranslated;
-            if (isSpace) {
-                if (identityServersEnabled) {
-                    helpTextUntranslated = _td("Invite someone using their name, username " +
-                        "(like <userId/>) or <a>share this space</a>.");
-                } else {
-                    helpTextUntranslated = _td("Invite someone using their name, username " +
-                        "(like <userId/>) or <a>share this space</a>.");
-                }
-            } else {
+           
                 if (identityServersEnabled) {
                     helpTextUntranslated = _td("Invite someone using their name, username " +
                         "(like <userId/>) or <a>share this room</a>.");
@@ -1305,7 +1293,7 @@ export default class InviteNewDialog extends React.PureComponent<IInviteDialogPr
                     helpTextUntranslated = _td("Invite someone using their name, username " +
                         "(like <userId/>) or <a>share this room</a>.");
                 }
-            }
+            
 
             helpText = _t(helpTextUntranslated, {}, {
                 userId: () =>

@@ -71,7 +71,7 @@ export function showStartChatInviteDialog(initialText = ""): void {
 export function showRoomInviteDialog(roomId: string, initialText = ""): void {
     // This dialog handles the room creation internally - we don't need to worry about it.
     Modal.createDialog(
-        InviteDialog, {
+        InviteNewDialog, {
             kind: KIND_INVITE,
             initialText,
             roomId,
