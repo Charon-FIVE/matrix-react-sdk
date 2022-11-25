@@ -504,9 +504,9 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 // button is the very first button without having to do length checks for `splice()`.
 
                 if (this.context.canSendMessages) {
-                    if (this.showReplyInThreadAction) {
-                        toolbarOpts.splice(0, 0, threadTooltipButton);
-                    }
+                    // if (this.showReplyInThreadAction) {
+                    //     toolbarOpts.splice(0, 0, threadTooltipButton);
+                    // }
                     toolbarOpts.splice(0, 0, (
                         <RovingAccessibleTooltipButton
                             className="mx_MessageActionBar_iconButton"
