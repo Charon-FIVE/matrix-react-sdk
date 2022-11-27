@@ -1414,7 +1414,7 @@ const BasicUserInfo: React.FC<{
     return <React.Fragment>
         { memberDetails }
         {introductionUI}
-        {remark}
+        {isMe?null:remark}
         {/* { securitySection } */}
         <UserOptionsSection
             canInvite={roomPermissions.canInvite}
