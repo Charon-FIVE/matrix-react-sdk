@@ -115,11 +115,11 @@ export default class HelpUserSettingsNewTab extends React.Component<IProps, ISta
                     }
                 </div>
                
-                <div className='mx_SettingsTab_updata'>
+                {/* <div className='mx_SettingsTab_updata'>
                 {updateButton} 
                     <br></br>
                     <br></br>
-                </div>
+                </div> */}
             </div>  
         );
     }
