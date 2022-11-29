@@ -24,6 +24,7 @@ import { _t, _td } from '../../../languageHandler';
 import E2EIcon, { E2EState } from './E2EIcon';
 import BaseAvatar from '../avatars/BaseAvatar';
 import PresenceLabel from "./PresenceLabel";
+import { RemarkUtils } from 'matrix-react-sdk/src/utils/RemarkUtils';
 
 export enum PowerStatus {
     Admin = "admin",
@@ -78,6 +79,7 @@ interface IProps {
     subtextLabel?: string;
     e2eStatus?: E2EState;
     powerStatus?: PowerStatus;
+    userId;
 }
 
 interface IState {
@@ -108,6 +110,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
             "mx_EntityTile": true,
             "mx_EntityTile_noHover": this.props.suppressOnHover,
         };
+        let rName= RemarkUtils.getRemarkNameById(this.props.userId);
         if (this.props.className) mainClassNames[this.props.className] = true;
 
         const presenceClass = presenceClassForMember(
@@ -116,7 +119,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         mainClassNames[presenceClass] = true;
 
         let nameEl;
-        const name = this.props.nameJSX || this.props.name;
+        const name = rName?rName:this.props.nameJSX || this.props.name;
 
         if (!this.props.suppressOnHover) {
             const activeAgo = this.props.presenceLastActiveAgo ?
@@ -177,7 +180,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         }
 
         const av = this.props.avatarJsx ||
-            <BaseAvatar name={this.props.name} width={36} height={36} aria-hidden="true" />;
+            <BaseAvatar name={rName?rName:this.props.name} width={36} height={36} aria-hidden="true" />;
 
         // The wrapping div is required to make the magic mouse listener work, for some reason.
         return (

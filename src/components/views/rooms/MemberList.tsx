@@ -306,6 +306,8 @@ export default class MemberList extends React.Component<IProps, IState> {
     };
 
     private createOverflowTile = (overflowCount: number, totalCount: number, onClick: () => void): JSX.Element => {
+       //  const otherMemberId =  DMRoomMap.shared().getUserIdForRoomId(this.props.roomId);
+      //  let rName= RemarkUtils.getRemarkNameById(otherMemberId);
         // For now we'll pretend this is any entity. It should probably be a separate tile.
         const text = _t("and %(count)s others...", { count: overflowCount });
         return (

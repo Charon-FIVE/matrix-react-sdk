@@ -30,6 +30,9 @@ import * as Avatar from '../../../Avatar';
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
+import { ActionPayload } from 'matrix-react-sdk/src/dispatcher/payloads';
+import defaultDispatcher from 'matrix-react-sdk/src/dispatcher/dispatcher';
+import { RemarkUtils } from 'matrix-react-sdk/src/utils/RemarkUtils';
 
 interface IProps extends Omit<ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url" | "onClick"> {
     // Room may be left unset here, but if it is,
@@ -49,6 +52,7 @@ interface IProps extends Omit<ComponentProps<typeof BaseAvatar>, "name" | "idNam
 
 interface IState {
     urls: string[];
+    remarkName:string;
 }
 
 export default class RoomAvatar extends React.Component<IProps, IState> {
@@ -64,11 +68,14 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
 
         this.state = {
             urls: RoomAvatar.getImageUrls(this.props),
+            remarkName:"",
         };
     }
 
     public componentDidMount() {
         MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
+        defaultDispatcher.register(this.onAction);
+        this.getRemarkName();
     }
 
     public componentWillUnmount() {
@@ -76,13 +83,32 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
         if (cli) {
             cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         }
+        
     }
 
     public static getDerivedStateFromProps(nextProps: IProps): IState {
         return {
             urls: RoomAvatar.getImageUrls(nextProps),
+            remarkName:"",//RemarkUtils.getRemarkNameById(DMRoomMap.shared().getUserIdForRoomId(nextProps.room.roomId)),
         };
     }
+
+
+    private onAction = (payload: ActionPayload) => {
+        if(payload.action ===  "remarked"){
+            this.getRemarkName(payload.userId);
+        }
+    };
+
+    private getRemarkName=(userid?:string)=>{
+        const otherMemberId =  DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
+        let rName= RemarkUtils.getRemarkNameById(userid?userid:otherMemberId);
+        this.setState({
+            remarkName:rName
+        });
+    }
+
+
 
     private onRoomStateEvents = (ev: MatrixEvent) => {
         if (ev.getRoomId() !== this.props.room?.roomId || ev.getType() !== EventType.RoomAvatar) return;
@@ -131,18 +157,20 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
     };
 
     public render() {
+       //
         const { room, oobData, viewAvatarOnClick, onClick, className, ...otherProps } = this.props;
-
-        const roomName = room ? room.name : oobData.name;
+        const otherMemberId =  DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
+        let rName= RemarkUtils.getRemarkNameById(otherMemberId);
+        const roomName =rName?rName:this.state.remarkName?this.state.remarkName: room ? room.name : oobData.name;
         // If the room is a DM, we use the other user's ID for the color hash
         // in order to match the room avatar with their avatar
-        const idName = room ? (DMRoomMap.shared().getUserIdForRoomId(room.roomId) ?? room.roomId) : oobData.roomId;
-
+        const idName =rName?rName:this.state.remarkName?this.state.remarkName: room ? (DMRoomMap.shared().getUserIdForRoomId(room.roomId) ?? room.roomId) : oobData.roomId;
+       
         return (
             <BaseAvatar
                 {...otherProps}
                 className={classNames(className, {
-                    mx_RoomAvatar_isSpaceRoom: room?.isSpaceRoom(),
+                    mx_RoomAvatar_isSpaceRoom: room?.isSpaceRoom(), 
                 })}
                 name={roomName}
                 idName={idName}

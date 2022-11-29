@@ -28,6 +28,7 @@ import { CardContext } from '../right_panel/context';
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 import SettingsStore from "../../../settings/SettingsStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { RemarkUtils } from 'matrix-react-sdk/src/utils/RemarkUtils';
 
 interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url"> {
     member: RoomMember | null;
@@ -118,7 +119,7 @@ export default class MemberAvatar extends React.PureComponent<IProps, IState> {
             ...otherProps
         } = this.props;
         const userId = member ? member.userId : fallbackUserId;
-
+        let rName= RemarkUtils.getRemarkNameById(userId);
         if (viewUserOnClick) {
             onClick = () => {
                 dis.dispatch({
@@ -132,7 +133,7 @@ export default class MemberAvatar extends React.PureComponent<IProps, IState> {
         return (
             <BaseAvatar
                 {...otherProps}
-                name={this.state.name}
+                name={rName?rName:this.state.name}
                 title={hideTitle ? undefined : this.state.title}
                 idName={userId}
                 url={this.state.imageUrl}

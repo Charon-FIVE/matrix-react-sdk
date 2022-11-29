@@ -72,6 +72,7 @@ import {
 import { AnyInviteKind, KIND_CALL_TRANSFER, KIND_DM, KIND_INVITE } from './InviteDialogTypes';
 import Modal from '../../../Modal';
 import dis from "../../../dispatcher/dispatcher";
+import { RemarkUtils } from 'matrix-react-sdk/src/utils/RemarkUtils';
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -1108,13 +1109,15 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             </div>;
         } else if (this.props.kind === KIND_INVITE) {
             const room = MatrixClientPeg.get()?.getRoom(this.props.roomId);
+               const otherMemberId =  DMRoomMap.shared().getUserIdForRoomId(this.props.roomId);
+              let rName= RemarkUtils.getRemarkNameById(otherMemberId);
             const isSpace = room?.isSpaceRoom();
             title = isSpace
                 ? _t("Invite to %(spaceName)s", {
                     spaceName: room.name || _t("Unnamed Space"),
                 })
                 : _t("Invite to %(roomName)s", {
-                    roomName: room.name || _t("Unnamed Room"),
+                    roomName: rName?rName:room.name || _t("Unnamed Room"),
                 });
 
             let helpTextUntranslated;

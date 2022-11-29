@@ -49,6 +49,8 @@ import { RoomTileCallSummary } from "./RoomTileCallSummary";
 import { RoomGeneralContextMenu } from "../context_menus/RoomGeneralContextMenu";
 import { CallStore, CallStoreEvent } from "../../../stores/CallStore";
 import MessageTimestamp from "matrix-react-sdk/src/components/views/messages/MessageTimestamp";
+import DMRoomMap from "matrix-react-sdk/src/utils/DMRoomMap";
+import { RemarkUtils } from "matrix-react-sdk/src/utils/RemarkUtils";
 
 interface IProps {
     room: Room;
@@ -65,6 +67,7 @@ interface IState {
     generalMenuPosition: PartialDOMRect;
     call: Call | null;
     messagePreview?: string;
+    remarkName:string;
 }
 
 const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomId}`;
@@ -93,6 +96,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             call: CallStore.instance.get(this.props.room.roomId),
             // generatePreview() will return nothing if the user has previews disabled
             messagePreview: "",
+            remarkName:"",
         };
         this.generatePreview();
 
@@ -161,6 +165,15 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         // Recalculate the call for this room, since it could've changed between
         // construction and mounting
         this.setState({ call: CallStore.instance.get(this.props.room.roomId) });
+        
+    }
+
+    private getRemarkName(userid?:string){
+        const otherMemberId =  DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
+        let rName= RemarkUtils.getRemarkNameById(userid?userid:otherMemberId);
+        this.setState({
+            remarkName:rName
+        });
     }
 
     public componentWillUnmount() {
@@ -184,6 +197,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             setImmediate(() => {
                 this.scrollIntoView();
             });
+        }else if(payload.action ===  "remarked"){
+            this.getRemarkName(payload.userId);
         }
     };
 
@@ -348,6 +363,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     }
 
     public render(): React.ReactElement {
+        this.getRemarkName();
         const classes = classNames({
             'mx_RoomTile': true,
             'mx_RoomTile_selected': this.state.selected,
@@ -355,7 +371,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             'mx_RoomTile_minimized': this.props.isMinimized,
         });
 
-        let name = this.props.room.name;
+        let name = this.state.remarkName?this.state.remarkName:this.props.room.name;
         if (typeof name !== 'string') name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
@@ -413,7 +429,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             <div className="mx_RoomTile_titleContainer">
                 <div title={name} className={titleClasses} tabIndex={-1}>
                     <span dir="auto">
-                        { name }
+                        { name}
                     </span>
                 </div>
                 { subtitle }

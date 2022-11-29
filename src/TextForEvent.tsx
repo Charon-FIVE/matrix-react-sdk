@@ -46,6 +46,8 @@ import RightPanelStore from './stores/right-panel/RightPanelStore';
 import UserIdentifierCustomisations from './customisations/UserIdentifier';
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { isLocationEvent } from './utils/EventUtils';
+import DMRoomMap from 'matrix-react-sdk/src/utils/DMRoomMap';
+import { RemarkUtils } from 'matrix-react-sdk/src/utils/RemarkUtils';
 
 export function getSenderName(event: MatrixEvent): string {
     return event.sender?.name ?? event.getSender() ?? _t("Someone");
@@ -84,12 +86,14 @@ function textForCallInviteEvent(event: MatrixEvent): () => string | null {
 
 function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean): () => string | null {
     // XXX: SYJS-16 "sender is sometimes null for join messages"
+    const otherMemberId =  DMRoomMap.shared().getUserIdForRoomId(ev.getRoomId());
+    let rName= RemarkUtils.getRemarkNameById(otherMemberId);
     const senderName = ev.sender?.name || getRoomMemberDisplayname(ev);
-    const targetName = ev.target?.name || getRoomMemberDisplayname(ev, ev.getStateKey());
+    const targetName = rName?rName:ev.target?.name || getRoomMemberDisplayname(ev, ev.getStateKey());
     const prevContent = ev.getPrevContent();
     const content = ev.getContent();
     const reason = content.reason;
-
+   
     switch (content.membership) {
         case 'invite': {
             const threePidContent = content.third_party_invite;
@@ -103,7 +107,7 @@ function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents
                     return () => _t('%(targetName)s accepted an invitation', { targetName });
                 }
             } else {
-                return () => _t('%(senderName)s invited %(targetName)s', { senderName, targetName });
+                return () => _t('%(senderName)s invited %(targetName)s', { senderName,targetName });
             }
         }
         case 'ban':
@@ -194,7 +198,9 @@ function textForRoomAvatarEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForRoomNameEvent(ev: MatrixEvent): () => string | null {
-    const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
+    const otherMemberId =  DMRoomMap.shared().getUserIdForRoomId(ev.getRoomId());
+    let rName= RemarkUtils.getRemarkNameById(otherMemberId);
+    const senderDisplayName =rName?rName: ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
 
     if (!ev.getContent().name || ev.getContent().name.trim().length === 0) {
         return () => _t('%(senderDisplayName)s removed the room name.', { senderDisplayName });
@@ -208,7 +214,7 @@ function textForRoomNameEvent(ev: MatrixEvent): () => string | null {
     }
     return () => _t('%(senderDisplayName)s changed the room name to %(roomName)s.', {
         senderDisplayName,
-        roomName: ev.getContent().name,
+        roomName: rName?rName:ev.getContent().name
     });
 }
 

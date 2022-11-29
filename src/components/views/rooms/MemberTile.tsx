@@ -32,6 +32,7 @@ import EntityTile, { PowerStatus } from "./EntityTile";
 import MemberAvatar from "./../avatars/MemberAvatar";
 import DisambiguatedProfile from "../messages/DisambiguatedProfile";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import { RemarkUtils } from 'matrix-react-sdk/src/utils/RemarkUtils';
 
 interface IProps {
     member: RoomMember;
@@ -188,7 +189,9 @@ export default class MemberTile extends React.Component<IProps, IState> {
 
     render() {
         const member = this.props.member;
-        const name = this.getDisplayName();
+       // const otherMemberId =  DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
+        let rName= RemarkUtils.getRemarkNameById(member.userId);
+        const name = rName?rName:this.getDisplayName();
         const presenceState = member.user ? member.user.presence : null;
 
         const av = (
@@ -243,6 +246,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
                 showPresence={this.props.showPresence}
                 e2eStatus={e2eStatus}
                 onClick={this.onClick}
+                userId = {member.userId}
             />
         );
     }

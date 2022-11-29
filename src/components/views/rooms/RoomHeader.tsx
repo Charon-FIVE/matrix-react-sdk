@@ -47,6 +47,8 @@ import RoomLiveShareWarning from '../beacon/RoomLiveShareWarning';
 import { BetaPill } from "../beta/BetaCard";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
+import DMRoomMap from 'matrix-react-sdk/src/utils/DMRoomMap';
+import { RemarkUtils } from 'matrix-react-sdk/src/utils/RemarkUtils';
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -74,6 +76,7 @@ interface IProps {
 interface IState {
     contextMenuPosition?: DOMRect;
     rightPanelOpen: boolean;
+    remarkName:string;
 }
 
 export default class RoomHeader extends React.Component<IProps, IState> {
@@ -83,6 +86,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         excludedRightPanelPhaseButtons: [],
         showButtons: true,
         enableRoomOptionsMenu: true,
+       
     };
 
     static contextType = RoomContext;
@@ -94,6 +98,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         notiStore.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.state = {
             rightPanelOpen: RightPanelStore.instance.isOpen,
+            remarkName:"",
         };
     }
 
@@ -110,6 +115,15 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         notiStore.removeListener(NotificationStateEvents.Update, this.onNotificationUpdate);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
     }
+
+    private getRemarkName(userid?:string){
+        const otherMemberId =  DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
+        let rName= RemarkUtils.getRemarkNameById(userid?userid:otherMemberId);
+        this.setState({
+            remarkName:rName
+        });
+    }
+
 
     private onRightPanelStoreUpdate = () => {
         this.setState({ rightPanelOpen: RightPanelStore.instance.isOpen });
@@ -267,7 +281,8 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
     public render() {
         let searchStatus = null;
-
+        const otherMemberId =  DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
+        let rName= RemarkUtils.getRemarkNameById(otherMemberId);
         // don't display the search count until the search completes and
         // gives us a valid (possibly zero) searchCount.
         if (this.props.searchInfo &&
@@ -283,7 +298,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             oobName = this.props.oobData.name;
         }
 
-        const name = this.renderName(oobName);
+        const name =rName?rName:this.state.remarkName?this.state.remarkName: this.renderName(oobName);
 
         const topicElement = <RoomTopic
             room={this.props.room}

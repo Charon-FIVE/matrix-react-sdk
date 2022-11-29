@@ -39,6 +39,7 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { UIComponent } from "../../../settings/UIFeature";
 import { privateShouldBeEncrypted } from "../../../utils/rooms";
 import { LocalRoom } from "../../../models/LocalRoom";
+import { RemarkUtils } from "matrix-react-sdk/src/utils/RemarkUtils";
 
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
@@ -49,7 +50,8 @@ function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): 
 const NewRoomIntro = () => {
     const cli = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
-
+    const otherMemberId =  DMRoomMap.shared().getUserIdForRoomId(roomId);
+    let rName= RemarkUtils.getRemarkNameById(otherMemberId);
     const isLocalRoom = room instanceof LocalRoom;
     const dmPartner = isLocalRoom
         ? room.targets[0]?.userId
@@ -67,7 +69,7 @@ const NewRoomIntro = () => {
         }
 
         const member = room?.getMember(dmPartner);
-        const displayName = room?.name || member?.rawDisplayName || dmPartner;
+        const displayName = rName?rName:room?.name || member?.rawDisplayName || dmPartner;
         body = <React.Fragment>
             <RoomAvatar
                 room={room}
@@ -82,7 +84,7 @@ const NewRoomIntro = () => {
                 }}
             />
 
-            <h2>{ room.name }</h2>
+            <h2>{ rName?rName:room.name }</h2>
 
             <p>{ _t(introMessage, {}, {
                 displayName: () => <b>{ displayName }</b>,
@@ -184,10 +186,10 @@ const NewRoomIntro = () => {
                 <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} viewAvatarOnClick={true} />
             </MiniAvatarUploader>
 
-            <h2>{ room.name }</h2>
+            <h2>{ rName?rName:room.name }</h2>
 
             <p>{ createdText } { _t("This is the start of <roomName/>.", {}, {
-                roomName: () => <b>{ room.name }</b>,
+                roomName: () => <b>{ rName?rName:room.name }</b>,
             }) }</p>
             <p>{ topicText }</p>
             { buttons }

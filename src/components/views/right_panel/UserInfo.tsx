@@ -1501,8 +1501,8 @@ const UserInfoHeader: React.FC<{
     if (e2eStatus) {
         e2eIcon = <E2EIcon size={18} status={e2eStatus} isUser={true} />;
     }
-
-    const displayName = (member as RoomMember).rawDisplayName;
+    let rName= RemarkUtils.getRemarkNameById(member.userId);
+    const displayName = rName?rName:(member as RoomMember).rawDisplayName;
     return <React.Fragment>
         { avatarElement }
 
