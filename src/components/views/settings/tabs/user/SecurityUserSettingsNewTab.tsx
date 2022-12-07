@@ -278,9 +278,9 @@ export default class SecurityUserSettingsNewTab extends React.Component<IProps, 
                 <div className="mx_SettingsTab_heading">{ _t("Where you're signed in") }</div>
 
                 <div className="mx_DeviceNewTile">
-                    <div>{"设备ID"}</div>
-                    <div>{"设备名称"}</div>
-                    <div>{"最近一次上线"}</div>
+                    <div className="mx_DeviceTile_info_title">{_t("Account")}</div>
+                    <div className="mx_DeviceTile_displayname_title">{_t("device name")}</div>
+                    <div className="mx_DeviceTile_actions_title">{_t("last time online")}</div>
                 </div>
                 <div className="mx_SettingsTab_section">
                     <DevicesNewPanel />

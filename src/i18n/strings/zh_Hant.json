@@ -2839,7 +2839,7 @@
     "The homeserver the user you're verifying is connected to": "您正在驗證的使用者所連線的家伺服器",
     "Can't see what you're looking for?": "找不到您要找的東西？",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "此聊天室不會將訊息橋接至任何平台。<a>取得更多資訊。</a>",
-    "Where you're signed in": "您登入的位置",
+    "Where you're signed in": "您在何處登陸",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "這個聊天室位於您不是管理員的某些空間中。在那些空間中，舊的聊天室仍將會顯示，但系統會提示人們加入新的。",
     "Use a more compact 'Modern' layout": "使用更簡潔的「現代」佈局",
     "Copy link to thread": "複製討論串連結",
@@ -3568,5 +3568,7 @@
     "Read list":"已读列表",
     "Remark":"备注",
     "Click to modify":"点击可修改",
-    "Start a conversation with someone using username or phone number add friend  (like <userId/>).": "使用某人的用户名或手机号码添加好友（如 <userId/>）。"
+    "Start a conversation with someone using username or phone number add friend  (like <userId/>).": "使用某人的用户名或手机号码添加好友（如 <userId/>）。",
+    "last time online": "最近一次上線",
+    "device name": "公開名稱"
 }

@@ -23,9 +23,13 @@ limitations under the License.
 
 .mx_DeviceTile_info {
     align-items: left;
+    width: 33%;
+    word-break: break-word;
+    padding-right: 5px;
 }
 .mx_DeviceTile_displayname{
     align-items: center;
+    width: 33%;
 }
 
 .mx_DeviceTile_metadata {
@@ -46,4 +50,10 @@ limitations under the License.
     grid-gap: $spacing-8;
     grid-auto-flow: column;
     margin-left: $spacing-8;
+    width: 33%;
+    word-break: break-word;
+}
+
+.mx_DeviceTile_info_title, .mx_DeviceTile_displayname_title, .mx_DeviceTile_actions_title {
+    width: 33%;
 }

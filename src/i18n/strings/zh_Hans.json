@@ -2840,7 +2840,7 @@
     "The homeserver the user you're verifying is connected to": "您正在验证的用户所连接的主服务器",
     "Can't see what you're looking for?": "看不到您要找的东西？",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "这个房间不会将消息桥接到任何平台。<a>了解更多</a>",
-    "Where you're signed in": "登录地点",
+    "Where you're signed in": "您在何处登陆",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "这个房间位于您不是管理员的某些空间中。 在这些空间中，旧房间仍将显示，但系统会提示人们加入新房间。",
     "Use a more compact 'Modern' layout": "使用更紧凑的“现代”布局",
     "Add option": "添加选项",
@@ -3522,5 +3522,7 @@
     "Read list":"已读列表",
     "Remark":"备注",
     "Click to modify":"点击可修改",
-    "Start a conversation with someone using username or phone number add friend  (like <userId/>).": "使用某人的用户名或手机号码添加好友（如 <userId/>）。"
+    "Start a conversation with someone using username or phone number add friend  (like <userId/>).": "使用某人的用户名或手机号码添加好友（如 <userId/>）。",
+    "last time online": "最近一次上线",
+    "device name": "公开名称"
 }
