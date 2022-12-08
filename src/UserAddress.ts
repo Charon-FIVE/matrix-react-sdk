@@ -19,8 +19,8 @@ limitations under the License.
 // const mxRoomIdRegex = /^!\S+:\S+$/;
 
 const emailRegex =  /^\S+@\S+\.\S+$/;
-const mxUserIdRegex = /^[a-zA-Z0-9_]+$/  ///^!\S+:\S+$/;
-const mxRoomIdRegex =/^[a-zA-Z0-9_]+$/     ///^!\S+:\S+$/;
+const mxUserIdRegex = /^[\u4e00-\u9fa5A-Za-z0-9-\_]+$/  ///^!\S+:\S+$/;
+const mxRoomIdRegex =/^[\u4e00-\u9fa5A-Za-z0-9-\_]+$/     ///^!\S+:\S+$/;
 
 
 export enum AddressType {
