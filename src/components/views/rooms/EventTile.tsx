@@ -260,7 +260,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         // no-op function because onHeightChanged is optional yet some sub-components assume its existence
         onHeightChanged: function() {},
         forExport: false,
-        layout: Layout.Group,
+        layout:  Layout.Bubble,//Layout.Group,
     };
 
     static contextType = RoomContext;

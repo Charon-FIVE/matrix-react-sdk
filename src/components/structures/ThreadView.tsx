@@ -88,13 +88,13 @@ export default class ThreadView extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            layout: SettingsStore.getValue("layout"),
+            layout:  Layout.Bubble,//SettingsStore.getValue("layout"),
             narrow: false,
         };
 
-        this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[,,, value]) =>
-            this.setState({ layout: value as Layout }),
-        );
+        // this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[,,, value]) =>
+        //     this.setState({ layout: value as Layout }),
+        // );
     }
 
     public componentDidMount(): void {

@@ -147,13 +147,13 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                     { _t("Appearance Settings only affect this %(brand)s session.", { brand }) }
                 </div>
                 <ThemeChoicePanel />
-                <LayoutSwitcher
+                {/* <LayoutSwitcher
                     userId={this.state.userId}
                     displayName={this.state.displayName}
                     avatarUrl={this.state.avatarUrl}
                     messagePreviewText={this.MESSAGE_PREVIEW_TEXT}
                     onLayoutChanged={this.onLayoutChanged}
-                />
+                /> */}
                 <FontScalingPanel />
                 { this.renderAdvancedSection() }
                 <ImageSizePanel />

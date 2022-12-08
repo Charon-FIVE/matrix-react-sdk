@@ -402,7 +402,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             canReact: false,
             canSendMessages: false,
             resizing: false,
-            layout: SettingsStore.getValue("layout"),
+            layout: Layout.Bubble,//SettingsStore.getValue("layout"),
             lowBandwidth: SettingsStore.getValue("lowBandwidth"),
             alwaysShowTimestamps: SettingsStore.getValue("alwaysShowTimestamps"),
             showTwelveHourTimestamps: SettingsStore.getValue("showTwelveHourTimestamps"),

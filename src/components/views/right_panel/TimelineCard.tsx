@@ -84,7 +84,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
         super(props);
         this.state = {
             showReadReceipts: SettingsStore.getValue("showReadReceipts", props.room.roomId),
-            layout: SettingsStore.getValue("layout"),
+            layout: Layout.Bubble,
             atEndOfLiveTimeline: true,
             narrow: false,
         };
@@ -97,9 +97,9 @@ export default class TimelineCard extends React.Component<IProps, IState> {
         this.readReceiptsSettingWatcher = SettingsStore.watchSetting("showReadReceipts", null, (...[,,, value]) =>
             this.setState({ showReadReceipts: value as boolean }),
         );
-        this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[,,, value]) =>
-            this.setState({ layout: value as Layout }),
-        );
+        // this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[,,, value]) =>
+        //     this.setState({ layout: value as Layout }),
+        // );
     }
 
     public componentWillUnmount(): void {
@@ -110,9 +110,9 @@ export default class TimelineCard extends React.Component<IProps, IState> {
         if (this.readReceiptsSettingWatcher) {
             SettingsStore.unwatchSetting(this.readReceiptsSettingWatcher);
         }
-        if (this.layoutWatcherRef) {
-            SettingsStore.unwatchSetting(this.layoutWatcherRef);
-        }
+        // if (this.layoutWatcherRef) {
+        //     SettingsStore.unwatchSetting(this.layoutWatcherRef);
+        // }
 
         dis.unregister(this.dispatcherRef);
     }
