@@ -28,7 +28,8 @@ export const DEFAULTS: IConfigOptions = {
     integrations_rest_url: "https://scalar.vector.im/api",
     bug_report_endpoint_url: null,
     jitsi: {
-        preferred_domain: "meet.element.io",
+       // preferred_domain: "meet.element.io",
+       preferred_domain: "meet.0c535de2.com",
     },
 
     // @ts-ignore - we deliberately use the camelCase version here so we trigger
@@ -38,7 +39,8 @@ export const DEFAULTS: IConfigOptions = {
     desktopBuilds: {
         available: true,
         logo: require("../res/img/element-desktop-logo.svg").default,
-        url: "https://element.io/get-started",
+      //  url: "https://element.io/get-started",
+      url:"http://52.77.106.193:7777/file/011/%E6%A1%8C%E9%9D%A2%E7%AB%AF/ONLINE/",
     },
     spaces_learn_more_url: "https://element.io/blog/spaces-blast-out-of-beta/",
 };
