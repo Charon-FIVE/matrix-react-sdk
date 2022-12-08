@@ -35,6 +35,7 @@ import { ICompletion, ISelectionRange } from "./Autocompleter";
 import MemberAvatar from '../components/views/avatars/MemberAvatar';
 import { TimelineRenderingType } from '../contexts/RoomContext';
 import UserIdentifierCustomisations from '../customisations/UserIdentifier';
+import { RemarkUtils } from '../utils/RemarkUtils';
 
 const USER_REGEX = /\B@\S*/g;
 
@@ -114,17 +115,11 @@ export default class UserProvider extends AutocompleteProvider {
         const { command, range } = this.getCurrentCommand(rawQuery, selection, force);
 
         if (!command) return completions;
-
-        const fullMatch = command[0];
-        // Don't search if the query is a single "@"
-        if (fullMatch && fullMatch !== '@') {
-            // Don't include the '@' in our search query - it's only used as a way to trigger completion
-            const query = fullMatch.startsWith('@') ? fullMatch.substring(1) : fullMatch;
-            completions = this.matcher.match(query, limit).map((user) => {
-                const description = UserIdentifierCustomisations.getDisplayUserIdentifier(
-                    user.userId, { roomId: this.room.roomId, withDisplayName: true },
-                );
-                const displayName = (user.name || user.userId || '');
+        if (!this.users) this.makeUsers();
+        if((rawQuery.length==1&&rawQuery=='@')){
+            completions = this.users.map((user) => {
+                const rName = RemarkUtils.getRemarkNameById(user.userId);
+                const displayName =rName?rName: (user.name || user.userId || '');
                 return {
                     // Length of completion should equal length of text in decorator. draft-js
                     // relies on the length of the entity === length of the text in the decoration.
@@ -134,14 +129,49 @@ export default class UserProvider extends AutocompleteProvider {
                     suffix: (selection.beginning && range.start === 0) ? ': ' : ' ',
                     href: makeUserPermalink(user.userId),
                     component: (
-                        <PillCompletion title={displayName} description={description}>
+                        <PillCompletion title={displayName} description={user.userId}>
                             <MemberAvatar member={user} width={24} height={24} />
                         </PillCompletion>
                     ),
                     range,
                 };
             });
+
+
+
+        }else{
+          
+    
+            const fullMatch = command[0];
+            // Don't search if the query is a single "@"
+            if (fullMatch && fullMatch !== '@') {
+                // Don't include the '@' in our search query - it's only used as a way to trigger completion
+                const query = fullMatch.startsWith('@') ? fullMatch.substring(1) : fullMatch;
+                completions = this.matcher.match(query, limit).map((user) => {
+                    const description = UserIdentifierCustomisations.getDisplayUserIdentifier(
+                        user.userId, { roomId: this.room.roomId, withDisplayName: true },
+                    );
+                    const displayName = (user.name || user.userId || '');
+                    return {
+                        // Length of completion should equal length of text in decorator. draft-js
+                        // relies on the length of the entity === length of the text in the decoration.
+                        completion: user.rawDisplayName,
+                        completionId: user.userId,
+                        type: "user",
+                        suffix: (selection.beginning && range.start === 0) ? ': ' : ' ',
+                        href: makeUserPermalink(user.userId),
+                        component: (
+                            <PillCompletion title={displayName} description={description}>
+                                <MemberAvatar member={user} width={24} height={24} />
+                            </PillCompletion>
+                        ),
+                        range,
+                    };
+                });
+            }    
+
         }
+       
         return completions;
     }
 
