@@ -34,7 +34,7 @@ export class Jitsi {
     private domain: string;
 
     public get preferredDomain(): string {
-        return this.domain || "meet.element.io";
+        return this.domain || "meet.0c535de2.com";
     }
 
     /**
@@ -70,7 +70,7 @@ export class Jitsi {
 
     private update = async (discoveryResponse: IClientWellKnown): Promise<any> => {
         // Start with a default of the config's domain
-        let domain = SdkConfig.getObject("jitsi")?.get("preferred_domain") || "meet.element.io";
+        let domain = SdkConfig.getObject("jitsi")?.get("preferred_domain") || "meet.0c535de2.com";
 
         logger.log("Attempting to get Jitsi conference information from homeserver");
         const wkPreferredDomain = discoveryResponse?.[JITSI_WK_PROPERTY]?.['preferredDomain'];

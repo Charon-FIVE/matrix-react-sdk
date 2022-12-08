@@ -3524,5 +3524,6 @@
     "Click to modify":"点击可修改",
     "Start a conversation with someone using username or phone number add friend  (like <userId/>).": "使用某人的用户名或手机号码添加好友（如 <userId/>）。",
     "last time online": "最近一次上线",
-    "device name": "公开名称"
+    "device name": "公开名称",
+    "You or the other party's number of friends has reached the upper limit.":"你或者对方的好友人数已经达到上限."
 }

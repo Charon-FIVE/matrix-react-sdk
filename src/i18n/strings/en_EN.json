@@ -3564,5 +3564,6 @@
     "Click to modify":"Click to modify",
     "Start a conversation with someone using username or phone number add friend  (like <userId/>).": "Start a conversation with someone using username or phone number add friend  (like <userId/>).",
     "last time online": "last time online",
-    "device name": "device name"
+    "device name": "device name",
+    "You or the other party's number of friends has reached the upper limit.":"You or the other party's number of friends has reached the upper limit."
 }

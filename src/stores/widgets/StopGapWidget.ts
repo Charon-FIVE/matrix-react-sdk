@@ -114,7 +114,7 @@ export class ElementWidget extends Widget {
         let domain = super.rawData['domain'];
         if (domain === undefined) {
             // v1 widgets default to meet.element.io regardless of user settings
-            domain = "meet.element.io";
+           domain = "meet.0c535de2.com";
         }
 
         let theme = new ThemeWatcher().getEffectiveTheme();

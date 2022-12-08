@@ -3562,7 +3562,8 @@
     "Read list":"Read list",
     "Remark":"Remark",
     "Click to modify":"Click to modify",
-    "Start a conversation with someone using username or phone number add friend  (like <userId/>).": "Start a conversation with someone using username or phone number add friend  (like <userId/>)."
+    "Start a conversation with someone using username or phone number add friend  (like <userId/>).": "Start a conversation with someone using username or phone number add friend  (like <userId/>).",
+    "You or the other party's number of friends has reached the upper limit.":"You or the other party's number of friends has reached the upper limit."
    
 
 }

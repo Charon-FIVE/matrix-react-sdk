@@ -270,6 +270,11 @@ export default class MultiInviter {
                             errorText = _t("The user's homeserver does not support the version of the room.");
                         }
                         break;
+
+                   case "M_FRIEND_LIMIT_EXCEEDED":
+                        errorText = _t("You or the other party's number of friends has reached the upper limit.");
+                        break;
+   
                 }
 
                 if (!errorText) {
