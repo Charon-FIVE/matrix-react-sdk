@@ -56,11 +56,11 @@ const SidebarUserSettingsTab = () => {
         <div className="mx_SettingsTab mx_SidebarUserSettingsTab">
             <div className="mx_SettingsTab_heading">{ _t("Sidebar") }</div>
             <div className="mx_SettingsTab_section">
-                <div className="mx_SettingsTab_subheading">{ _t("Spaces to show") }</div>
+                {/* <div className="mx_SettingsTab_subheading">{ _t("Spaces to show") }</div>
                 <div className="mx_SettingsTab_subsectionText">
                     { _t("Spaces are ways to group rooms and people. " +
                         "Alongside the spaces you're in, you can use some pre-built ones too.") }
-                </div>
+                </div> */}
 
                 <StyledCheckbox
                     checked={!!homeEnabled}
@@ -70,9 +70,9 @@ const SidebarUserSettingsTab = () => {
                 >
                     { _t("Home") }
                 </StyledCheckbox>
-                <div className="mx_SidebarUserSettingsTab_checkboxMicrocopy">
+                {/* <div className="mx_SidebarUserSettingsTab_checkboxMicrocopy">
                     { _t("Home is useful for getting an overview of everything.") }
-                </div>
+                </div> */}
 
                 <StyledCheckbox
                     checked={allRoomsInHome}
@@ -90,9 +90,9 @@ const SidebarUserSettingsTab = () => {
                 >
                     { _t("Show all rooms") }
                 </StyledCheckbox>
-                <div className="mx_SidebarUserSettingsTab_checkboxMicrocopy">
+                {/* <div className="mx_SidebarUserSettingsTab_checkboxMicrocopy">
                     { _t("Show all your rooms in Home, even if they're in a space.") }
-                </div>
+                </div> */}
 
                 <StyledCheckbox
                     checked={!!favouritesEnabled}
