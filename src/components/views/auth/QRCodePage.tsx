@@ -41,6 +41,7 @@ interface IProps {
     isSyncing?: boolean;
     defaultUsername?: string;
     fragmentAfterLogin?: string;
+    fallbackHsUrl?: string;
 }
 interface IState {
     qrData:string;
