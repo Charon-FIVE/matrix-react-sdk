@@ -41,6 +41,7 @@ interface IProps {
     isSyncing?: boolean;
     defaultUsername?: string;
     fragmentAfterLogin?: string;
+    fallbackHsUrl?: string;
 }
 interface IState {
     qrData:string;
@@ -121,6 +122,7 @@ export default class QRCodePage extends React.PureComponent<IProps,IState> {
             isPolling:false,
             invalid:false,
         }
+        this.generateTimes = 1;
         this.hsUrl = null;
         clearInterval(this.setTimeoutTimer);
     }

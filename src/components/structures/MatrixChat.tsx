@@ -1398,6 +1398,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
         this.subTitleStatus = '';
         this.setPageSubtitle();
+        location.reload();
     }
 
     /**
@@ -1985,17 +1986,18 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             //         onFinished={this.onCompleteSecurityE2eSetupFinished}
             //     />
             // );
+            this.onLoggedIn();
         
-                view = (
-                    <LoggedInView
-                        {...this.props}
-                        {...this.state}
-                        ref={this.loggedInView}
-                        matrixClient={MatrixClientPeg.get()}
-                        onRegistered={this.onRegistered}
-                        currentRoomId={localStorage.getItem('mx_last_room_id')}
-                    />
-                );
+                // view = (
+                //     <LoggedInView
+                //         {...this.props}
+                //         {...this.state}
+                //         ref={this.loggedInView}
+                //         matrixClient={MatrixClientPeg.get()}
+                //         onRegistered={this.onRegistered}
+                //         currentRoomId={localStorage.getItem('mx_last_room_id')}
+                //     />
+                // );
         } else if (this.state.view === Views.E2E_SETUP) {
             view = (
                 <E2eSetup
@@ -2051,6 +2053,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             //view = <Welcome />;
             view = <QRCodePage 
                 onLoggedIn={this.onUserCompletedLoginFlow}
+                fallbackHsUrl={this.getFallbackHsUrl()}
                 fragmentAfterLogin={fragmentAfterLogin}
                 isSyncing={this.state.pendingInitialSync}
                 onServerConfigChange={this.onServerConfigChange}
@@ -2064,6 +2067,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     onLoggedIn={this.onUserCompletedLoginFlow}
                     fragmentAfterLogin={fragmentAfterLogin}
                     isSyncing={this.state.pendingInitialSync}
+                    fallbackHsUrl={this.getFallbackHsUrl()}
                     onServerConfigChange={this.onServerConfigChange}
                     defaultUsername={this.props.startingFragmentQueryParams.defaultUsername as string}
                     {...this.getServerProperties()}
@@ -2092,6 +2096,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     fragmentAfterLogin={fragmentAfterLogin}
                     isSyncing={this.state.pendingInitialSync}
                     onServerConfigChange={this.onServerConfigChange}
+                    fallbackHsUrl={this.getFallbackHsUrl()}
                     defaultUsername={this.props.startingFragmentQueryParams.defaultUsername as string}
                     {...this.getServerProperties()}
                 />
@@ -2109,6 +2114,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     onLoggedIn={this.onUserCompletedLoginFlow}
                     fragmentAfterLogin={fragmentAfterLogin}
                     isSyncing={this.state.pendingInitialSync}
+                    fallbackHsUrl={this.getFallbackHsUrl()}
                     onServerConfigChange={this.onServerConfigChange}
                     defaultUsername={this.props.startingFragmentQueryParams.defaultUsername as string}
                     {...this.getServerProperties()}
