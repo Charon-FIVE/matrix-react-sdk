@@ -310,7 +310,7 @@ export default class DeviceListener {
 
         // Display or hide the batch toast for old unverified sessions
         if (oldUnverifiedDeviceIds.size > 0) {
-            showBulkUnverifiedSessionsToast(oldUnverifiedDeviceIds);
+          //  showBulkUnverifiedSessionsToast(oldUnverifiedDeviceIds);
         } else {
             hideBulkUnverifiedSessionsToast();
         }
