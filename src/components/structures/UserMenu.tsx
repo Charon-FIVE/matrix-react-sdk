@@ -244,15 +244,15 @@ export default class UserMenu extends React.Component<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
 
-        // const cli = MatrixClientPeg.get();
-        // if (!cli || !cli.isCryptoEnabled() || !(await cli.exportRoomKeys())?.length) {
-        //     // log out without user prompt if they have no local megolm sessions
-        //     defaultDispatcher.dispatch({ action: 'logout' });
-        // } else {
-        //     Modal.createDialog(LogoutDialog);
-        // }
+        const cli = MatrixClientPeg.get();
+        if (!cli || !cli.isCryptoEnabled() || !(await cli.exportRoomKeys())?.length) {
+            // log out without user prompt if they have no local megolm sessions
+            defaultDispatcher.dispatch({ action: 'logout' });
+        } else {
+            Modal.createDialog(LogoutDialog);
+        }
         //直接退出
-        defaultDispatcher.dispatch({ action: 'logout' });
+      //  defaultDispatcher.dispatch({ action: 'logout' });
 
         this.setState({ contextMenuPosition: null }); // also close the menu
     };

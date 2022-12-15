@@ -1981,12 +1981,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 </div>
             );
         } else if (this.state.view === Views.COMPLETE_SECURITY) {
-            // view = (
-            //     <CompleteSecurity
-            //         onFinished={this.onCompleteSecurityE2eSetupFinished}
-            //     />
-            // );
-            this.onLoggedIn();
+            view = (
+                <CompleteSecurity
+                    onFinished={this.onCompleteSecurityE2eSetupFinished}
+                />
+            );
+          
         
                 // view = (
                 //     <LoggedInView
