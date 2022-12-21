@@ -27,6 +27,15 @@ export default class PermalinkConstructor {
         throw new Error("Not implemented");
     }
 
+
+    forShareRoomEvent(roomId: string, eventId: string, serverCandidates: string[] = []): string {
+        throw new Error("Not implemented");
+    }
+
+    forShareRoom(roomIdOrAlias: string, serverCandidates: string[] = []): string {
+        throw new Error("Not implemented");
+    }
+
     forGroup(groupId: string): string {
         throw new Error("Not implemented");
     }

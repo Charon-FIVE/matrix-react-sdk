@@ -573,6 +573,7 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
         'mx_EventTile_body': true,
         'mx_EventTile_bigEmoji': emojiBody,
         'markdown-body': isHtmlMessage && !emojiBody,
+        'at-all-heighlight':strippedBody.startsWith('@all ')
     });
 
     let emojiBodyElements: JSX.Element[];

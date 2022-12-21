@@ -141,7 +141,7 @@ export class RoomPermalinkCreator {
     }
 
     public forEvent(eventId: string): string {
-        return getPermalinkConstructor().forEvent(this.roomId, eventId, this._serverCandidates);
+        return getPermalinkConstructor().forShareRoomEvent(this.roomId, eventId, this._serverCandidates);
     }
 
     public forShareableRoom(): string {
@@ -152,11 +152,11 @@ export class RoomPermalinkCreator {
                 return getPermalinkConstructor().forRoom(alias);
             }
         }
-        return getPermalinkConstructor().forRoom(this.roomId, this._serverCandidates);
+        return getPermalinkConstructor().forShareRoom(this.roomId, this._serverCandidates);
     }
 
     public forRoom(): string {
-        return getPermalinkConstructor().forRoom(this.roomId, this._serverCandidates);
+        return getPermalinkConstructor().forShareRoom(this.roomId, this._serverCandidates);
     }
 
     private onRoomStateUpdate = () => {

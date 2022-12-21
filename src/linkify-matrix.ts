@@ -142,7 +142,10 @@ export const ELEMENT_URL_PATTERN =
         "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/|" +
         "(?:app|beta|staging|develop)\\.element\\.io/" +
     ")(#.*)";
-
+    export const MATRIXTO_URL_PATTERN = "^(?:https?://).freedomain.0c535de2/#/(([#@!+]).*)";
+    export const MATRIXTO_MD_LINK_PATTERN =
+        '\\[([^\\]]*)\\]\\((?:https?://).freedomain.0c535de2/#/([#@!+][^\\)]*)\\)';   
+    
 export const options = {
     events: function(href: string, type: Type | string): Partial<GlobalEventHandlers> {
         switch (type) {
@@ -229,7 +232,8 @@ export const options = {
                 const transformed = tryTransformPermalinkToLocalHref(href);
                 if (
                     transformed !== href || // if it could be converted to handle locally for matrix symbols e.g. @user:server.tdl and matrix.to
-                    decodeURIComponent(href).match(ELEMENT_URL_PATTERN) // for https links to Element domains
+                   // decodeURIComponent(href).match(ELEMENT_URL_PATTERN) // for https links to Element domains
+                   decodeURIComponent(href).match(MATRIXTO_URL_PATTERN) 
                 ) {
                     return null;
                 } else {

@@ -14,54 +14,57 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import DMRoomMap from "matrix-react-sdk/src/utils/DMRoomMap";
 import PermalinkConstructor, { PermalinkParts } from "./PermalinkConstructor";
 
-export const host = "freedomain.0c535de2.com"//"matrix.to";
+export const host = "matrix.to";
 export const baseUrl = `https://${host}`;
+export const shareRoomBaseUrl = "https://freedomain.0c535de2.com";
 
 /**
  * Generates matrix.to permalinks
  */
 export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
-    constructor() {
+    public constructor() {
         super();
     }
 
-    forEvent(roomId: string, eventId: string, serverCandidates: string[]): string {
+    public forEvent(roomId: string, eventId: string, serverCandidates: string[]): string {
         return `${baseUrl}/#/${roomId}/${eventId}${this.encodeServerCandidates(serverCandidates)}`;
     }
 
-    forRoom(roomIdOrAlias: string, serverCandidates: string[]): string {
-        //return `${baseUrl}/#/${roomIdOrAlias}${this.encodeServerCandidates(serverCandidates)}`;
-        return `${baseUrl}/#/${roomIdOrAlias}${"?kind=RoomId"}`;
+    public forRoom(roomIdOrAlias: string, serverCandidates: string[]): string {
+        return `${baseUrl}/#/${roomIdOrAlias}${this.encodeServerCandidates(serverCandidates)}`;
     }
 
-    forUser(userId: string): string {
-       // return `${baseUrl}/#/${userId}`;
-       return `${baseUrl}/#/${userId}${"?kind=UserId"}`;
+
+    public forShareRoomEvent(roomId: string, eventId: string, serverCandidates: string[]): string {
+        return `${shareRoomBaseUrl}/#/${roomId}/${eventId}${"?kind=RoomId"}`;
     }
 
-    forGroup(groupId: string): string {
-        return `${baseUrl}/#/${groupId}`;
+    public forShareRoom(roomIdOrAlias: string, serverCandidates: string[]): string {
+        return `${shareRoomBaseUrl}/#/${roomIdOrAlias}${"?kind=RoomId"}`;
     }
 
-    forEntity(entityId: string): string {
+    public forUser(userId: string): string {
+        return `${baseUrl}/#/${userId}`;
+    }
+
+    public forEntity(entityId: string): string {
         return `${baseUrl}/#/${entityId}`;
     }
 
-    isPermalinkHost(testHost: string): boolean {
+    public isPermalinkHost(testHost: string): boolean {
         return testHost === host;
     }
 
-    encodeServerCandidates(candidates: string[]) {
-        if (!candidates || candidates.length === 0) return '';
-        return `?via=${candidates.map(c => encodeURIComponent(c)).join("&via=")}`;
+    public encodeServerCandidates(candidates: string[]) {
+        if (!candidates || candidates.length === 0) return "";
+        return `?via=${candidates.map((c) => encodeURIComponent(c)).join("&via=")}`;
     }
 
     // Heavily inspired by/borrowed from the matrix-bot-sdk (with permission):
     // https://github.com/turt2live/matrix-js-bot-sdk/blob/7c4665c9a25c2c8e0fe4e509f2616505b5b66a1c/src/Permalinks.ts#L33-L61
-    parsePermalink(fullUrl: string): PermalinkParts {
+    public parsePermalink(fullUrl: string): PermalinkParts {
         if (!fullUrl || !fullUrl.startsWith(baseUrl)) {
             throw new Error("Does not appear to be a permalink");
         }
@@ -69,44 +72,25 @@ export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
         const parts = fullUrl.substring(`${baseUrl}/#/`.length).split("/");
 
         const entity = parts[0];
-
-
-        if (DMRoomMap.shared().getUserIdForRoomId(entity)) {
+        if (entity[0] === "@") {
+            // Probably a user, no further parsing needed.
             return PermalinkParts.forUser(entity);
-        }else{
-            if (parts.length === 1) { // room without event permalink
-                        const [roomId, query=""] = entity.split("?");
-                        const via = query.split(/&?via=/g).filter(p => !!p);
-                        return PermalinkParts.forRoom(roomId, via);
-                    }
-        
-                    // rejoin the rest because v3 events can have slashes (annoyingly)
-                    const eventIdAndQuery = parts.length > 1 ? parts.slice(1).join('/') : "";
-                    const [eventId, query=""] = eventIdAndQuery.split("?");
-                    const via = query.split(/&?via=/g).filter(p => !!p);
-        
-                    return PermalinkParts.forEvent(entity, eventId, via);
+        } else if (entity[0] === "#" || entity[0] === "!") {
+            if (parts.length === 1) {
+                // room without event permalink
+                const [roomId, query = ""] = entity.split("?");
+                const via = query.split(/&?via=/g).filter((p) => !!p);
+                return PermalinkParts.forRoom(roomId, via);
+            }
+
+            // rejoin the rest because v3 events can have slashes (annoyingly)
+            const eventIdAndQuery = parts.length > 1 ? parts.slice(1).join("/") : "";
+            const [eventId, query = ""] = eventIdAndQuery.split("?");
+            const via = query.split(/&?via=/g).filter((p) => !!p);
+
+            return PermalinkParts.forEvent(entity, eventId, via);
+        } else {
+            throw new Error("Unknown entity type in permalink");
         }
-        // if (entity[0] === '@') {
-        //     // Probably a user, no further parsing needed.
-        //     return PermalinkParts.forUser(entity);
-        // } else if (entity[0] === '#' || entity[0] === '!') {
-        //     if (parts.length === 1) { // room without event permalink
-        //         const [roomId, query=""] = entity.split("?");
-        //         const via = query.split(/&?via=/g).filter(p => !!p);
-        //         return PermalinkParts.forRoom(roomId, via);
-        //     }
-
-        //     // rejoin the rest because v3 events can have slashes (annoyingly)
-        //     const eventIdAndQuery = parts.length > 1 ? parts.slice(1).join('/') : "";
-        //     const [eventId, query=""] = eventIdAndQuery.split("?");
-        //     const via = query.split(/&?via=/g).filter(p => !!p);
-
-        //     return PermalinkParts.forEvent(entity, eventId, via);
-        // } else if (entity[0] === '+') {
-        //     return PermalinkParts.forGroup(entity);
-        // } else {
-        //     throw new Error("Unknown entity type in permalink");
-        // }
     }
 }
