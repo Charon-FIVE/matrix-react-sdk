@@ -83,9 +83,11 @@ function parseLink(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
 
     const children = Array.from(n.childNodes);
     if (href === n.textContent && children.every(c => c.nodeType === Node.TEXT_NODE)) {
-        return parseAtRoomMentions(n.textContent, pc, opts);
+        return [pc.userPill(n.textContent, resourceId)];
+      //  return parseAtRoomMentions(n.textContent, pc, opts);
     } else {
-        return [pc.plain("["), ...parseChildren(n, pc, opts), pc.plain(`](${href})`)];
+       return  [pc.userPill(n.textContent, resourceId)];
+      //  return [pc.plain("["), ...parseChildren(n, pc, opts), pc.plain(`](${href})`)];
     }
 }
 
